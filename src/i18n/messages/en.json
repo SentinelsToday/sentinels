@@ -1,0 +1,6 @@
+{
+  "common": { "appName": "Sentinel Robotics", "dashboard": "Dashboard", "robots": "Robots", "fleet": "Fleet", "settings": "Settings", "signIn": "Sign In", "signOut": "Sign Out" },
+  "hero": { "title": "Trust Infrastructure for Autonomous Machines", "subtitle": "Cryptographic identity, secure telemetry, and verifiable fleet operations for robotics systems.", "cta": "Request Access", "docs": "Read Docs" },
+  "dashboard": { "totalRobots": "Total Robots", "activeRobots": "Active", "trustScore": "Avg Trust Score", "alerts": "Alerts" },
+  "robot": { "status": "Status", "trustScore": "Trust Score", "firmware": "Firmware", "lastSeen": "Last Seen", "register": "Register Robot" }
+}

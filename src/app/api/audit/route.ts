@@ -1,25 +1,45 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { sha256, verifySignature } from "@/lib/crypto";
+import { verifySignature } from "@/lib/crypto";
 
-// GET /api/audit - Query audit logs with filters
+// GET /api/audit - Query audit logs with pagination, action filter, and date range
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
+  const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+  const limit = Math.max(1, parseInt(searchParams.get("limit") || "20"));
   const robotId = searchParams.get("robotId");
   const action = searchParams.get("action");
-  const limit = parseInt(searchParams.get("limit") || "50");
-  const offset = parseInt(searchParams.get("offset") || "0");
+  const from = searchParams.get("from");
+  const to = searchParams.get("to");
 
   const where: Record<string, unknown> = {};
   if (robotId) where.robotId = robotId;
   if (action) where.action = action;
+  if (from || to) {
+    where.timestamp = {
+      ...(from && { gte: new Date(from) }),
+      ...(to && { lte: new Date(to) }),
+    };
+  }
 
   const [logs, total] = await Promise.all([
-    db.auditLog.findMany({ where, orderBy: { timestamp: "desc" }, take: limit, skip: offset, include: { robot: { select: { name: true, did: true } } } }),
+    db.auditLog.findMany({
+      where,
+      orderBy: { timestamp: "desc" },
+      skip: (page - 1) * limit,
+      take: limit,
+      include: { robot: { select: { name: true, did: true } } },
+    }),
     db.auditLog.count({ where }),
   ]);
 
-  return NextResponse.json({ logs, total, limit, offset });
+  return NextResponse.json({
+    logs,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
+  });
 }
 
 // POST /api/audit/verify - Verify audit chain integrity for a robot
@@ -37,8 +57,6 @@ export async function POST(req: NextRequest) {
 
   for (let i = 0; i < logs.length; i++) {
     const log = logs[i];
-
-    // Verify hash chain
     if (i === 0) {
       if (log.previousHash !== null) {
         chainValid = false;
@@ -50,11 +68,8 @@ export async function POST(req: NextRequest) {
         issues.push(`Log ${log.id}: previousHash mismatch (chain broken)`);
       }
     }
-
-    // Verify signature
     const sigValid = verifySignature(log.hash, log.signature, robot.publicKey);
     if (!sigValid) {
-      // Might be signed with a previous key (after rotation), so just note it
       issues.push(`Log ${log.id}: signature verification failed (possible key rotation)`);
     }
   }

@@ -40,6 +40,8 @@ model Robot {
   telemetryEvents  TelemetryEvent[]
   auditLogs        AuditLog[]
   commands         Command[]
+  softwareUpdates  SoftwareUpdate[]
+  wallet           Wallet?
 }
 
 // Firmware verification records
@@ -101,4 +103,98 @@ model Command {
   completedAt DateTime?
 
   @@index([robotId])
+}
+
+
+// OTA Software Updates
+model SoftwareUpdate {
+  id            String   @id @default(cuid())
+  robotId       String
+  robot         Robot    @relation(fields: [robotId], references: [id])
+  version       String
+  packageUrl    String
+  packageHash   String
+  status        String   @default("pending")
+  scheduledAt   DateTime?
+  startedAt     DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime @default(now())
+
+  @@index([robotId])
+}
+
+// Robot Wallet
+model Wallet {
+  id            String   @id @default(cuid())
+  robotId       String   @unique
+  robot         Robot    @relation(fields: [robotId], references: [id])
+  address       String   @unique
+  balance       Float    @default(0)
+  permissions   String   @default("[\"read\"]")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// RBAC User
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      String   @default("viewer")
+  fleetId   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Organization {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  plan        String   @default("free")
+  maxRobots   Int      @default(10)
+  maxFleets   Int      @default(1)
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model OrgMember {
+  id        String   @id @default(cuid())
+  orgId     String
+  userId    String
+  role      String   @default("member")
+  joinedAt  DateTime @default(now())
+
+  @@unique([orgId, userId])
+  @@index([orgId])
+}
+
+// Webhooks
+model Webhook {
+  id        String   @id @default(cuid())
+  fleetId   String
+  url       String
+  secret    String
+  events    String   @default("[]") // JSON array of event types
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([fleetId])
+}
+
+// Robot-to-Robot Transactions
+model Transaction {
+  id          String   @id @default(cuid())
+  fromRobotId String
+  toRobotId   String
+  amount      Float
+  type        String   @default("transfer")
+  status      String   @default("pending")
+  memo        String?
+  createdAt   DateTime @default(now())
+  completedAt DateTime?
+
+  @@index([fromRobotId])
+  @@index([toRobotId])
 }

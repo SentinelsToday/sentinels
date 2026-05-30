@@ -31,12 +31,28 @@ function createModel(tableName: string) {
       return data;
     },
 
+    async findFirst({ where, orderBy }: { where?: Record<string, any>; orderBy?: Record<string, string> } = {}) {
+      let query = insforge.database.from(tableName).select("*");
+      if (where) {
+        for (const [key, value] of Object.entries(where)) {
+          if (value !== undefined) query = query.eq(key, value);
+        }
+      }
+      if (orderBy) {
+        const [[col, dir]] = Object.entries(orderBy);
+        query = query.order(col, { ascending: dir === "asc" });
+      }
+      const { data } = await query.limit(1).maybeSingle();
+      return data || null;
+    },
+
     async findMany({ where, orderBy, take, skip, include }: {
       where?: Record<string, any>;
       orderBy?: Record<string, string> | Record<string, string>[];
       take?: number;
       skip?: number;
       include?: Record<string, any>;
+      select?: Record<string, any>;
     } = {}) {
       let query = insforge.database.from(tableName).select("*");
 
@@ -64,7 +80,7 @@ function createModel(tableName: string) {
       return data || [];
     },
 
-    async create({ data }: { data: Record<string, any> }) {
+    async create({ data }: { data: any }) {
       const { data: result, error } = await insforge.database
         .from(tableName)
         .insert(data)
@@ -92,6 +108,18 @@ function createModel(tableName: string) {
         .eq(key, value);
       if (error) throw new Error(`Delete failed: ${error.message}`);
       return { id: value };
+    },
+
+    async deleteMany({ where }: { where?: Record<string, any> } = {}) {
+      let query = insforge.database.from(tableName).delete();
+      if (where) {
+        for (const [key, value] of Object.entries(where)) {
+          if (value !== undefined) query = query.eq(key, value);
+        }
+      }
+      const { error } = await query;
+      if (error) throw new Error(`DeleteMany failed: ${error.message}`);
+      return { count: 0 };
     },
 
     async count({ where }: { where?: Record<string, any> } = {}) {
@@ -134,4 +162,11 @@ export const db = {
   telemetryEvent: createModel("TelemetryEvent"),
   auditLog: createModel("AuditLog"),
   command: createModel("Command"),
+  softwareUpdate: createModel("SoftwareUpdate"),
+  wallet: createModel("Wallet"),
+  transaction: createModel("Transaction"),
+  webhook: createModel("Webhook"),
+  user: createModel("User"),
+  organization: createModel("Organization"),
+  orgMember: createModel("OrgMember"),
 };
