@@ -1,10 +1,35 @@
+import Link from "next/link";
 import { Shield } from "lucide-react";
 
 const footerLinks = {
-  Platform: ["Robot Identity", "Trust Verification", "Fleet Command", "Audit Layer", "Robot Wallets"],
-  Developers: ["Documentation", "SDK Reference", "API Status", "Changelog", "GitHub"],
-  Company: ["About", "Blog", "Careers", "Contact", "Press"],
-  Legal: ["Privacy", "Terms", "Security", "Compliance", "DPA"],
+  Platform: [
+    { label: "Robot Identity", href: "/platform#identity" },
+    { label: "Trust Verification", href: "/platform#trust" },
+    { label: "Fleet Command", href: "/platform#fleet" },
+    { label: "Audit Layer", href: "/platform#audit" },
+    { label: "Robot Wallets", href: "/platform#wallet" },
+  ],
+  Developers: [
+    { label: "Documentation", href: "/docs" },
+    { label: "SDK Reference", href: "/developers" },
+    { label: "API Status", href: "/docs" },
+    { label: "Changelog", href: "/blog" },
+    { label: "GitHub", href: "https://github.com" },
+  ],
+  Company: [
+    { label: "About", href: "/platform" },
+    { label: "Blog", href: "/blog" },
+    { label: "Careers", href: "/enterprise" },
+    { label: "Contact", href: "/enterprise" },
+    { label: "Enterprise", href: "/enterprise" },
+  ],
+  Legal: [
+    { label: "Privacy", href: "/security" },
+    { label: "Terms", href: "/security" },
+    { label: "Security", href: "/security" },
+    { label: "Compliance", href: "/enterprise" },
+    { label: "DPA", href: "/enterprise" },
+  ],
 };
 
 export function Footer() {
@@ -14,12 +39,12 @@ export function Footer() {
         <div className="py-12 lg:py-16">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
             <div className="col-span-2 md:col-span-1">
-              <div className="flex items-center gap-2.5 mb-4">
+              <Link href="/" className="flex items-center gap-2.5 mb-4">
                 <Shield className="h-5 w-5 text-sentinel" strokeWidth={2.5} />
                 <span className="font-mono text-sm font-semibold tracking-wider text-foreground">
                   SENTINEL
                 </span>
-              </div>
+              </Link>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Trust infrastructure for autonomous machines.
               </p>
@@ -35,13 +60,13 @@ export function Footer() {
                 </h3>
                 <ul className="space-y-2.5">
                   {links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
                         className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                       >
-                        {link}
-                      </a>
+                        {link.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>

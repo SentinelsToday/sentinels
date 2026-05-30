@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { generateEd25519Keypair, generateDID, generateHardwareFingerprint, sha256, signData } from "@/lib/crypto";
+import { rateLimit, getClientIP } from "@/lib/rate-limit";
 
 // POST /api/robots/register - Register a new robot
 export async function POST(req: NextRequest) {
+  const limited = rateLimit(getClientIP(req), "register");
+  if (limited) return limited;
   try {
     const body = await req.json();
     const { name, model, serialNumber, fleetId } = body;

@@ -53,6 +53,8 @@ model FirmwareRecord {
   verified        Boolean  @default(false)
   previousHash    String?  // chain to previous firmware
   createdAt       DateTime @default(now())
+
+  @@index([robotId])
 }
 
 // Telemetry events
@@ -66,6 +68,9 @@ model TelemetryEvent {
   signature   String   // signed by robot
   verified    Boolean  @default(false)
   timestamp   DateTime @default(now())
+
+  @@index([robotId])
+  @@index([timestamp])
 }
 
 // Immutable audit log with hash chain
@@ -79,6 +84,9 @@ model AuditLog {
   previousHash  String?  // links to previous log entry
   signature     String   // signed by system
   timestamp     DateTime @default(now())
+
+  @@index([robotId])
+  @@index([timestamp])
 }
 
 // Commands sent to robots
@@ -91,4 +99,6 @@ model Command {
   status    String   @default("pending") // pending | sent | acknowledged | completed | failed
   issuedAt  DateTime @default(now())
   completedAt DateTime?
+
+  @@index([robotId])
 }

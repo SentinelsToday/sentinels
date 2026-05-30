@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -10,11 +11,11 @@ import {
 } from "lucide-react";
 
 const navLinks = [
-  { label: "Platform", href: "#platform" },
-  { label: "Security", href: "#security" },
-  { label: "Developers", href: "#developers" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Docs", href: "#developers" },
+  { label: "Platform", href: "/platform" },
+  { label: "Security", href: "/security" },
+  { label: "Developers", href: "/developers" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Docs", href: "/docs" },
 ];
 
 export function Header() {
@@ -25,23 +26,23 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <Shield className="h-5 w-5 text-sentinel transition-transform group-hover:scale-110" strokeWidth={2.5} />
             <span className="font-mono text-sm font-semibold tracking-wider text-foreground">
               SENTINEL
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 className="px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-mono tracking-wide"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -53,17 +54,17 @@ export function Header() {
               className="font-mono text-sm text-muted-foreground hover:text-foreground"
               asChild
             >
-              <a href="#developers">
+              <Link href="/docs">
                 <Terminal className="mr-1.5 h-3.5 w-3.5" />
                 CLI
-              </a>
+              </Link>
             </Button>
             <Button
               size="sm"
               className="font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-sentinel-foreground"
               asChild
             >
-              <a href="#cta">Request Access</a>
+              <Link href="/auth/signin">Request Access</Link>
             </Button>
           </div>
 
@@ -78,14 +79,14 @@ export function Header() {
               <SheetContent side="right" className="w-72 bg-background border-border">
                 <nav className="flex flex-col gap-1 mt-8" aria-label="Mobile navigation">
                   {navLinks.map((link) => (
-                    <a
+                    <Link
                       key={link.label}
                       href={link.href}
                       onClick={() => setMobileOpen(false)}
                       className="px-4 py-3 text-sm font-mono text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   ))}
                   <div className="mt-4 px-4 flex flex-col gap-3">
                     <Button
@@ -94,17 +95,17 @@ export function Header() {
                       className="w-full font-mono text-sm"
                       asChild
                     >
-                      <a href="#developers">
+                      <Link href="/docs">
                         <Terminal className="mr-1.5 h-3.5 w-3.5" />
                         CLI
-                      </a>
+                      </Link>
                     </Button>
                     <Button
                       size="sm"
                       className="w-full font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-sentinel-foreground"
                       asChild
                     >
-                      <a href="#cta">Request Access</a>
+                      <Link href="/auth/signin">Request Access</Link>
                     </Button>
                   </div>
                 </nav>

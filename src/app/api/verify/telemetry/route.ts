@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { sha256, signData, verifySignature } from "@/lib/crypto";
+import { rateLimit, getClientIP } from "@/lib/rate-limit";
 
 // POST /api/verify/telemetry - Submit signed telemetry
 export async function POST(req: NextRequest) {
+  const limited = rateLimit(getClientIP(req), "telemetry");
+  if (limited) return limited;
   try {
     const { robotId, eventType, payload, signature: providedSignature } = await req.json();
 

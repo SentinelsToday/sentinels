@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { sha256, signData } from "@/lib/crypto";
+import { rateLimit, getClientIP } from "@/lib/rate-limit";
 
 // POST /api/robots/[id]/command - Send command to robot
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const limited = rateLimit(getClientIP(req), "command");
+  if (limited) return limited;
   const { id } = await params;
   const { type, payload } = await req.json();
 
