@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,20 +7,88 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// Fleet / Organization
+model Fleet {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  apiKey      String   @unique @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  robots      Robot[]
 }
 
-model Post {
+// Core Robot entity
+model Robot {
+  id                  String   @id @default(cuid())
+  name                String
+  model               String?
+  serialNumber        String   @unique
+  did                 String   @unique // decentralized ID
+  publicKey           String   // PEM
+  privateKey          String   // PEM (encrypted in production)
+  publicKeyHex        String
+  hardwareFingerprint String
+  status              String   @default("registered") // registered | active | offline | compromised | decommissioned
+  trustScore          Int      @default(50)
+  fleetId             String?
+  fleet               Fleet?   @relation(fields: [fleetId], references: [id])
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  firmwareRecords  FirmwareRecord[]
+  telemetryEvents  TelemetryEvent[]
+  auditLogs        AuditLog[]
+  commands         Command[]
+}
+
+// Firmware verification records
+model FirmwareRecord {
+  id              String   @id @default(cuid())
+  robotId         String
+  robot           Robot    @relation(fields: [robotId], references: [id])
+  version         String
+  hash            String   // SHA-256 of firmware binary
+  signature       String   // signed by robot's private key
+  verified        Boolean  @default(false)
+  previousHash    String?  // chain to previous firmware
+  createdAt       DateTime @default(now())
+}
+
+// Telemetry events
+model TelemetryEvent {
+  id          String   @id @default(cuid())
+  robotId     String
+  robot       Robot    @relation(fields: [robotId], references: [id])
+  eventType   String   // heartbeat | sensor | location | battery | error
+  payload     String   // JSON
+  hash        String   // SHA-256 of payload
+  signature   String   // signed by robot
+  verified    Boolean  @default(false)
+  timestamp   DateTime @default(now())
+}
+
+// Immutable audit log with hash chain
+model AuditLog {
+  id            String   @id @default(cuid())
+  robotId       String
+  robot         Robot    @relation(fields: [robotId], references: [id])
+  action        String   // registered | firmware_updated | key_rotated | command_executed | anomaly_detected | status_changed
+  details       String   // JSON
+  hash          String   // SHA-256(previousHash + action + details + timestamp)
+  previousHash  String?  // links to previous log entry
+  signature     String   // signed by system
+  timestamp     DateTime @default(now())
+}
+
+// Commands sent to robots
+model Command {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  robotId   String
+  robot     Robot    @relation(fields: [robotId], references: [id])
+  type      String   // reboot | update | stop | start | diagnostic | custom
+  payload   String?  // JSON
+  status    String   @default("pending") // pending | sent | acknowledged | completed | failed
+  issuedAt  DateTime @default(now())
+  completedAt DateTime?
 }
