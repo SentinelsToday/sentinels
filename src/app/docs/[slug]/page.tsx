@@ -144,7 +144,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                       );
                     },
                     pre: ({ children }) => (
-                      <pre className="bg-[#0f0f11] border border-border rounded-lg px-5 py-4 mb-6 overflow-x-auto text-[13px] leading-[1.7] font-mono">
+                      <pre className="bg-[#0f0f11] text-gray-200 border border-border rounded-lg px-5 py-4 mb-6 overflow-x-auto text-[13px] leading-[1.7] font-mono">
                         {children}
                       </pre>
                     ),
