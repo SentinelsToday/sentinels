@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,12 +24,12 @@ const staggerContainer = {
 };
 
 const terminalLines = [
-  { prefix: "$ ", text: "sentinel register --robot unit-0042", color: "text-foreground" },
-  { prefix: "→ ", text: "Generating Ed25519 keypair...", color: "text-steel" },
-  { prefix: "→ ", text: "Registering DID: did:sentinel:0x7f3a...b2c1", color: "text-steel" },
-  { prefix: "→ ", text: "Firmware hash: SHA-256:a4e8f...91cd", color: "text-steel" },
-  { prefix: "→ ", text: "Trust score: ████████░░ 82/100", color: "text-sentinel" },
-  { prefix: "✓ ", text: "Robot unit-0042 verified and onboarded", color: "text-emerald-600" },
+  { prefix: "$ ", text: "sentinel register --robot unit-0042", color: "text-foreground", delay: 300 },
+  { prefix: "→ ", text: "Generating Ed25519 keypair...", color: "text-steel", delay: 800 },
+  { prefix: "→ ", text: "Registering DID: did:sentinel:0x7f3a...b2c1", color: "text-steel", delay: 1200 },
+  { prefix: "→ ", text: "Firmware hash: SHA-256:a4e8f...91cd", color: "text-steel", delay: 1600 },
+  { prefix: "→ ", text: "Trust score: ████████░░ 82/100", color: "text-sentinel", delay: 2000 },
+  { prefix: "✓ ", text: "Robot unit-0042 verified and onboarded", color: "text-emerald-600", delay: 2600 },
 ];
 
 const stats = [
@@ -38,6 +39,45 @@ const stats = [
 ];
 
 const partners = ["Solana", "NATS", "ROS 2", "MQTT"];
+
+function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    if (visibleCount >= lines.length) return;
+    const timer = setTimeout(() => setVisibleCount((c) => c + 1), lines[visibleCount].delay);
+    return () => clearTimeout(timer);
+  }, [visibleCount, lines]);
+
+  useEffect(() => {
+    const interval = setInterval(() => setShowCursor((c) => !c), 530);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="relative">
+      {lines.slice(0, visibleCount).map((line, i) => (
+        <motion.div
+          key={i}
+          className={`flex ${line.color}`}
+          initial={{ opacity: 0, x: -8 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          <span className="select-none shrink-0 text-gray-500 mr-1">{line.prefix}</span>
+          <span className="whitespace-pre-wrap break-all">{line.text}</span>
+        </motion.div>
+      ))}
+      {visibleCount < lines.length && (
+        <span
+          className={`inline-block w-[7px] h-[14px] bg-foreground/70 ml-0.5 align-middle ${showCursor ? "opacity-100" : "opacity-0"}`}
+          style={{ transition: "opacity 0.1s" }}
+        />
+      )}
+    </div>
+  );
+}
 
 export function HeroSection() {
   return (
@@ -120,36 +160,9 @@ export function HeroSection() {
             </div>
 
             {/* Terminal body */}
-            <motion.div
-              className="px-5 py-4 font-mono text-[13px] leading-7"
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-            >
-              {terminalLines.map((line, i) => (
-                <motion.div
-                  key={i}
-                  className={`flex ${line.color}`}
-                  variants={{
-                    hidden: { opacity: 0, x: -8 },
-                    visible: {
-                      opacity: 1,
-                      x: 0,
-                      transition: {
-                        duration: 0.35,
-                        delay: i * 0.18,
-                        ease: [0.25, 0.1, 0.25, 1],
-                      },
-                    },
-                  }}
-                >
-                  <span className="select-none shrink-0 text-gray-500 mr-1">
-                    {line.prefix}
-                  </span>
-                  <span className="whitespace-pre-wrap break-all">{line.text}</span>
-                </motion.div>
-              ))}
-            </motion.div>
+            <div className="px-5 py-4 font-mono text-[13px] leading-7 min-h-[176px]">
+              <AnimatedTerminalLines lines={terminalLines} />
+            </div>
           </div>
         </motion.div>
 
