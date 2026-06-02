@@ -1,10 +1,10 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,7 +45,7 @@ export default function SignInPage() {
       const publicKey = resp.publicKey.toString();
 
       const message = new TextEncoder().encode(
-        `Sign in to Sentinel Robotics\nNonce: ${crypto.randomUUID()}\nTimestamp: ${Date.now()}`
+        `Sign in to Sentinels Robotics\nNonce: ${crypto.randomUUID()}\nTimestamp: ${Date.now()}`
       );
       const signed = await sol.signMessage(message, "utf8");
       const signature = Buffer.from(signed.signature).toString("base64");
@@ -78,8 +78,8 @@ export default function SignInPage() {
       <main className="flex-1 pt-16 flex items-center justify-center">
         <div className="w-full max-w-sm mx-auto px-4">
           <div className="text-center mb-8">
-            <Shield className="h-8 w-8 text-sentinel mx-auto mb-3" strokeWidth={2} />
-            <h1 className="text-2xl font-bold text-foreground">Sign in to Sentinel</h1>
+            <Shield className="h-8 w-8 text-sentinels mx-auto mb-3" strokeWidth={2} />
+            <h1 className="text-2xl font-bold text-foreground">Sign in to Sentinels</h1>
             <p className="mt-2 text-sm text-muted-foreground">Access your fleet dashboard</p>
           </div>
 
@@ -102,7 +102,7 @@ export default function SignInPage() {
             <Button
               type="submit"
               disabled={loading || !apiKey}
-              className="w-full font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-white h-10"
+              className="w-full font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-10"
             >
               <KeyRound className="mr-1.5 h-4 w-4" />
               {loading ? "Authenticating..." : "Sign In with API Key"}

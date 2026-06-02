@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
 import {
   Shield,
   Lock,
@@ -46,7 +46,7 @@ const securityPrinciples = [
   {
     icon: Eye,
     title: "Continuous Verification",
-    description: "Runtime integrity checks verify firmware and software state continuously — not just at boot time.",
+    description: "Runtime integrity checks verify firmware and software state continuously â€” not just at boot time.",
   },
   {
     icon: FileSignature,
@@ -78,12 +78,12 @@ const compliance = [
 
 const bootSteps: SequenceStep[] = [
   { type: "output", text: "[00:00.001] BOOT  Hardware attestation initiated", color: "text-blue-400", delay: 100 },
-  { type: "output", text: "[00:00.012] PASS  TPM 2.0 identity confirmed — fingerprint:0x8a3f...c2d1", color: "text-emerald-400" },
-  { type: "output", text: "[00:00.034] HASH  Firmware hash computed — SHA-256:a4e8f...91cd", color: "text-blue-400" },
-  { type: "output", text: "[00:00.089] CHAIN Verifying on-chain proof — Solana slot 258491032", color: "text-blue-400" },
-  { type: "output", text: "[00:00.142] PASS  Firmware integrity verified ✓", color: "text-emerald-400" },
-  { type: "output", text: "[00:00.156] AUTH  DID authentication — did:sentinel:0x7f3a...b2c1", color: "text-blue-400" },
-  { type: "output", text: "[00:00.178] PASS  Trust token issued — score 98/100", color: "text-emerald-400" },
+  { type: "output", text: "[00:00.012] PASS  TPM 2.0 identity confirmed â€” fingerprint:0x8a3f...c2d1", color: "text-emerald-400" },
+  { type: "output", text: "[00:00.034] HASH  Firmware hash computed â€” SHA-256:a4e8f...91cd", color: "text-blue-400" },
+  { type: "output", text: "[00:00.089] CHAIN Verifying on-chain proof â€” Solana slot 258491032", color: "text-blue-400" },
+  { type: "output", text: "[00:00.142] PASS  Firmware integrity verified âœ“", color: "text-emerald-400" },
+  { type: "output", text: "[00:00.156] AUTH  DID authentication â€” did:sentinels:0x7f3a...b2c1", color: "text-blue-400" },
+  { type: "output", text: "[00:00.178] PASS  Trust token issued â€” score 98/100", color: "text-emerald-400" },
   { type: "output", text: "[00:00.180] READY Robot unit-0042 operational", color: "text-emerald-400" },
 ];
 
@@ -96,8 +96,8 @@ export default function SecurityPage() {
         <section className="relative grid-bg py-20 sm:py-28 lg:py-32 bg-white">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
             <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-              <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel mb-6">
-                <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+              <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels mb-6">
+                <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
                 Security
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
@@ -116,7 +116,7 @@ export default function SecurityPage() {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="max-w-2xl mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">Security Principles</h2>
               <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-                Every layer of Sentinel is designed with security as the primary constraint, not an afterthought.
+                Every layer of Sentinels is designed with security as the primary constraint, not an afterthought.
               </p>
             </motion.div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -130,9 +130,9 @@ export default function SecurityPage() {
                     viewport={{ once: true }}
                     custom={i}
                     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } } }}
-                    className="group rounded-md border border-border bg-white p-6 transition-colors hover:border-sentinel/40 hover:shadow-sm"
+                    className="group rounded-md border border-border bg-white p-6 transition-colors hover:border-sentinels/40 hover:shadow-sm"
                   >
-                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-steel transition-colors group-hover:bg-sentinel/10 group-hover:text-sentinel">
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-steel transition-colors group-hover:bg-sentinels/10 group-hover:text-sentinels">
                       <Icon className="h-5 w-5" strokeWidth={1.8} />
                     </div>
                     <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground">{principle.title}</h3>
@@ -195,7 +195,7 @@ export default function SecurityPage() {
               </p>
             </motion.div>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
-              <TerminalWindow title="security-pipeline — boot verification">
+              <TerminalWindow title="security-pipeline â€” boot verification">
                 <TerminalSequence steps={bootSteps} />
               </TerminalWindow>
             </motion.div>
@@ -222,7 +222,7 @@ export default function SecurityPage() {
                   variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } } }}
                   className="rounded-md border border-border bg-surface p-5 text-center"
                 >
-                  <ShieldCheck className="h-8 w-8 text-sentinel mx-auto mb-3" strokeWidth={1.5} />
+                  <ShieldCheck className="h-8 w-8 text-sentinels mx-auto mb-3" strokeWidth={1.5} />
                   <h3 className="font-mono text-sm font-semibold text-foreground">{cert.name}</h3>
                   <span className="inline-block mt-1 font-mono text-[11px] text-emerald-600 font-semibold">{cert.status}</span>
                   <p className="mt-2 text-[13px] text-muted-foreground">{cert.desc}</p>
@@ -243,7 +243,7 @@ export default function SecurityPage() {
                 Talk to our security team about your compliance requirements and threat model.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Button size="lg" className="font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-white h-11 px-6" asChild>
+                <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-11 px-6" asChild>
                   <Link href="/enterprise">
                     Enterprise Security
                     <ArrowRight className="ml-1.5 h-4 w-4" />

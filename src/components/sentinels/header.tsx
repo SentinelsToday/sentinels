@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -27,9 +27,9 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <Shield className="h-5 w-5 text-sentinel transition-transform group-hover:scale-110" strokeWidth={2.5} />
+            <Shield className="h-5 w-5 text-sentinels transition-transform group-hover:scale-110" strokeWidth={2.5} />
             <span className="font-mono text-sm font-semibold tracking-wider text-foreground">
-              SENTINEL
+              SENTINELS
             </span>
           </Link>
 
@@ -61,7 +61,7 @@ export function Header() {
             </Button>
             <Button
               size="sm"
-              className="font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-sentinel-foreground"
+              className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-sentinels-foreground"
               asChild
             >
               <Link href="/auth/signin">Request Access</Link>
@@ -102,7 +102,7 @@ export function Header() {
                     </Button>
                     <Button
                       size="sm"
-                      className="w-full font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-sentinel-foreground"
+                      className="w-full font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-sentinels-foreground"
                       asChild
                     >
                       <Link href="/auth/signin">Request Access</Link>

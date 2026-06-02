@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
 import {
   Shield,
   Fingerprint,
@@ -32,7 +32,7 @@ const modules = [
     id: "identity",
     badge: "Module 01",
     title: "Robot Identity Engine",
-    description: "Every robot receives a cryptographic identity — decentralized ID, Ed25519 keypair, hardware fingerprint, and secure wallet. Built on W3C DID standards.",
+    description: "Every robot receives a cryptographic identity â€” decentralized ID, Ed25519 keypair, hardware fingerprint, and secure wallet. Built on W3C DID standards.",
     icon: Fingerprint,
     features: [
       { icon: Shield, title: "DID Registration", desc: "W3C-compliant decentralized identifiers anchored on Solana" },
@@ -104,8 +104,8 @@ export default function PlatformPage() {
         <section className="relative grid-bg py-20 sm:py-28 lg:py-32 bg-white">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
             <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-              <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel mb-6">
-                <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+              <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels mb-6">
+                <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
                 Platform Overview
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
@@ -135,12 +135,12 @@ export default function PlatformPage() {
                   variants={fadeUp}
                   className="max-w-3xl mb-12"
                 >
-                  <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel mb-4">
-                    <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+                  <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels mb-4">
+                    <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
                     {mod.badge}
                   </span>
                   <div className="flex items-center gap-3 mt-3 mb-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-sentinel/10 text-sentinel">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-sentinels/10 text-sentinels">
                       <Icon className="h-5 w-5" strokeWidth={1.8} />
                     </div>
                     <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
@@ -166,9 +166,9 @@ export default function PlatformPage() {
                           hidden: { opacity: 0, y: 20 },
                           visible: { opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
                         }}
-                        className={`group flex gap-4 p-5 sm:p-6 border border-border rounded-md transition-colors duration-200 hover:border-sentinel/40 hover:shadow-sm ${isAlt ? "bg-white" : "bg-surface"}`}
+                        className={`group flex gap-4 p-5 sm:p-6 border border-border rounded-md transition-colors duration-200 hover:border-sentinels/40 hover:shadow-sm ${isAlt ? "bg-white" : "bg-surface"}`}
                       >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-secondary text-steel transition-colors group-hover:bg-sentinel/10 group-hover:text-sentinel">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-secondary text-steel transition-colors group-hover:bg-sentinels/10 group-hover:text-sentinels">
                           <FIcon className="h-5 w-5" strokeWidth={1.8} />
                         </div>
                         <div>
@@ -192,10 +192,10 @@ export default function PlatformPage() {
                 Ready to secure your fleet?
               </h2>
               <p className="mt-4 text-base text-muted-foreground">
-                Get started with Sentinel in minutes. No credit card required for the starter tier.
+                Get started with Sentinels in minutes. No credit card required for the starter tier.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Button size="lg" className="font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-white h-11 px-6" asChild>
+                <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-11 px-6" asChild>
                   <Link href="/pricing">
                     View Pricing
                     <ArrowRight className="ml-1.5 h-4 w-4" />

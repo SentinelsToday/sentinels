@@ -1,22 +1,22 @@
-# Sentinel Robotics — Development Checklist
+﻿# Sentinels Robotics â€” Development Checklist
 
-## ✅ ALL FEATURES COMPLETED
+## âœ… ALL FEATURES COMPLETED
 
 ### Website Pages (15 pages)
-- [x] `/` — Landing Page (Hero + 8 sections)
-- [x] `/platform` — Platform overview
-- [x] `/security` — Security features
-- [x] `/developers` — Developer docs/SDK
-- [x] `/pricing` — 3-tier pricing
-- [x] `/enterprise` — Enterprise features
-- [x] `/blog` + `/blog/[slug]` — Blog with dynamic posts
-- [x] `/docs` + `/docs/[slug]` — Documentation
-- [x] `/auth/signin` — Sign-in page
-- [x] `/dashboard` — Main dashboard
-- [x] `/dashboard/robots` — Robot fleet list
-- [x] `/dashboard/robots/[id]` — Robot detail
-- [x] `/dashboard/realtime` — Live telemetry feed
-- [x] `/dashboard/settings` — API key management
+- [x] `/` â€” Landing Page (Hero + 8 sections)
+- [x] `/platform` â€” Platform overview
+- [x] `/security` â€” Security features
+- [x] `/developers` â€” Developer docs/SDK
+- [x] `/pricing` â€” 3-tier pricing
+- [x] `/enterprise` â€” Enterprise features
+- [x] `/blog` + `/blog/[slug]` â€” Blog with dynamic posts
+- [x] `/docs` + `/docs/[slug]` â€” Documentation
+- [x] `/auth/signin` â€” Sign-in page
+- [x] `/dashboard` â€” Main dashboard
+- [x] `/dashboard/robots` â€” Robot fleet list
+- [x] `/dashboard/robots/[id]` â€” Robot detail
+- [x] `/dashboard/realtime` â€” Live telemetry feed
+- [x] `/dashboard/settings` â€” API key management
 
 ### Design System
 - [x] Light theme (industrial, monochrome, safety orange)
@@ -24,7 +24,7 @@
 - [x] Framer Motion scroll animations
 - [x] Responsive design + mobile nav
 
-### Backend APIs — Robot Core (51 total routes)
+### Backend APIs â€” Robot Core (51 total routes)
 - [x] Robot registration, CRUD, commands
 - [x] Firmware verification (hash chain)
 - [x] Telemetry verification (signed events)
@@ -37,7 +37,7 @@
 - [x] Robot Wallet (balance, deposit/withdraw, permissions)
 - [x] OTA Software Updates (create, list, status)
 
-### Backend APIs — Fleet & Management
+### Backend APIs â€” Fleet & Management
 - [x] Fleet listing + stats (search, pagination, filters)
 - [x] Audit logs (search, pagination, date range)
 - [x] Solana proof anchoring
@@ -46,7 +46,7 @@
 - [x] ClickHouse telemetry (ingest, query, aggregates)
 - [x] MQTT/NATS messaging (publish, subscribe)
 
-### Backend APIs — Business & Platform
+### Backend APIs â€” Business & Platform
 - [x] Stripe Payment Integration (checkout, webhook, status)
 - [x] Role-Based Access Control (admin/operator/viewer)
 - [x] User management (CRUD, role assignment)
@@ -57,7 +57,7 @@
 - [x] Email Notifications (engine, settings, templates)
 - [x] Robot-to-Robot Payments (transfer, stats, audit trail)
 
-### Backend APIs — Telemetry Pipeline
+### Backend APIs â€” Telemetry Pipeline
 - [x] Telemetry ingest (ClickHouse + Prisma dual-write)
 - [x] Telemetry query (filters, pagination)
 - [x] Telemetry aggregates (1m/5m/1h/1d buckets)
@@ -110,7 +110,7 @@
 
 ---
 
-## 📊 Final Stats
+## ðŸ“Š Final Stats
 
 | Metric | Count |
 |--------|-------|
@@ -118,11 +118,11 @@
 | Pages | 15 |
 | Database Models | 12 |
 | Library Modules | 16 |
-| Build Status | ✅ PASSING |
+| Build Status | âœ… PASSING |
 
 ---
 
-## 🚀 To Activate (When Ready)
+## ðŸš€ To Activate (When Ready)
 
 - **Stripe**: Install `stripe` package + set `STRIPE_SECRET_KEY` env
 - **IPFS**: Replace mock with real IPFS node (Pinata/Infura)

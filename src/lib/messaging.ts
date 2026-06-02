@@ -1,9 +1,9 @@
-export const TOPICS = {
-  TELEMETRY: 'sentinel/telemetry',
-  COMMANDS: 'sentinel/commands',
-  ALERTS: 'sentinel/alerts',
-  FIRMWARE: 'sentinel/firmware',
-  STATUS: 'sentinel/status',
+﻿export const TOPICS = {
+  TELEMETRY: 'sentinels/telemetry',
+  COMMANDS: 'sentinels/commands',
+  ALERTS: 'sentinels/alerts',
+  FIRMWARE: 'sentinels/firmware',
+  STATUS: 'sentinels/status',
 } as const;
 
 export interface Message {

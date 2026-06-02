@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -41,10 +41,10 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sentinel: var(--sentinel);
-  --color-sentinel-foreground: var(--sentinel-foreground);
-  --color-sentinel-muted: var(--sentinel-muted);
-  --color-sentinel-dim: var(--sentinel-dim);
+  --color-sentinels: var(--sentinels);
+  --color-sentinels-foreground: var(--sentinels-foreground);
+  --color-sentinels-muted: var(--sentinels-muted);
+  --color-sentinels-dim: var(--sentinels-dim);
   --color-steel: var(--steel);
   --color-steel-light: var(--steel-light);
   --color-graphite: var(--graphite);
@@ -54,7 +54,7 @@
 
 :root {
   --radius: 0.5rem;
-  /* Sentinel Industrial LIGHT Theme */
+  /* Sentinels Industrial LIGHT Theme */
   --background: #FFFFFF;
   --foreground: #111113;
   --card: #FAFAFA;
@@ -73,11 +73,11 @@
   --border: #E5E7EB;
   --input: #E5E7EB;
   --ring: #E8553D;
-  /* Sentinel custom tokens - light mode */
-  --sentinel: #D4432D;
-  --sentinel-foreground: #FFFFFF;
-  --sentinel-muted: #B83A27;
-  --sentinel-dim: #E8553D10;
+  /* Sentinels custom tokens - light mode */
+  --sentinels: #D4432D;
+  --sentinels-foreground: #FFFFFF;
+  --sentinels-muted: #B83A27;
+  --sentinels-dim: #E8553D10;
   --steel: #6B7280;
   --steel-light: #9CA3AF;
   --graphite: #D1D5DB;
@@ -118,10 +118,10 @@
   --border: #E5E7EB;
   --input: #E5E7EB;
   --ring: #D4432D;
-  --sentinel: #D4432D;
-  --sentinel-foreground: #FFFFFF;
-  --sentinel-muted: #B83A27;
-  --sentinel-dim: #E8553D10;
+  --sentinels: #D4432D;
+  --sentinels-foreground: #FFFFFF;
+  --sentinels-muted: #B83A27;
+  --sentinels-dim: #E8553D10;
   --steel: #6B7280;
   --steel-light: #9CA3AF;
   --graphite: #D1D5DB;
@@ -151,16 +151,16 @@
   }
 }
 
-/* Custom Sentinel Utilities */
+/* Custom Sentinels Utilities */
 @layer utilities {
-  .text-sentinel {
-    color: var(--sentinel);
+  .text-sentinels {
+    color: var(--sentinels);
   }
-  .bg-sentinel {
-    background-color: var(--sentinel);
+  .bg-sentinels {
+    background-color: var(--sentinels);
   }
-  .border-sentinel {
-    border-color: var(--sentinel);
+  .border-sentinels {
+    border-color: var(--sentinels);
   }
   .text-steel {
     color: var(--steel);
@@ -216,13 +216,13 @@ html {
 }
 
 /* Terminal cursor blink */
-@keyframes sentinel-blink {
+@keyframes sentinels-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
 /* Terminal window entrance */
-@keyframes sentinel-terminal-in {
+@keyframes sentinels-terminal-in {
   from {
     opacity: 0;
     transform: translateY(8px) scale(0.98);

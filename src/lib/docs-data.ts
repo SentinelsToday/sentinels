@@ -1,62 +1,62 @@
-export const docSections = [
+﻿export const docSections = [
   {
     slug: "quick-start",
     title: "Quick Start",
     category: "Getting Started",
     content: `## Overview
 
-Sentinel provides cryptographic identity and trust verification for autonomous machines. This guide walks you through setup in under five minutes.
+Sentinels provides cryptographic identity and trust verification for autonomous machines. This guide walks you through setup in under five minutes.
 
 ---
 
 ## Prerequisites
 
-- A Sentinel account ([request access](https://sentinel.dev))
+- A Sentinels account ([request access](https://sentinels.dev))
 - Terminal access (macOS, Linux, or WSL on Windows)
 - Node.js 18+ (for SDK usage)
 
 ---
 
-## Step 1 — Install the CLI
+## Step 1 â€” Install the CLI
 
 \`\`\`bash
-curl -fsSL https://get.sentinel.dev | sh
+curl -fsSL https://get.sentinels.dev | sh
 \`\`\`
 
 Verify the installation:
 
 \`\`\`bash
-sentinel --version
+sentinels --version
 \`\`\`
 
 ---
 
-## Step 2 — Authenticate
+## Step 2 â€” Authenticate
 
 \`\`\`bash
-sentinel auth login
+sentinels auth login
 \`\`\`
 
-This opens your browser for authentication. Once complete, your session token is stored locally at \`~/.sentinel/credentials\`.
+This opens your browser for authentication. Once complete, your session token is stored locally at \`~/.sentinels/credentials\`.
 
 ---
 
-## Step 3 — Initialize a project
+## Step 3 â€” Initialize a project
 
 \`\`\`bash
-sentinel init --project my-fleet
+sentinels init --project my-fleet
 \`\`\`
 
-This generates a \`sentinel.yaml\` configuration file containing your project ID and API keys.
+This generates a \`sentinels.yaml\` configuration file containing your project ID and API keys.
 
-> **Important:** Add \`sentinel.yaml\` to your \`.gitignore\`. Never commit credentials.
+> **Important:** Add \`sentinels.yaml\` to your \`.gitignore\`. Never commit credentials.
 
 ---
 
-## Step 4 — Register a device
+## Step 4 â€” Register a device
 
 \`\`\`bash
-sentinel register \\
+sentinels register \\
   --name unit-001 \\
   --model forklift-v2 \\
   --serial SN-2025-001
@@ -65,21 +65,21 @@ sentinel register \\
 **Output:**
 
 \`\`\`
-✓ Device registered
+âœ“ Device registered
   ID:          clx8f2k...
-  DID:         did:sentinel:0x7f3a...b2c1
+  DID:         did:sentinels:0x7f3a...b2c1
   Trust Score: 100/100
   Status:      registered
 \`\`\`
 
-Behind the scenes, Sentinel generates an Ed25519 keypair, derives a decentralized identifier (DID), and initializes the trust score.
+Behind the scenes, Sentinels generates an Ed25519 keypair, derives a decentralized identifier (DID), and initializes the trust score.
 
 ---
 
-## Step 5 — Verify firmware (recommended)
+## Step 5 â€” Verify firmware (recommended)
 
 \`\`\`bash
-sentinel verify firmware \\
+sentinels verify firmware \\
   --robot unit-001 \\
   --version 2.4.1 \\
   --file ./firmware.bin \\
@@ -92,9 +92,9 @@ The \`--anchor\` flag stores an immutable proof on Solana. Without it, verificat
 
 ## Next steps
 
-- [Authentication](/docs/authentication) — Configure API keys and access control
-- [Telemetry Signing](/docs/telemetry-signing) — Submit signed data from your devices
-- [Fleet Commands](/docs/fleet-commands) — Send and track commands across your fleet`,
+- [Authentication](/docs/authentication) â€” Configure API keys and access control
+- [Telemetry Signing](/docs/telemetry-signing) â€” Submit signed data from your devices
+- [Fleet Commands](/docs/fleet-commands) â€” Send and track commands across your fleet`,
   },
   {
     slug: "authentication",
@@ -102,7 +102,7 @@ The \`--anchor\` flag stores an immutable proof on Solana. Without it, verificat
     category: "Getting Started",
     content: `## Overview
 
-Every API request requires authentication. Sentinel supports three methods:
+Every API request requires authentication. Sentinels supports three methods:
 
 | Method | Best for |
 |--------|----------|
@@ -118,16 +118,16 @@ Generated when you create a project. Include it in the \`Authorization\` header:
 
 \`\`\`bash
 curl -H "Authorization: Bearer sk_live_abc123..." \\
-  https://api.sentinel.dev/v1/robots
+  https://api.sentinels.dev/v1/robots
 \`\`\`
 
 **SDK usage:**
 
 \`\`\`typescript
-import { Sentinel } from '@sentinel/sdk';
+import { Sentinels } from '@sentinels/sdk';
 
-const sentinel = new Sentinel({
-  apiKey: process.env.SENTINEL_API_KEY,
+const sentinels = new Sentinels({
+  apiKey: process.env.SENTINELS_API_KEY,
 });
 \`\`\`
 
@@ -138,11 +138,11 @@ const sentinel = new Sentinel({
 For teams using Solana wallets (Phantom, Backpack, Solflare):
 
 \`\`\`typescript
-const sentinel = new Sentinel({
+const sentinels = new Sentinels({
   wallet: phantomWallet,
 });
 
-await sentinel.auth.connectWallet();
+await sentinels.auth.connectWallet();
 \`\`\`
 
 The SDK requests a signature of a one-time challenge. No passwords or email required.
@@ -165,7 +165,7 @@ Tokens are valid for **24 hours**. Include them in subsequent requests:
 
 \`\`\`bash
 curl -H "Authorization: Bearer eyJhbGci..." \\
-  https://api.sentinel.dev/v1/fleet/stats
+  https://api.sentinels.dev/v1/fleet/stats
 \`\`\`
 
 ---
@@ -215,7 +215,7 @@ Registration creates a cryptographic identity for a device. Each registered devi
 ## Register a device
 
 \`\`\`typescript
-const device = await sentinel.devices.register({
+const device = await sentinels.devices.register({
   name: 'unit-0042',
   model: 'forklift-v2',
   serialNumber: 'SN-2025-0042',
@@ -228,7 +228,7 @@ const device = await sentinel.devices.register({
 {
   "id": "clx1a2b3c...",
   "name": "unit-0042",
-  "did": "did:sentinel:0x7f3a8b2c1d4e5f6a...",
+  "did": "did:sentinels:0x7f3a8b2c1d4e5f6a...",
   "publicKey": "-----BEGIN PUBLIC KEY-----...",
   "publicKeyHex": "0x4a8f3c2d...",
   "hardwareFingerprint": "0x8a3f7b2c...",
@@ -250,7 +250,7 @@ Serial numbers are unique across your fleet. Attempting to register a duplicate 
 For onboarding multiple devices:
 
 \`\`\`typescript
-const devices = await sentinel.devices.registerBatch([
+const devices = await sentinels.devices.registerBatch([
   { name: 'unit-001', model: 'agv-v3', serialNumber: 'SN-001' },
   { name: 'unit-002', model: 'agv-v3', serialNumber: 'SN-002' },
   { name: 'unit-003', model: 'agv-v3', serialNumber: 'SN-003' },
@@ -278,8 +278,8 @@ With hardware attestation enabled, the private key never leaves the device's sec
 ## Device lifecycle
 
 \`\`\`
-registered → active → offline → decommissioned
-                    → compromised
+registered â†’ active â†’ offline â†’ decommissioned
+                    â†’ compromised
 \`\`\`
 
 Status transitions are logged in the audit chain automatically.`,
@@ -290,14 +290,14 @@ Status transitions are logged in the audit chain automatically.`,
     category: "Trust Verification",
     content: `## Overview
 
-Firmware verification ensures devices run untampered code. Sentinel hashes the firmware binary, validates the signature chain, and optionally anchors the proof on Solana.
+Firmware verification ensures devices run untampered code. Sentinels hashes the firmware binary, validates the signature chain, and optionally anchors the proof on Solana.
 
 ---
 
 ## Verify firmware
 
 \`\`\`typescript
-const proof = await sentinel.verify.firmware({
+const proof = await sentinels.verify.firmware({
   robotId: 'clx1a2b3c...',
   version: '2.4.1',
   firmwareData: Buffer.from(firmwareBinary),
@@ -338,7 +338,7 @@ Firmware verification is the highest-weighted factor in trust scoring (+30 point
 Create an immutable, publicly verifiable record on Solana:
 
 \`\`\`typescript
-const anchor = await sentinel.solana.anchor({
+const anchor = await sentinels.solana.anchor({
   hash: proof.hash,
   robotDid: device.did,
   proofType: 'firmware',
@@ -392,7 +392,7 @@ Telemetry signing provides cryptographic proof that data originated from a speci
 When the device signs data locally:
 
 \`\`\`typescript
-const result = await sentinel.telemetry.submit({
+const result = await sentinels.telemetry.submit({
   robotId: 'clx1a2b3c...',
   eventType: 'sensor',
   payload: {
@@ -408,10 +408,10 @@ const result = await sentinel.telemetry.submit({
 
 ## Server-side signing
 
-For devices that cannot sign locally, Sentinel signs on their behalf:
+For devices that cannot sign locally, Sentinels signs on their behalf:
 
 \`\`\`typescript
-const result = await sentinel.telemetry.submit({
+const result = await sentinels.telemetry.submit({
   robotId: 'clx1a2b3c...',
   eventType: 'heartbeat',
   payload: { status: 'active', uptime: 3600 },
@@ -470,7 +470,7 @@ Commands allow you to control devices remotely. Every command is authenticated, 
 ## Send a command
 
 \`\`\`typescript
-const command = await sentinel.commands.send({
+const command = await sentinels.commands.send({
   robotId: 'clx1a2b3c...',
   type: 'REBOOT',
   payload: { reason: 'scheduled-maintenance' },
@@ -486,7 +486,7 @@ const command = await sentinel.commands.send({
 | \`STATUS_CHECK\` | Request current device state |
 | \`REBOOT\` | Restart the device |
 | \`UPDATE_FIRMWARE\` | Initiate firmware update |
-| \`EMERGENCY_STOP\` | Immediate halt — highest priority |
+| \`EMERGENCY_STOP\` | Immediate halt â€” highest priority |
 | \`CUSTOM\` | Application-specific command with payload |
 
 ---
@@ -496,8 +496,8 @@ const command = await sentinel.commands.send({
 Commands progress through defined states:
 
 \`\`\`
-PENDING → SENT → ACKNOWLEDGED → COMPLETED
-                              → FAILED
+PENDING â†’ SENT â†’ ACKNOWLEDGED â†’ COMPLETED
+                              â†’ FAILED
 \`\`\`
 
 Monitor status via polling or WebSocket subscription.
@@ -509,7 +509,7 @@ Monitor status via polling or WebSocket subscription.
 Send the same command to multiple devices:
 
 \`\`\`typescript
-await sentinel.commands.sendBatch({
+await sentinels.commands.sendBatch({
   robotIds: ['device-1', 'device-2', 'device-3'],
   type: 'UPDATE_FIRMWARE',
   payload: { version: '2.5.0' },
@@ -521,7 +521,7 @@ await sentinel.commands.sendBatch({
 ## Command history
 
 \`\`\`typescript
-const history = await sentinel.commands.list({
+const history = await sentinels.commands.list({
   robotId: 'clx1a2b3c...',
   limit: 20,
   status: 'completed',

@@ -1,4 +1,4 @@
-import { generateKeyPairSync, createHash, sign, verify, randomBytes } from "crypto";
+﻿import { generateKeyPairSync, createHash, sign, verify, randomBytes } from "crypto";
 
 export function generateEd25519Keypair() {
   const { publicKey, privateKey } = generateKeyPairSync("ed25519");
@@ -28,7 +28,7 @@ export function verifySignature(data: string, signatureHex: string, publicKeyPem
 
 export function generateDID(publicKeyHex: string): string {
   const hash = sha256(publicKeyHex).slice(0, 40);
-  return `did:sentinel:${hash}`;
+  return `did:sentinels:${hash}`;
 }
 
 export function generateHardwareFingerprint(): string {

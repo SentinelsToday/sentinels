@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import { posts } from "@/lib/blog-data";
@@ -59,13 +59,13 @@ export default function BlogPage() {
                   custom={i}
                   variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.06, duration: 0.5 } } }}
                 >
-                  <Link href={`/blog/${post.slug}`} className="group block rounded-lg border border-border bg-white p-6 transition-colors hover:border-sentinel/40 hover:shadow-sm">
+                  <Link href={`/blog/${post.slug}`} className="group block rounded-lg border border-border bg-white p-6 transition-colors hover:border-sentinels/40 hover:shadow-sm">
                     <div className="flex items-center gap-3 mb-3">
-                      <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-sentinel bg-sentinel/5 border border-sentinel/20 px-2 py-0.5 rounded">
+                      <span className="font-mono text-[10px] font-semibold uppercase tracking-widest text-sentinels bg-sentinels/5 border border-sentinels/20 px-2 py-0.5 rounded">
                         {post.category}
                       </span>
                     </div>
-                    <h2 className="text-lg font-bold text-foreground group-hover:text-sentinel transition-colors leading-tight">
+                    <h2 className="text-lg font-bold text-foreground group-hover:text-sentinels transition-colors leading-tight">
                       {post.title}
                     </h2>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
@@ -82,7 +82,7 @@ export default function BlogPage() {
                           {post.readTime}
                         </span>
                       </div>
-                      <ArrowRight className="h-4 w-4 text-steel opacity-0 group-hover:opacity-100 group-hover:text-sentinel transition-all" />
+                      <ArrowRight className="h-4 w-4 text-steel opacity-0 group-hover:opacity-100 group-hover:text-sentinels transition-all" />
                     </div>
                   </Link>
                 </motion.article>

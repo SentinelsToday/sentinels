@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
 import {
   Shield,
   Building2,
@@ -28,9 +28,9 @@ const fadeUp = {
 
 const enterpriseFeatures = [
   { icon: Shield, title: "SOC 2 Type II Certified", desc: "Full security, availability, and confidentiality controls with annual audits" },
-  { icon: Server, title: "Dedicated Infrastructure", desc: "Isolated compute, storage, and networking for your fleet — no shared tenancy" },
+  { icon: Server, title: "Dedicated Infrastructure", desc: "Isolated compute, storage, and networking for your fleet â€” no shared tenancy" },
   { icon: Clock, title: "99.99% SLA", desc: "Contractual uptime guarantee with financial credits for any downtime" },
-  { icon: Lock, title: "On-Prem Deployment", desc: "Deploy Sentinel in your own data center or private cloud for full control" },
+  { icon: Lock, title: "On-Prem Deployment", desc: "Deploy Sentinels in your own data center or private cloud for full control" },
   { icon: FileText, title: "Compliance Exports", desc: "Automated audit report generation for SOC 2, ISO 27001, NIST, and IEC 62443" },
   { icon: Headphones, title: "Dedicated Support", desc: "Named support engineer with 15-minute response time for critical issues" },
   { icon: Users, title: "SSO & RBAC", desc: "SAML/OIDC single sign-on with granular role-based access control" },
@@ -61,7 +61,7 @@ const industries = [
 const process = [
   { step: "01", title: "Discovery Call", desc: "Understand your fleet size, compliance needs, and integration requirements" },
   { step: "02", title: "Technical Assessment", desc: "Architecture review, security audit, and deployment planning" },
-  { step: "03", title: "Pilot Deployment", desc: "Deploy Sentinel with a subset of your fleet for validation" },
+  { step: "03", title: "Pilot Deployment", desc: "Deploy Sentinels with a subset of your fleet for validation" },
   { step: "04", title: "Full Rollout", desc: "Scale to your entire fleet with dedicated support and monitoring" },
 ];
 
@@ -74,8 +74,8 @@ export default function EnterprisePage() {
         <section className="relative grid-bg py-20 sm:py-28 lg:py-32 bg-white">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
             <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-              <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel mb-6">
-                <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+              <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels mb-6">
+                <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
                 Enterprise
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
@@ -85,7 +85,7 @@ export default function EnterprisePage() {
                 Dedicated infrastructure, compliance certifications, and enterprise support for organizations deploying robotics at scale in regulated industries.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Button size="lg" className="font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-white h-11 px-6">
+                <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-11 px-6">
                   Contact Sales
                   <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Button>
@@ -117,9 +117,9 @@ export default function EnterprisePage() {
                     viewport={{ once: true }}
                     custom={i}
                     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.06, duration: 0.5 } } }}
-                    className="group rounded-md border border-border bg-white p-5 transition-colors hover:border-sentinel/40 hover:shadow-sm"
+                    className="group rounded-md border border-border bg-white p-5 transition-colors hover:border-sentinels/40 hover:shadow-sm"
                   >
-                    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded bg-secondary text-steel transition-colors group-hover:bg-sentinel/10 group-hover:text-sentinel">
+                    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded bg-secondary text-steel transition-colors group-hover:bg-sentinels/10 group-hover:text-sentinels">
                       <Icon className="h-4 w-4" strokeWidth={1.8} />
                     </div>
                     <h3 className="font-mono text-xs font-semibold tracking-wide text-foreground">{feature.title}</h3>
@@ -137,7 +137,7 @@ export default function EnterprisePage() {
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} variants={fadeUp} className="max-w-2xl mb-12">
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">Built for Regulated Industries</h2>
               <p className="mt-4 text-base text-muted-foreground leading-relaxed">
-                Sentinel is deployed in environments where robot compromise has real-world consequences.
+                Sentinels is deployed in environments where robot compromise has real-world consequences.
               </p>
             </motion.div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -153,12 +153,12 @@ export default function EnterprisePage() {
                     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } } }}
                     className="rounded-lg border border-border bg-surface p-8"
                   >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-sentinel/10 text-sentinel mb-5">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-md bg-sentinels/10 text-sentinels mb-5">
                       <Icon className="h-6 w-6" strokeWidth={1.5} />
                     </div>
                     <h3 className="text-lg font-bold text-foreground">{industry.name}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{industry.description}</p>
-                    <p className="mt-4 font-mono text-[11px] text-sentinel font-semibold uppercase tracking-wider">{industry.stats}</p>
+                    <p className="mt-4 font-mono text-[11px] text-sentinels font-semibold uppercase tracking-wider">{industry.stats}</p>
                   </motion.div>
                 );
               })}
@@ -184,7 +184,7 @@ export default function EnterprisePage() {
                   variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } } }}
                   className="rounded-md border border-border bg-white p-5"
                 >
-                  <span className="font-mono text-2xl font-bold text-sentinel/30">{step.step}</span>
+                  <span className="font-mono text-2xl font-bold text-sentinels/30">{step.step}</span>
                   <h3 className="mt-2 font-mono text-sm font-semibold text-foreground">{step.title}</h3>
                   <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">{step.desc}</p>
                 </motion.div>
@@ -197,7 +197,7 @@ export default function EnterprisePage() {
         <section className="py-20 sm:py-28 bg-white border-t border-border">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-              <ShieldCheck className="h-12 w-12 text-sentinel mx-auto mb-6" strokeWidth={1.5} />
+              <ShieldCheck className="h-12 w-12 text-sentinels mx-auto mb-6" strokeWidth={1.5} />
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
                 Ready to deploy at scale?
               </h2>
@@ -205,7 +205,7 @@ export default function EnterprisePage() {
                 Talk to our enterprise team about your fleet size, compliance requirements, and deployment timeline.
               </p>
               <div className="mt-8">
-                <Button size="lg" className="font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-white h-12 px-8">
+                <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-12 px-8">
                   Schedule a Call
                   <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Button>

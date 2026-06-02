@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -91,8 +91,8 @@ export function RobotIdentitySection() {
           className="mb-14 sm:mb-18 max-w-2xl"
         >
           <motion.div variants={fadeUp} className="mb-4">
-            <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel">
-              <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+            <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels">
+              <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
               Identity Engine
             </span>
           </motion.div>
@@ -106,7 +106,7 @@ export function RobotIdentitySection() {
 
         {/* Body */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* LEFT — Pipeline */}
+          {/* LEFT â€” Pipeline */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} className="relative">
             <div className="mb-6 flex items-center gap-2">
               <div className="h-px flex-1 bg-border" />
@@ -124,19 +124,19 @@ export function RobotIdentitySection() {
                       variants={stepVariants}
                       className={`group flex items-center gap-3.5 rounded-md border px-4 py-3 transition-colors duration-200 ${
                         isLast
-                          ? "border-sentinel/30 bg-sentinel/5 hover:border-sentinel/60"
+                          ? "border-sentinels/30 bg-sentinels/5 hover:border-sentinels/60"
                           : "border-border bg-white hover:border-graphite"
                       }`}
                     >
                       <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded ${
                         isLast
-                          ? "bg-sentinel/10 text-sentinel"
+                          ? "bg-sentinels/10 text-sentinels"
                           : "bg-secondary text-steel group-hover:text-foreground transition-colors"
                       }`}>
                         <Icon className="h-4 w-4" strokeWidth={2} />
                       </div>
                       <span className={`font-mono text-sm tracking-wide ${
-                        isLast ? "font-semibold text-sentinel" : "font-medium text-foreground"
+                        isLast ? "font-semibold text-sentinels" : "font-medium text-foreground"
                       }`}>
                         {step.label}
                       </span>
@@ -153,7 +153,7 @@ export function RobotIdentitySection() {
             </div>
           </motion.div>
 
-          {/* RIGHT — Feature Cards */}
+          {/* RIGHT â€” Feature Cards */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-60px" }} className="grid grid-cols-1 sm:grid-cols-2 gap-4 self-start">
             {featureCards.map((card, i) => {
               const Icon = card.icon;
@@ -162,9 +162,9 @@ export function RobotIdentitySection() {
                   key={card.title}
                   custom={i}
                   variants={cardVariants}
-                  className="group rounded-md border border-border bg-white p-5 transition-colors duration-200 hover:border-sentinel/40 hover:shadow-sm"
+                  className="group rounded-md border border-border bg-white p-5 transition-colors duration-200 hover:border-sentinels/40 hover:shadow-sm"
                 >
-                  <div className="mb-3 flex h-8 w-8 items-center justify-center rounded bg-secondary text-steel transition-colors group-hover:bg-sentinel/10 group-hover:text-sentinel">
+                  <div className="mb-3 flex h-8 w-8 items-center justify-center rounded bg-secondary text-steel transition-colors group-hover:bg-sentinels/10 group-hover:text-sentinels">
                     <Icon className="h-4 w-4" strokeWidth={2} />
                   </div>
                   <h3 className="mb-1.5 text-sm font-bold tracking-tight text-foreground">{card.title}</h3>

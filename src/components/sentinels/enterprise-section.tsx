@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -18,7 +18,7 @@ import { TerminalWindow, AuditLogStream } from "@/components/terminal";
 const complianceFeatures = [
   { icon: Shield, title: "End-to-End Encryption", desc: "All data encrypted in transit and at rest with hardware-backed key management" },
   { icon: FileText, title: "Immutable Audit Logs", desc: "Every event signed, timestamped, and anchored on-chain for compliance export" },
-  { icon: Lock, title: "Zero-Trust Architecture", desc: "No implicit trust — every robot, request, and action must authenticate" },
+  { icon: Lock, title: "Zero-Trust Architecture", desc: "No implicit trust â€” every robot, request, and action must authenticate" },
   { icon: Eye, title: "Firmware Integrity", desc: "Boot-time and runtime verification ensures no compromised code executes" },
   { icon: Scale, title: "Regulatory Compliance", desc: "SOC 2, ISO 27001, and defense-grade compliance frameworks built-in" },
   { icon: Building2, title: "Multi-Tenant Isolation", desc: "Enterprise-grade tenant isolation with dedicated key hierarchies" },
@@ -32,9 +32,9 @@ const industries = [
 ];
 
 const auditEvents = [
-  { time: "2025-01-15T08:23:41Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Robot <span className="text-gray-200">unit-0042</span> firmware verified — hash <span className="text-[#E8553D]">0xa4e8f...91cd</span></> },
-  { time: "2025-01-15T08:23:42Z ", tag: "AUTH", tagColor: "text-blue-400", message: <>  DID <span className="text-gray-200">did:sentinel:0x7f3a</span> trust score updated <span className="text-emerald-400">94→98</span></> },
-  { time: "2025-01-15T08:23:43Z ", tag: "WARN", tagColor: "text-amber-400", message: <> Robot <span className="text-gray-200">unit-0307</span> battery below threshold — <span className="text-amber-400">12%</span></> },
+  { time: "2025-01-15T08:23:41Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Robot <span className="text-gray-200">unit-0042</span> firmware verified â€” hash <span className="text-[#E8553D]">0xa4e8f...91cd</span></> },
+  { time: "2025-01-15T08:23:42Z ", tag: "AUTH", tagColor: "text-blue-400", message: <>  DID <span className="text-gray-200">did:sentinels:0x7f3a</span> trust score updated <span className="text-emerald-400">94â†’98</span></> },
+  { time: "2025-01-15T08:23:43Z ", tag: "WARN", tagColor: "text-amber-400", message: <> Robot <span className="text-gray-200">unit-0307</span> battery below threshold â€” <span className="text-amber-400">12%</span></> },
   { time: "2025-01-15T08:23:44Z ", tag: "SIGN", tagColor: "text-emerald-400", message: <> Telemetry batch <span className="text-gray-200">#4891</span> anchored on Solana slot <span className="text-[#E8553D]">258491032</span></> },
   { time: "2025-01-15T08:23:45Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Mission <span className="text-gray-200">pick-warehouse-a</span> completed by <span className="text-gray-200">unit-0042</span></> },
 ];
@@ -56,8 +56,8 @@ export function EnterpriseSection() {
           variants={fadeUp}
           className="max-w-2xl mb-12 sm:mb-16"
         >
-          <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+          <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
             Enterprise Security
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground mt-3">
@@ -80,9 +80,9 @@ export function EnterpriseSection() {
                 viewport={{ once: true }}
                 custom={i}
                 variants={fadeUp}
-                className="group rounded-md border border-border bg-surface p-6 transition-colors duration-200 hover:border-sentinel/40 hover:shadow-sm"
+                className="group rounded-md border border-border bg-surface p-6 transition-colors duration-200 hover:border-sentinels/40 hover:shadow-sm"
               >
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-steel transition-colors group-hover:bg-sentinel/10 group-hover:text-sentinel">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-steel transition-colors group-hover:bg-sentinels/10 group-hover:text-sentinels">
                   <Icon className="h-5 w-5" strokeWidth={1.8} />
                 </div>
                 <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground">{feature.title}</h3>
@@ -100,7 +100,7 @@ export function EnterpriseSection() {
           variants={fadeUp}
           className="mb-16 sm:mb-20"
         >
-          <TerminalWindow title="audit-log — immutable events">
+          <TerminalWindow title="audit-log â€” immutable events">
             <AuditLogStream events={auditEvents} />
           </TerminalWindow>
         </motion.div>
@@ -128,9 +128,9 @@ export function EnterpriseSection() {
                   viewport={{ once: true }}
                   custom={i}
                   variants={fadeUp}
-                  className="group flex flex-col items-center text-center rounded-md border border-border bg-surface p-6 transition-colors duration-200 hover:border-sentinel/40 hover:shadow-sm"
+                  className="group flex flex-col items-center text-center rounded-md border border-border bg-surface p-6 transition-colors duration-200 hover:border-sentinels/40 hover:shadow-sm"
                 >
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-secondary text-steel transition-colors group-hover:bg-sentinel/10 group-hover:text-sentinel">
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-secondary text-steel transition-colors group-hover:bg-sentinels/10 group-hover:text-sentinels">
                     <Icon className="h-6 w-6" strokeWidth={1.5} />
                   </div>
                   <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground">{industry.name}</h3>

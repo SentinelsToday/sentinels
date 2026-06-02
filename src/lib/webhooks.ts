@@ -1,4 +1,4 @@
-import { createHmac } from "crypto";
+﻿import { createHmac } from "crypto";
 import { db } from "@/lib/db";
 
 export const WEBHOOK_EVENTS = [
@@ -33,9 +33,9 @@ export async function dispatchWebhook(event: string, payload: any, fleetId: stri
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Sentinel-Event": event,
-          "X-Sentinel-Signature": signature,
-          "X-Sentinel-Timestamp": timestamp,
+          "X-Sentinels-Event": event,
+          "X-Sentinels-Signature": signature,
+          "X-Sentinels-Timestamp": timestamp,
         },
         body,
       });

@@ -1,10 +1,10 @@
-# Sentinel Robotics — PRD vs Codebase Gap Analysis
+﻿# Sentinels Robotics â€” PRD vs Codebase Gap Analysis
 
 > Generated: 2026-06-02
 
 ---
 
-## 📋 TOTAL SCOPE (Per PRD Requirements)
+## ðŸ“‹ TOTAL SCOPE (Per PRD Requirements)
 
 ### 1. Robot Identity Engine
 - [ ] Decentralized ID (DID) per robot
@@ -56,9 +56,9 @@
 - [ ] Heavy data OFF-chain
 
 ### Tech Stack (PRD requirement)
-- [ ] Frontend: Next.js, Tailwind, shadcn/ui ✅
+- [ ] Frontend: Next.js, Tailwind, shadcn/ui âœ…
 - [ ] Dashboard: React, TanStack Query, Zustand
-- [ ] Backend: Rust (Axum) OR Go (Fiber) — currently Next.js API routes
+- [ ] Backend: Rust (Axum) OR Go (Fiber) â€” currently Next.js API routes
 - [ ] Auth: JWT + Wallet auth + OAuth
 - [ ] Messaging: NATS + MQTT + gRPC
 - [ ] Databases: PostgreSQL + ClickHouse + Redis
@@ -80,24 +80,24 @@
 
 ---
 
-## ✅ COMPLETED (What is built)
+## âœ… COMPLETED (What is built)
 
-### Identity Engine — DONE
+### Identity Engine â€” DONE
 - [x] Ed25519 keypair generation (`/api/robots/register`)
-- [x] DID generation (`did:sentinel:0x...`)
+- [x] DID generation (`did:sentinels:0x...`)
 - [x] Robot registration CRUD
 - [x] Key rotation (`/api/robots/[id]/rotate-keys`)
 - [x] Hardware attestation endpoint (`/api/robots/[id]/attestation`)
 - [x] Hardware fingerprint generation
 
-### Trust Verification — DONE (with mocks)
+### Trust Verification â€” DONE (with mocks)
 - [x] Firmware hash chain verification (`/api/verify/firmware`)
 - [x] Signed telemetry verification (`/api/verify/telemetry`)
 - [x] Trust score engine (5 factors, 0-100) (`/api/verify/trust/[robotId]`)
 - [x] Anomaly detection (5 rules) (`/api/robots/[id]/anomalies`)
 - [x] AI analysis (statistical) (`/api/robots/[id]/ai-analysis`)
 
-### Fleet Platform — DONE
+### Fleet Platform â€” DONE
 - [x] Fleet CRUD with pagination (`/api/fleet`)
 - [x] Fleet stats (`/api/fleet/stats`)
 - [x] Dashboard UI (robots list, detail view)
@@ -105,27 +105,27 @@
 - [x] OTA updates (`/api/robots/[id]/updates`)
 - [x] Real-time telemetry feed (`/dashboard/realtime`)
 
-### Audit Layer — DONE
+### Audit Layer â€” DONE
 - [x] Hash-chained audit logs (`/api/audit`)
 - [x] On-chain Solana anchoring (`/api/solana/anchor`)
 - [x] Solana-native blockchain support
 - [x] Compliance export (CSV/JSON) (`/api/export/*`)
 - [x] Chain integrity verification (`/api/audit/[robotId]`)
 
-### Wallet System — DONE
+### Wallet System â€” DONE
 - [x] Wallet per robot (`/api/robots/[id]/wallet`)
 - [x] Balance management (deposit/withdraw)
 - [x] Wallet permissions (read, write, transfer, stake, api_access)
 - [x] Robot-to-robot transactions (`/api/transactions`)
 - [x] Transaction stats (`/api/transactions/stats`)
 
-### All 15 Website Pages — DONE
+### All 15 Website Pages â€” DONE
 - [x] Landing, Platform, Security, Developers, Pricing, Enterprise
 - [x] Blog + Docs with dynamic content
 - [x] Auth sign-in (API key + wallet)
 - [x] Dashboard (main, robots list, robot detail, realtime, settings)
 
-### All 51 API Routes — DONE
+### All 51 API Routes â€” DONE
 - [x] Robot core (14 routes)
 - [x] Verification (3 routes)
 - [x] Fleet (2 routes)
@@ -144,18 +144,18 @@
 - [x] Notifications (2 routes)
 - [x] Transactions (3 routes)
 
-### All 12 Database Models — DONE
+### All 12 Database Models â€” DONE
 - [x] Fleet, Robot, FirmwareRecord, TelemetryEvent, AuditLog
 - [x] Command, SoftwareUpdate, Wallet, User, Organization
 - [x] OrgMember, Webhook, Transaction
 
-### All 16 Lib Modules — DONE
+### All 16 Lib Modules â€” DONE
 - [x] crypto, db, solana, chains, trust-score
 - [x] anomaly-detection, ai-anomaly, messaging
 - [x] clickhouse, ipfs, stripe, webhooks
 - [x] notifications, rate-limit, rbac, insforge
 
-### Design System — DONE
+### Design System â€” DONE
 - [x] Light theme (industrial, monochrome, safety orange)
 - [x] shadcn/ui full component library
 - [x] Framer Motion scroll animations
@@ -163,7 +163,7 @@
 
 ---
 
-## 🔶 PARTIALLY DONE / MOCKED
+## ðŸ”¶ PARTIALLY DONE / MOCKED
 
 | Module | Status | What is missing |
 |--------|--------|-----------------|
@@ -171,7 +171,7 @@
 | **ClickHouse** | In-memory mock | No real ClickHouse connection; production columnar DB not configured |
 | **IPFS** | In-memory mock | No real IPFS node (Pinata/Infura); files stored in memory |
 | **MQTT/NATS** | In-memory mock | No real MQTT broker / NATS server; in-memory pub/sub only |
-| **Multi-chain** | Solana only (intentional) | Not needed — SOL-only focus confirmed |
+| **Multi-chain** | Solana only (intentional) | Not needed â€” SOL-only focus confirmed |
 | **AI Anomaly Detection** | Basic statistical | PRD requires PyTorch/ONNX/TinyML; currently only Z-score + moving average |
 | **Backend Language** | Next.js API routes | PRD specifies Rust (Axum) or Go (Fiber); currently JS/TS runtime |
 | **Auth** | Basic NextAuth | PRD requires JWT + Wallet auth + OAuth; wallet auth is mock, no OAuth |
@@ -180,44 +180,44 @@
 
 ---
 
-## ❌ NOT STARTED / PENDING
+## âŒ NOT STARTED / PENDING
 
-### 🎯 InsForge Integration (TOP PRIORITY — Auth + Database)
-- [ ] **InsForge Auth** — Replace NextAuth with `insforge.auth`:
-  - [ ] Set up SSR helpers (`@insforge/sdk/ssr`) — `createServerClient`, `createBrowserClient`
+### ðŸŽ¯ InsForge Integration (TOP PRIORITY â€” Auth + Database)
+- [ ] **InsForge Auth** â€” Replace NextAuth with `insforge.auth`:
+  - [ ] Set up SSR helpers (`@insforge/sdk/ssr`) â€” `createServerClient`, `createBrowserClient`
   - [ ] Create refresh route (`/api/auth/refresh`)
   - [ ] Add Proxy/Middleware (`updateSession`)
   - [ ] Rewrite sign-in page (email/password via InsForge)
   - [ ] Real wallet auth via InsForge (Ed25519 verification)
   - [ ] OAuth (Google/GitHub) via InsForge
-- [ ] **InsForge Database** — Create tables in InsForge PostgreSQL:
+- [ ] **InsForge Database** â€” Create tables in InsForge PostgreSQL:
   - [ ] Create all tables via `npx @insforge/cli` (Robot, Fleet, Wallet, etc.)
   - [ ] Write RLS policies for every table
-  - [ ] Switch `DATABASE_URL` from SQLite → InsForge Postgres
+  - [ ] Switch `DATABASE_URL` from SQLite â†’ InsForge Postgres
   - [ ] Set up InsForge admin client for server-side ops
-- [ ] **Database adapter check** — `db.ts` already uses InsForge SDK ✅, just needs tables to exist
-- [ ] **Prisma dependency** — Remove or keep only for local dev
+- [ ] **Database adapter check** â€” `db.ts` already uses InsForge SDK âœ…, just needs tables to exist
+- [ ] **Prisma dependency** â€” Remove or keep only for local dev
 
 ### Real Infrastructure (Replace mocks with production services)
-- [ ] **Stripe** — Install `stripe` package, handle real webhooks
-- [ ] **ClickHouse** — Connect real ClickHouse (cloud/self-hosted)
-- [ ] **IPFS** — Connect Pinata or Infura
-- [ ] **MQTT** — Connect real MQTT broker (EMQX, Mosquitto)
-- [ ] **NATS** — Connect real NATS server
-- [ ] **gRPC** — Implement gRPC server/client
-- [ ] **Redis** — Real Redis for caching + pub/sub
-- [ ] **Email Service** — Connect SendGrid / Resend
-- [ ] **S3 Storage** — For telemetry/logs/camera feeds
+- [ ] **Stripe** â€” Install `stripe` package, handle real webhooks
+- [ ] **ClickHouse** â€” Connect real ClickHouse (cloud/self-hosted)
+- [ ] **IPFS** â€” Connect Pinata or Infura
+- [ ] **MQTT** â€” Connect real MQTT broker (EMQX, Mosquitto)
+- [ ] **NATS** â€” Connect real NATS server
+- [ ] **gRPC** â€” Implement gRPC server/client
+- [ ] **Redis** â€” Real Redis for caching + pub/sub
+- [ ] **Email Service** â€” Connect SendGrid / Resend
+- [ ] **S3 Storage** â€” For telemetry/logs/camera feeds
 
-### Blockchain — Solana Native (Only SOL)
-- [ ] **Anchor Framework** — Build custom Solana program (robot identity, proofs, trust state)
-- [ ] **Wallet Integration** — Connect Phantom, Backpack
+### Blockchain â€” Solana Native (Only SOL)
+- [ ] **Anchor Framework** â€” Build custom Solana program (robot identity, proofs, trust state)
+- [ ] **Wallet Integration** â€” Connect Phantom, Backpack
 
 ### Auth & Security
-- [ ] **Real Wallet Auth** — Ed25519 signature verification (currently mock)
-- [ ] **OAuth** — Google/GitHub/Enterprise SSO
-- [ ] **Hardware TPM** — Real TPM/TPM2.0 integration (endpoint exists only)
-- [ ] **Intel SGX** — Secure enclave support (optional)
+- [ ] **Real Wallet Auth** â€” Ed25519 signature verification (currently mock)
+- [ ] **OAuth** â€” Google/GitHub/Enterprise SSO
+- [ ] **Hardware TPM** â€” Real TPM/TPM2.0 integration (endpoint exists only)
+- [ ] **Intel SGX** â€” Secure enclave support (optional)
 - [ ] **End-to-end encryption** for telemetry
 
 ### Robotics Integrations
@@ -231,7 +231,7 @@
 - [ ] **PyTorch** model training for anomaly detection
 - [ ] **ONNX Runtime** for model inference
 - [ ] **TinyML** edge inference on robots
-- [ ] **Behavior analysis** — abnormal robot behavior detection
+- [ ] **Behavior analysis** â€” abnormal robot behavior detection
 - [ ] **Fake sensor pattern detection**
 
 ### Autonomous Payments (Future)
@@ -245,14 +245,14 @@
 - [ ] **Kubernetes** orchestration
 - [ ] **CI/CD pipeline** (GitHub Actions)
 - [ ] **Monitoring** (Prometheus/Grafana)
-- [ ] **Load testing** — 1M+ robots scalability
+- [ ] **Load testing** â€” 1M+ robots scalability
 - [ ] **99.99% uptime** architecture
 
 ---
 
-## 📊 SUMMARY
+## ðŸ“Š SUMMARY
 
-| Category | Total | ✅ Done | 🔶 Partial | ❌ Pending |
+| Category | Total | âœ… Done | ðŸ”¶ Partial | âŒ Pending |
 |----------|-------|---------|------------|-----------|
 | Identity Engine | 8 | 8 | 0 | 0 |
 | Trust Verification | 7 | 7 | 0 | 0 |

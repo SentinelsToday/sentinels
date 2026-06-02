@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -39,15 +39,15 @@ export function FleetSection() {
           variants={fadeUp}
           className="max-w-2xl mb-12 sm:mb-16"
         >
-          <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+          <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
             Fleet Command
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground mt-3">
             Real-Time Fleet Management
           </h2>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Monitor robot health, deploy software updates, execute commands, and track missions — all from a single command center.
+            Monitor robot health, deploy software updates, execute commands, and track missions â€” all from a single command center.
           </p>
         </motion.div>
 
@@ -63,7 +63,7 @@ export function FleetSection() {
             {/* Dashboard header */}
             <div className="flex items-center justify-between px-4 sm:px-6 py-3 border-b border-border bg-surface">
               <div className="flex items-center gap-3">
-                <Monitor className="h-4 w-4 text-sentinel" />
+                <Monitor className="h-4 w-4 text-sentinels" />
                 <span className="font-mono text-sm font-semibold text-foreground">Fleet Dashboard</span>
                 <span className="font-mono text-[10px] text-muted-foreground bg-secondary px-2 py-0.5 rounded">v2.4.1</span>
               </div>
@@ -82,8 +82,8 @@ export function FleetSection() {
             {/* Stats bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 border-b border-border">
               <div className="flex items-center gap-3 px-4 sm:px-6 py-3 border-r border-border">
-                <div className="flex h-8 w-8 items-center justify-center rounded bg-sentinel/10">
-                  <Wifi className="h-4 w-4 text-sentinel" />
+                <div className="flex h-8 w-8 items-center justify-center rounded bg-sentinels/10">
+                  <Wifi className="h-4 w-4 text-sentinels" />
                 </div>
                 <div>
                   <p className="font-mono text-lg font-semibold text-foreground">247</p>
@@ -202,9 +202,9 @@ export function FleetSection() {
                 viewport={{ once: true }}
                 custom={i}
                 variants={fadeUp}
-                className="group rounded-md border border-border bg-white p-5 transition-colors duration-200 hover:border-sentinel/40 hover:shadow-sm"
+                className="group rounded-md border border-border bg-white p-5 transition-colors duration-200 hover:border-sentinels/40 hover:shadow-sm"
               >
-                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded bg-secondary text-steel transition-colors group-hover:bg-sentinel/10 group-hover:text-sentinel">
+                <div className="mb-3 flex h-9 w-9 items-center justify-center rounded bg-secondary text-steel transition-colors group-hover:bg-sentinels/10 group-hover:text-sentinels">
                   <Icon className="h-4 w-4" strokeWidth={1.8} />
                 </div>
                 <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground">{feature.title}</h3>

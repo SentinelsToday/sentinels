@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { Shield } from "lucide-react";
 
 const footerLinks = {
@@ -40,9 +40,9 @@ export function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
             <div className="col-span-2 md:col-span-1">
               <Link href="/" className="flex items-center gap-2.5 mb-4">
-                <Shield className="h-5 w-5 text-sentinel" strokeWidth={2.5} />
+                <Shield className="h-5 w-5 text-sentinels" strokeWidth={2.5} />
                 <span className="font-mono text-sm font-semibold tracking-wider text-foreground">
-                  SENTINEL
+                  SENTINELS
                 </span>
               </Link>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -77,7 +77,7 @@ export function Footer() {
 
         <div className="border-t border-border py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground font-mono">
-            © 2025 Sentinel Robotics, Inc. All rights reserved.
+            Â© 2025 Sentinels Robotics, Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">

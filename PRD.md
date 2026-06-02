@@ -1,4 +1,4 @@
-# Sentinel Robotics — Product Requirements Document
+﻿# Sentinels Robotics â€” Product Requirements Document
 
 ## Core Concept
 
@@ -57,17 +57,17 @@ Critical in: warehouses, drone delivery, autonomous vehicles, industrial systems
 ## Ideal Customer Profile
 
 ### Phase 1 (Best Entry)
-Robotics startups — need fleet management, auth, telemetry, logging, compliance. Fast sales cycle.
+Robotics startups â€” need fleet management, auth, telemetry, logging, compliance. Fast sales cycle.
 
 ### Phase 2
-Warehouses / Logistics — Amazon-style robotics, autonomous forklifts, inventory robots.
+Warehouses / Logistics â€” Amazon-style robotics, autonomous forklifts, inventory robots.
 
 ### Phase 3
-Defense / Industrial — Massive contracts.
+Defense / Industrial â€” Massive contracts.
 
 ---
 
-## Product Architecture — Core Modules
+## Product Architecture â€” Core Modules
 
 ### 1. Robot Identity Engine
 
@@ -182,7 +182,7 @@ Using: S3, IPFS, ClickHouse
 - Dashboard: React, TanStack Query, Zustand, Framer Motion (minimal)
 
 ### Backend
-- API: Rust (Axum) OR Go (Fiber) — Rust preferred for robotics infra
+- API: Rust (Axum) OR Go (Fiber) â€” Rust preferred for robotics infra
 - Auth: JWT, Wallet auth, OAuth for enterprise
 - Messaging: NATS, MQTT, gRPC
 
@@ -212,7 +212,7 @@ Using: S3, IPFS, ClickHouse
 
 Build the trust infrastructure layer for autonomous machines.
 
-Sentinel enables robots to:
+Sentinels enables robots to:
 - Verify identity
 - Prove actions
 - Maintain trusted firmware
@@ -317,12 +317,12 @@ Subheadline: "Cryptographic identity, secure telemetry, and verifiable fleet ope
 CTA: Request Access | Read Docs
 
 **Sections:**
-1. Trusted Robot Identity — Show robot authentication flow
-2. Signed Telemetry — Live telemetry visualization
-3. Firmware Verification — Show trust pipeline diagram
-4. Fleet Command — Minimal dashboard preview
-5. Enterprise Security — Compliance + audit focus
-6. Developer Experience — SDKs + APIs
+1. Trusted Robot Identity â€” Show robot authentication flow
+2. Signed Telemetry â€” Live telemetry visualization
+3. Firmware Verification â€” Show trust pipeline diagram
+4. Fleet Command â€” Minimal dashboard preview
+5. Enterprise Security â€” Compliance + audit focus
+6. Developer Experience â€” SDKs + APIs
 
 ### Pages
 - `/` (landing)

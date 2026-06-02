@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
+﻿import { notFound } from "next/navigation";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
 import { docSections } from "@/lib/docs-data";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -53,7 +53,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                     href={`/docs/${d.slug}`}
                     className={`block px-3 py-2 rounded-md text-[13px] transition-colors ${
                       d.slug === slug
-                        ? "bg-sentinel/5 text-sentinel font-medium border-l-2 border-sentinel"
+                        ? "bg-sentinels/5 text-sentinels font-medium border-l-2 border-sentinels"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                     }`}
                   >
@@ -74,7 +74,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
 
               {/* Title */}
               <div className="mb-10">
-                <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-sentinel">
+                <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-sentinels">
                   {doc.category}
                 </span>
                 <h1 className="text-[2.25rem] font-bold tracking-tight text-foreground mt-3 leading-tight">
@@ -121,7 +121,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                     ),
                     li: ({ children }) => (
                       <li className="text-[15px] leading-[1.8] text-muted-foreground flex gap-2">
-                        <span className="text-sentinel mt-[2px] shrink-0">•</span>
+                        <span className="text-sentinels mt-[2px] shrink-0">â€¢</span>
                         <span>{children}</span>
                       </li>
                     ),
@@ -138,7 +138,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                         );
                       }
                       return (
-                        <code className="text-[13px] font-mono text-sentinel bg-sentinel/5 px-1.5 py-0.5 rounded border border-sentinel/10">
+                        <code className="text-[13px] font-mono text-sentinels bg-sentinels/5 px-1.5 py-0.5 rounded border border-sentinels/10">
                           {children}
                         </code>
                       );
@@ -149,7 +149,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                       </pre>
                     ),
                     blockquote: ({ children }) => (
-                      <blockquote className="border-l-2 border-sentinel/40 pl-4 py-1 my-6 bg-sentinel/[0.02] rounded-r-md">
+                      <blockquote className="border-l-2 border-sentinels/40 pl-4 py-1 my-6 bg-sentinels/[0.02] rounded-r-md">
                         {children}
                       </blockquote>
                     ),
@@ -177,7 +177,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
                       </td>
                     ),
                     a: ({ href, children }) => (
-                      <a href={href} className="text-sentinel hover:text-sentinel/80 underline underline-offset-2 transition-colors">
+                      <a href={href} className="text-sentinels hover:text-sentinels/80 underline underline-offset-2 transition-colors">
                         {children}
                       </a>
                     ),

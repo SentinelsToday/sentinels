@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -25,7 +25,7 @@ export default function DashboardLayout({
           <div className="p-4 border-b border-neutral-200">
             <Link href="/" className="flex items-center gap-2 text-[#111113]">
               <Shield className="h-5 w-5 text-[#E8553D]" />
-              <span className="font-semibold text-sm font-mono">SENTINEL</span>
+              <span className="font-semibold text-sm font-mono">SENTINELS</span>
             </Link>
           </div>
           <nav className="flex-1 p-3 space-y-1">

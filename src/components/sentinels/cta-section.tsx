@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -25,8 +25,8 @@ export function CtaSection() {
 
           <div className="relative z-10 max-w-2xl mx-auto">
             <div className="mb-6 flex justify-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-sentinel/10">
-                <Shield className="h-7 w-7 text-sentinel" strokeWidth={2} />
+              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-sentinels/10">
+                <Shield className="h-7 w-7 text-sentinels" strokeWidth={2} />
               </div>
             </div>
 
@@ -34,13 +34,13 @@ export function CtaSection() {
               Secure Your Robot Fleet
             </h2>
             <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Join the next generation of trust infrastructure for autonomous machines. Get early access to Sentinel&apos;s cryptographic identity and fleet verification platform.
+              Join the next generation of trust infrastructure for autonomous machines. Get early access to Sentinels&apos;s cryptographic identity and fleet verification platform.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Button
                 size="lg"
-                className="font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-sentinel-foreground h-12 px-8"
+                className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-sentinels-foreground h-12 px-8"
                 asChild
               >
                 <a href="#">
@@ -61,7 +61,7 @@ export function CtaSection() {
             </div>
 
             <p className="mt-6 font-mono text-xs text-muted-foreground">
-              No credit card required · Free tier for up to 10 robots · SOC 2 compliant
+              No credit card required Â· Free tier for up to 10 robots Â· SOC 2 compliant
             </p>
           </div>
         </motion.div>

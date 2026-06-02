@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sentinel Robotics — Trust Infrastructure for Autonomous Machines",
+  title: "Sentinels Robotics â€” Trust Infrastructure for Autonomous Machines",
   description:
     "Cryptographic identity, secure telemetry, and verifiable fleet operations for robotics systems. OAuth for robots. IAM for autonomous systems.",
   keywords: [
@@ -31,19 +31,19 @@ export const metadata: Metadata = {
     "trust infrastructure",
     "compliance",
   ],
-  authors: [{ name: "Sentinel Robotics" }],
+  authors: [{ name: "Sentinels Robotics" }],
   icons: {
     icon: "/logo.svg",
   },
   openGraph: {
-    title: "Sentinel Robotics — Trust Infrastructure for Autonomous Machines",
+    title: "Sentinels Robotics â€” Trust Infrastructure for Autonomous Machines",
     description:
       "Cryptographic identity, secure telemetry, and verifiable fleet operations for robotics systems.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sentinel Robotics",
+    title: "Sentinels Robotics",
     description:
       "Trust Infrastructure for Autonomous Machines",
   },

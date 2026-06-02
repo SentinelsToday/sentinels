@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -25,14 +25,14 @@ const pipelineSteps = [
 
 const codeLines = [
   { type: "comment", text: "// Firmware verification check" },
-  { type: "keyword", text: "const ", suffix: "proof ", eq: "= ", call: "await sentinel.verifyFirmware({" },
+  { type: "keyword", text: "const ", suffix: "proof ", eq: "= ", call: "await sentinels.verifyFirmware({" },
   { type: "indent", key: "robotId", value: '"unit-0042",' },
   { type: "indent", key: "version", value: '"2.4.1",' },
   { type: "indent", key: "hash", value: '"SHA-256:a4e8f...91cd",' },
   { type: "indent", key: "chainProof", value: '"0x7f3a...b2c1"' },
   { type: "plain", text: "});" },
-  { type: "comment", text: "// proof.verified → true" },
-  { type: "comment", text: "// proof.trustScore → 94" },
+  { type: "comment", text: "// proof.verified â†’ true" },
+  { type: "comment", text: "// proof.trustScore â†’ 94" },
 ];
 
 const features = [
@@ -58,24 +58,24 @@ function PipelineStep({ step, isLast }: { step: (typeof pipelineSteps)[number]; 
     <motion.div variants={stepVariants} className="flex items-center gap-0">
       <div className={`relative flex flex-col items-center gap-3 px-4 py-5 sm:px-5 sm:py-6 border rounded-md min-w-[120px] sm:min-w-[140px] transition-colors group ${
         isAccent
-          ? "bg-sentinel/5 border-sentinel/30 hover:border-sentinel/60"
+          ? "bg-sentinels/5 border-sentinels/30 hover:border-sentinels/60"
           : "bg-white border-border hover:border-graphite"
       }`}>
         <span className={`absolute top-2 right-2.5 font-mono text-[10px] tracking-widest ${
-          isAccent ? "text-sentinel/70" : "text-steel"
+          isAccent ? "text-sentinels/70" : "text-steel"
         }`}>
           {String(step.step).padStart(2, "0")}
         </span>
         <div className={`flex h-10 w-10 items-center justify-center rounded-md ${
           isAccent
-            ? "bg-sentinel/10 text-sentinel"
+            ? "bg-sentinels/10 text-sentinels"
             : "bg-secondary text-steel group-hover:text-foreground"
         } transition-colors`}>
           <Icon className="h-5 w-5" strokeWidth={1.8} />
         </div>
         <div className="text-center">
           <p className={`font-mono text-[11px] sm:text-xs font-semibold tracking-wider ${
-            isAccent ? "text-sentinel" : "text-foreground"
+            isAccent ? "text-sentinels" : "text-foreground"
           }`}>
             {step.label}
           </p>
@@ -147,15 +147,15 @@ export function FirmwareSection() {
           variants={fadeUpVariants}
           className="max-w-2xl mb-12 sm:mb-16"
         >
-          <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+          <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
             Trust Engine
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground mt-3">
             Firmware Verification Pipeline
           </h2>
           <p className="mt-4 text-base text-muted-foreground leading-relaxed max-w-xl">
-            Every firmware update is hashed, signed, and anchored to Solana. Robots boot only with verified, untampered firmware — from flash to execution.
+            Every firmware update is hashed, signed, and anchored to Solana. Robots boot only with verified, untampered firmware â€” from flash to execution.
           </p>
         </motion.div>
 
@@ -207,8 +207,8 @@ export function FirmwareSection() {
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
-              <div key={feature.title} className="group flex gap-4 p-5 sm:p-6 border border-border rounded-md bg-white hover:border-sentinel/40 hover:shadow-sm transition-colors">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-secondary text-steel group-hover:bg-sentinel/10 group-hover:text-sentinel transition-colors">
+              <div key={feature.title} className="group flex gap-4 p-5 sm:p-6 border border-border rounded-md bg-white hover:border-sentinels/40 hover:shadow-sm transition-colors">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-secondary text-steel group-hover:bg-sentinels/10 group-hover:text-sentinels transition-colors">
                   <Icon className="h-5 w-5" strokeWidth={1.8} />
                 </div>
                 <div>

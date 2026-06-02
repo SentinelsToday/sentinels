@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -94,12 +94,12 @@ export function PricingSection() {
               variants={fadeUp}
               className={`relative rounded-lg border p-6 sm:p-8 flex flex-col ${
                 plan.highlighted
-                  ? "border-sentinel/40 bg-sentinel/5 shadow-md"
+                  ? "border-sentinels/40 bg-sentinels/5 shadow-md"
                   : "border-border bg-white"
               }`}
             >
               {plan.highlighted && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 font-mono text-[10px] font-semibold uppercase tracking-widest text-sentinel bg-white border border-sentinel/30 px-3 py-1 rounded-full">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 font-mono text-[10px] font-semibold uppercase tracking-widest text-sentinels bg-white border border-sentinels/30 px-3 py-1 rounded-full">
                   Most Popular
                 </span>
               )}
@@ -116,7 +116,7 @@ export function PricingSection() {
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2.5">
-                    <Check className={`h-4 w-4 shrink-0 mt-0.5 ${plan.highlighted ? "text-sentinel" : "text-emerald-500"}`} strokeWidth={2.5} />
+                    <Check className={`h-4 w-4 shrink-0 mt-0.5 ${plan.highlighted ? "text-sentinels" : "text-emerald-500"}`} strokeWidth={2.5} />
                     <span className="text-sm text-foreground">{feature}</span>
                   </li>
                 ))}
@@ -125,7 +125,7 @@ export function PricingSection() {
               <Button
                 className={`w-full font-mono text-sm h-11 ${
                   plan.highlighted
-                    ? "bg-sentinel hover:bg-sentinel-muted text-sentinel-foreground"
+                    ? "bg-sentinels hover:bg-sentinels-muted text-sentinels-foreground"
                     : "bg-foreground hover:bg-foreground/90 text-background"
                 }`}
                 asChild

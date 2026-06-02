@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 
 export async function GET() {
   return NextResponse.json({
-    name: "Sentinel Robotics API",
+    name: "Sentinels Robotics API",
     version: "1.0.0",
     endpoints: {
       identity: {

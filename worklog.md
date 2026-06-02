@@ -1,4 +1,4 @@
----
+﻿---
 Task ID: 1
 Agent: Main
 Task: Convert entire project to light theme and build all remaining sections
@@ -26,4 +26,4 @@ Stage Summary:
 - All sections use framer-motion scroll-triggered animations
 - Terminal/code blocks maintain dark bg for contrast against light theme
 - Fully responsive design with mobile navigation
-- All custom CSS tokens (sentinel, steel, surface, graphite) working in light mode
+- All custom CSS tokens (sentinels, steel, surface, graphite) working in light mode

@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
+﻿import { notFound } from "next/navigation";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
 import { posts } from "@/lib/blog-data";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
@@ -29,7 +29,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
             {/* Header */}
             <div className="mb-10">
-              <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-widest text-sentinel mb-4">
+              <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-widest text-sentinels mb-4">
                 {post.category}
               </span>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground leading-tight">
@@ -49,7 +49,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </div>
 
             {/* Content */}
-            <div className="prose prose-neutral max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3 prose-p:text-muted-foreground prose-p:leading-relaxed prose-li:text-muted-foreground prose-strong:text-foreground prose-code:text-sentinel prose-code:bg-sentinel/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-pre:bg-[#1A1A1D] prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-table:font-mono prose-table:text-sm prose-th:text-steel prose-th:font-semibold prose-th:uppercase prose-th:text-[11px] prose-th:tracking-wider">
+            <div className="prose prose-neutral max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-h2:text-xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3 prose-p:text-muted-foreground prose-p:leading-relaxed prose-li:text-muted-foreground prose-strong:text-foreground prose-code:text-sentinels prose-code:bg-sentinels/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-pre:bg-[#1A1A1D] prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-table:font-mono prose-table:text-sm prose-th:text-steel prose-th:font-semibold prose-th:uppercase prose-th:text-[11px] prose-th:tracking-wider">
               <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
           </div>

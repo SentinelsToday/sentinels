@@ -1,16 +1,16 @@
-"use client";
+﻿"use client";
 
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
-import { HeroSection } from "@/components/sentinel/hero-section";
-import { RobotIdentitySection } from "@/components/sentinel/robot-identity-section";
-import { TelemetrySection } from "@/components/sentinel/telemetry-section";
-import { FirmwareSection } from "@/components/sentinel/firmware-section";
-import { FleetSection } from "@/components/sentinel/fleet-section";
-import { EnterpriseSection } from "@/components/sentinel/enterprise-section";
-import { DeveloperSection } from "@/components/sentinel/developer-section";
-import { PricingSection } from "@/components/sentinel/pricing-section";
-import { CtaSection } from "@/components/sentinel/cta-section";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
+import { HeroSection } from "@/components/sentinels/hero-section";
+import { RobotIdentitySection } from "@/components/sentinels/robot-identity-section";
+import { TelemetrySection } from "@/components/sentinels/telemetry-section";
+import { FirmwareSection } from "@/components/sentinels/firmware-section";
+import { FleetSection } from "@/components/sentinels/fleet-section";
+import { EnterpriseSection } from "@/components/sentinels/enterprise-section";
+import { DeveloperSection } from "@/components/sentinels/developer-section";
+import { PricingSection } from "@/components/sentinels/pricing-section";
+import { CtaSection } from "@/components/sentinels/cta-section";
 
 export default function Home() {
   return (

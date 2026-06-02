@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -25,11 +25,11 @@ const staggerContainer = {
 };
 
 const terminalSteps: SequenceStep[] = [
-  { type: "command", text: "sentinel register --robot unit-0042", delay: 150 },
+  { type: "command", text: "sentinels register --robot unit-0042", delay: 150 },
   { type: "output", text: "Generating Ed25519 keypair..." },
-  { type: "output", text: "Registering DID: did:sentinel:0x7f3a...b2c1" },
+  { type: "output", text: "Registering DID: did:sentinels:0x7f3a...b2c1" },
   { type: "output", text: "Firmware hash: SHA-256:a4e8f...91cd" },
-  { type: "output", text: "Trust score: ████████░░ 82/100", color: "text-sentinel" },
+  { type: "output", text: "Trust score: â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–‘â–‘ 82/100", color: "text-sentinels" },
   { type: "success", text: "Robot unit-0042 verified and onboarded" },
 ];
 
@@ -59,7 +59,7 @@ export function HeroSection() {
             Trust Infrastructure
             <br />
             for{" "}
-            <span className="text-sentinel">Autonomous Machines</span>
+            <span className="text-sentinels">Autonomous Machines</span>
           </motion.h1>
 
           <motion.p
@@ -81,7 +81,7 @@ export function HeroSection() {
         >
           <Button
             size="lg"
-            className="font-mono text-sm bg-sentinel hover:bg-sentinel-muted text-sentinel-foreground h-11 px-6"
+            className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-sentinels-foreground h-11 px-6"
             asChild
           >
             <a href="#cta">
@@ -110,7 +110,7 @@ export function HeroSection() {
           custom={0.6}
           variants={fadeUp}
         >
-          <TerminalWindow title="sentinel-cli — register">
+          <TerminalWindow title="sentinels-cli â€” register">
             <TerminalSequence steps={terminalSteps} />
           </TerminalWindow>
         </motion.div>

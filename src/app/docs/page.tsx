@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
-import { Header } from "@/components/sentinel/header";
-import { Footer } from "@/components/sentinel/footer";
+import { Header } from "@/components/sentinels/header";
+import { Footer } from "@/components/sentinels/footer";
 import {
   Terminal,
   Code2,
@@ -106,18 +106,18 @@ export default function DocsPage() {
                 Documentation
               </h1>
               <p className="mt-4 max-w-xl mx-auto text-base text-muted-foreground leading-relaxed">
-                Everything you need to integrate Sentinel into your robotics infrastructure.
+                Everything you need to integrate Sentinels into your robotics infrastructure.
               </p>
               {/* Search */}
               <div className="mt-8 max-w-md mx-auto">
-                <div className="flex items-center gap-2 rounded-md border border-border bg-surface px-4 py-3 focus-within:border-sentinel/40 transition-colors">
+                <div className="flex items-center gap-2 rounded-md border border-border bg-surface px-4 py-3 focus-within:border-sentinels/40 transition-colors">
                   <Search className="h-4 w-4 text-steel shrink-0" />
                   <input
                     type="text"
                     placeholder="Search documentation..."
                     className="flex-1 bg-transparent font-mono text-sm text-foreground placeholder:text-muted-foreground outline-none"
                   />
-                  <kbd className="hidden sm:inline-flex font-mono text-[10px] text-steel border border-border rounded px-1.5 py-0.5">⌘K</kbd>
+                  <kbd className="hidden sm:inline-flex font-mono text-[10px] text-steel border border-border rounded px-1.5 py-0.5">âŒ˜K</kbd>
                 </div>
               </div>
             </motion.div>
@@ -131,8 +131,8 @@ export default function DocsPage() {
               {quickLinks.map((link) => {
                 const Icon = link.icon;
                 return (
-                  <div key={link.title} className="group flex items-center gap-3 rounded-md border border-border bg-white px-4 py-3 transition-colors hover:border-sentinel/40 cursor-pointer">
-                    <Icon className="h-4 w-4 text-steel group-hover:text-sentinel transition-colors" strokeWidth={1.8} />
+                  <div key={link.title} className="group flex items-center gap-3 rounded-md border border-border bg-white px-4 py-3 transition-colors hover:border-sentinels/40 cursor-pointer">
+                    <Icon className="h-4 w-4 text-steel group-hover:text-sentinels transition-colors" strokeWidth={1.8} />
                     <div>
                       <p className="font-mono text-xs font-semibold text-foreground">{link.title}</p>
                       <p className="text-[11px] text-muted-foreground">{link.desc}</p>
@@ -160,7 +160,7 @@ export default function DocsPage() {
                     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.06, duration: 0.5 } } }}
                   >
                     <div className="flex items-center gap-2 mb-4">
-                      <Icon className="h-4 w-4 text-sentinel" strokeWidth={1.8} />
+                      <Icon className="h-4 w-4 text-sentinels" strokeWidth={1.8} />
                       <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground">{section.title}</h3>
                     </div>
                     <div className="space-y-1">
@@ -171,7 +171,7 @@ export default function DocsPage() {
                           className="group flex items-center justify-between rounded-md px-3 py-2.5 transition-colors hover:bg-surface"
                         >
                           <div>
-                            <p className="text-sm font-medium text-foreground group-hover:text-sentinel transition-colors">{link.title}</p>
+                            <p className="text-sm font-medium text-foreground group-hover:text-sentinels transition-colors">{link.title}</p>
                             <p className="text-[12px] text-muted-foreground">{link.desc}</p>
                           </div>
                           <ArrowRight className="h-3.5 w-3.5 text-steel opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -203,16 +203,16 @@ export default function DocsPage() {
                 <div className="overflow-x-auto">
                   <div className="px-5 py-4 font-mono text-[13px] leading-7 whitespace-nowrap">
                     <div><span className="text-gray-500"># Install the CLI</span></div>
-                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">curl -fsSL https://get.sentinel.dev | sh</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">curl -fsSL https://get.sentinels.dev | sh</span></div>
                     <div className="mt-2"><span className="text-gray-500"># Authenticate</span></div>
-                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel auth login</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinels auth login</span></div>
                     <div className="mt-2"><span className="text-gray-500"># Initialize project</span></div>
-                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel init --project my-fleet</span></div>
-                    <div><span className="text-[#E8553D]">→ </span><span className="text-gray-400">Created sentinel.yaml</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinels init --project my-fleet</span></div>
+                    <div><span className="text-[#E8553D]">â†’ </span><span className="text-gray-400">Created sentinels.yaml</span></div>
                     <div className="mt-2"><span className="text-gray-500"># Register your first robot</span></div>
-                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel register --name unit-001 --model forklift</span></div>
-                    <div><span className="text-emerald-400">✓ </span><span className="text-gray-400">Robot registered — DID: did:sentinel:0x...</span></div>
-                    <div><span className="text-emerald-400">✓ </span><span className="text-gray-400">Trust score: 100/100</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinels register --name unit-001 --model forklift</span></div>
+                    <div><span className="text-emerald-400">âœ“ </span><span className="text-gray-400">Robot registered â€” DID: did:sentinels:0x...</span></div>
+                    <div><span className="text-emerald-400">âœ“ </span><span className="text-gray-400">Trust score: 100/100</span></div>
                   </div>
                 </div>
               </div>

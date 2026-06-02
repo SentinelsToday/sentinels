@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { ShieldAlert, Gauge, Activity } from "lucide-react";
@@ -42,8 +42,8 @@ export function TelemetrySection() {
           variants={fadeUp}
           className="max-w-2xl mb-12 sm:mb-16"
         >
-          <span className="inline-flex items-center gap-1.5 rounded border border-sentinel/20 bg-sentinel/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinel mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-sentinel" />
+          <span className="inline-flex items-center gap-1.5 rounded border border-sentinels/20 bg-sentinels/5 px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-widest text-sentinels mb-4">
+            <span className="h-1.5 w-1.5 rounded-full bg-sentinels" />
             Trust Verification
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground mt-3">
@@ -137,9 +137,9 @@ export function TelemetrySection() {
                 viewport={{ once: true }}
                 custom={i}
                 variants={fadeUp}
-                className="group rounded-md border border-border bg-white p-6 transition-colors duration-200 hover:border-sentinel/40 hover:shadow-sm"
+                className="group rounded-md border border-border bg-white p-6 transition-colors duration-200 hover:border-sentinels/40 hover:shadow-sm"
               >
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-steel transition-colors group-hover:bg-sentinel/10 group-hover:text-sentinel">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-steel transition-colors group-hover:bg-sentinels/10 group-hover:text-sentinels">
                   <Icon className="h-5 w-5" strokeWidth={1.8} />
                 </div>
                 <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground">{metric.title}</h3>

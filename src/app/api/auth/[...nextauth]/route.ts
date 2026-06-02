@@ -1,4 +1,4 @@
-import NextAuth, { type NextAuthOptions } from "next-auth";
+﻿import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import nacl from "tweetnacl";
 import bs58 from "bs58";
@@ -13,9 +13,9 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.apiKey) return null;
-        const validKey = process.env.SENTINEL_ADMIN_KEY || "sentinel-admin-dev";
+        const validKey = process.env.SENTINELS_ADMIN_KEY || "sentinels-admin-dev";
         if (credentials.apiKey === validKey) {
-          return { id: "admin", name: "Fleet Admin", email: "admin@sentinel.dev" };
+          return { id: "admin", name: "Fleet Admin", email: "admin@sentinels.dev" };
         }
         return null;
       },
