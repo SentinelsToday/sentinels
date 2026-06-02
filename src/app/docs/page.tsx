@@ -200,18 +200,20 @@ export default function DocsPage() {
                   <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
                   <span className="ml-2 font-mono text-[11px] text-gray-500 tracking-wider">quick-start</span>
                 </div>
-                <div className="px-5 py-4 font-mono text-[13px] leading-7">
-                  <div><span className="text-gray-500"># Install the CLI</span></div>
-                  <div><span className="text-gray-300">$ </span><span className="text-gray-200">curl -fsSL https://get.sentinel.dev | sh</span></div>
-                  <div className="mt-2"><span className="text-gray-500"># Authenticate</span></div>
-                  <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel auth login</span></div>
-                  <div className="mt-2"><span className="text-gray-500"># Initialize project</span></div>
-                  <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel init --project my-fleet</span></div>
-                  <div><span className="text-[#E8553D]">→ </span><span className="text-gray-400">Created sentinel.yaml</span></div>
-                  <div className="mt-2"><span className="text-gray-500"># Register your first robot</span></div>
-                  <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel register --name unit-001 --model forklift</span></div>
-                  <div><span className="text-emerald-400">✓ </span><span className="text-gray-400">Robot registered — DID: did:sentinel:0x...</span></div>
-                  <div><span className="text-emerald-400">✓ </span><span className="text-gray-400">Trust score: 100/100</span></div>
+                <div className="overflow-x-auto">
+                  <div className="px-5 py-4 font-mono text-[13px] leading-7 whitespace-nowrap">
+                    <div><span className="text-gray-500"># Install the CLI</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">curl -fsSL https://get.sentinel.dev | sh</span></div>
+                    <div className="mt-2"><span className="text-gray-500"># Authenticate</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel auth login</span></div>
+                    <div className="mt-2"><span className="text-gray-500"># Initialize project</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel init --project my-fleet</span></div>
+                    <div><span className="text-[#E8553D]">→ </span><span className="text-gray-400">Created sentinel.yaml</span></div>
+                    <div className="mt-2"><span className="text-gray-500"># Register your first robot</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinel register --name unit-001 --model forklift</span></div>
+                    <div><span className="text-emerald-400">✓ </span><span className="text-gray-400">Robot registered — DID: did:sentinel:0x...</span></div>
+                    <div><span className="text-emerald-400">✓ </span><span className="text-gray-400">Trust score: 100/100</span></div>
+                  </div>
                 </div>
               </div>
             </motion.div>

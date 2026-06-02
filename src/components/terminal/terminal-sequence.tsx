@@ -67,7 +67,7 @@ export function TerminalLine({
 
   return (
     <div
-      className={`flex ${color} ${mounted ? "" : "opacity-0"}`}
+      className={`flex items-center ${color}`}
       style={{
         opacity: mounted ? 1 : 0,
         transform: mounted ? "translateX(0)" : "translateX(-8px)",
@@ -76,7 +76,7 @@ export function TerminalLine({
     >
       <span className="select-none shrink-0 text-gray-500 mr-1">{prefix}</span>
       {isComplete ? (
-        <span className="whitespace-pre-wrap break-all">{line.text}</span>
+        <span>{line.text}</span>
       ) : (
         <TypewriterText text={line.text} startDelay={line.delay ?? 0} />
       )}
@@ -95,18 +95,8 @@ export function TerminalSequence({ steps }: { steps: SequenceStep[] }) {
     setTimeout(() => setCompleted((prev) => new Set(prev).add(i)), gap);
   }, [steps]);
 
-  useEffect(() => {
-    if (completed.size === 0 && steps.length > 0) {
-      const firstDelay = steps[0].delay ?? 100;
-      if (firstDelay > 0) {
-        const timer = setTimeout(() => setCompleted(new Set()), 10);
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [completed.size, steps]);
-
   return (
-    <div className="relative">
+    <div>
       {steps.map((step, i) => {
         const isActive = i === completed.size && completed.size < steps.length;
         const isComplete = i <= completed.size - 1;

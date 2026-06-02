@@ -46,8 +46,10 @@ export function TerminalWindow({
         <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
         <span className="ml-3 font-mono text-[11px] text-gray-500 tracking-wide">{title}</span>
       </div>
-      <div className="px-5 py-4 font-mono text-[13px] leading-7">
-        {children}
+      <div className="overflow-x-auto">
+        <div className="px-5 py-4 font-mono text-[13px] leading-7 whitespace-nowrap min-w-0">
+          {children}
+        </div>
       </div>
     </div>
   );

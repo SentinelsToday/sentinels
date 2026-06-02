@@ -111,9 +111,7 @@ export function HeroSection() {
           variants={fadeUp}
         >
           <TerminalWindow title="sentinel-cli — register">
-            <div className="min-h-[176px]">
-              <TerminalSequence steps={terminalSteps} />
-            </div>
+            <TerminalSequence steps={terminalSteps} />
           </TerminalWindow>
         </motion.div>
 

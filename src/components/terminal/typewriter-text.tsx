@@ -41,5 +41,5 @@ export function TypewriterText({
     return () => clearTimeout(timer);
   }, [displayed, text, startDelay]);
 
-  return <span className="whitespace-pre-wrap break-all">{text.slice(0, displayed)}</span>;
+  return <span>{text.slice(0, displayed)}</span>;
 }
