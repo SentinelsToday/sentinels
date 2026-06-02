@@ -13,12 +13,12 @@ export type TerminalLineDef = {
 };
 
 const colorMap: Record<string, string> = {
-  command: "text-foreground",
-  output: "text-steel",
-  success: "text-emerald-600",
-  error: "text-red-500",
-  warning: "text-amber-400",
-  info: "text-blue-400",
+  command: "text-gray-200",
+  output: "text-gray-400",
+  success: "text-emerald-400",
+  error: "text-red-400",
+  warning: "text-amber-300",
+  info: "text-blue-300",
 };
 
 const prefixMap: Record<string, string> = {
@@ -33,7 +33,7 @@ const prefixMap: Record<string, string> = {
 function getColor(type?: string, color?: string) {
   if (color) return color;
   if (type && colorMap[type]) return colorMap[type];
-  return "text-steel";
+  return "text-gray-400";
 }
 
 function getPrefix(type?: string, prefix?: string) {
