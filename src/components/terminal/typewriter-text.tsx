@@ -7,15 +7,15 @@ const PUNCTUATION = new Set([".", ",", "!", "?", ";", ":", "\n"]);
 function nextSpeed(text: string, pos: number): number {
   const prev = text[pos - 1];
   if (prev && PUNCTUATION.has(prev)) {
-    return 80 + Math.random() * 70;
+    return 40 + Math.random() * 40;
   }
   if (prev === " " && text.length > 1) {
-    if (Math.random() < 0.2) return 8 + Math.random() * 12;
+    if (Math.random() < 0.25) return 6 + Math.random() * 8;
   }
-  if (Math.random() < 0.12) {
-    return 10 + Math.random() * 10;
+  if (Math.random() < 0.15) {
+    return 6 + Math.random() * 8;
   }
-  return 30 + Math.random() * 30;
+  return 12 + Math.random() * 18;
 }
 
 export function TypewriterText({

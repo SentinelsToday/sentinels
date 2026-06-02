@@ -58,7 +58,7 @@ export function TerminalLine({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setMounted(true), 50);
+    const timer = setTimeout(() => setMounted(true), 20);
     return () => clearTimeout(timer);
   }, []);
 
@@ -91,13 +91,13 @@ export function TerminalSequence({ steps }: { steps: SequenceStep[] }) {
   const [completed, setCompleted] = useState<Set<number>>(new Set());
 
   const completeLine = useCallback((i: number) => {
-    const gap = steps[i]?.gap ?? 25;
+    const gap = steps[i]?.gap ?? 8;
     setTimeout(() => setCompleted((prev) => new Set(prev).add(i)), gap);
   }, [steps]);
 
   useEffect(() => {
     if (completed.size === 0 && steps.length > 0) {
-      const firstDelay = steps[0].delay ?? 300;
+      const firstDelay = steps[0].delay ?? 100;
       if (firstDelay > 0) {
         const timer = setTimeout(() => setCompleted(new Set()), 10);
         return () => clearTimeout(timer);

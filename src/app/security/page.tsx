@@ -77,7 +77,7 @@ const compliance = [
 ];
 
 const bootSteps: SequenceStep[] = [
-  { type: "output", text: "[00:00.001] BOOT  Hardware attestation initiated", color: "text-blue-400", delay: 300 },
+  { type: "output", text: "[00:00.001] BOOT  Hardware attestation initiated", color: "text-blue-400", delay: 100 },
   { type: "output", text: "[00:00.012] PASS  TPM 2.0 identity confirmed — fingerprint:0x8a3f...c2d1", color: "text-emerald-400" },
   { type: "output", text: "[00:00.034] HASH  Firmware hash computed — SHA-256:a4e8f...91cd", color: "text-blue-400" },
   { type: "output", text: "[00:00.089] CHAIN Verifying on-chain proof — Solana slot 258491032", color: "text-blue-400" },

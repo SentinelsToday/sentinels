@@ -36,7 +36,7 @@ export function TerminalWindow({
           : {
               opacity: mounted ? 1 : 0,
               transform: mounted ? "translateY(0) scale(1)" : "translateY(8px) scale(0.98)",
-              transition: "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+              transition: "opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
             }
       }
     >

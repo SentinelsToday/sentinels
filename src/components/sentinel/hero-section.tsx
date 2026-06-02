@@ -25,12 +25,12 @@ const staggerContainer = {
 };
 
 const terminalSteps: SequenceStep[] = [
-  { type: "command", text: "sentinel register --robot unit-0042", delay: 400 },
-  { type: "output", text: "Generating Ed25519 keypair...", gap: 30 },
+  { type: "command", text: "sentinel register --robot unit-0042", delay: 150 },
+  { type: "output", text: "Generating Ed25519 keypair...", gap: 12 },
   { type: "output", text: "Registering DID: did:sentinel:0x7f3a...b2c1" },
   { type: "output", text: "Firmware hash: SHA-256:a4e8f...91cd" },
   { type: "output", text: "Trust score: ████████░░ 82/100", color: "text-sentinel" },
-  { type: "success", text: "Robot unit-0042 verified and onboarded", gap: 50 },
+  { type: "success", text: "Robot unit-0042 verified and onboarded", gap: 20 },
 ];
 
 const stats = [

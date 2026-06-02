@@ -7,7 +7,7 @@ export function AuditLogStream({ events }: { events: { time: string; tag: string
 
   useEffect(() => {
     if (visible >= events.length) return;
-    const delay = visible === 0 ? 500 : 400 + Math.random() * 400;
+    const delay = visible === 0 ? 200 : 150 + Math.random() * 200;
     const timer = setTimeout(() => setVisible((c) => c + 1), delay);
     return () => clearTimeout(timer);
   }, [visible, events.length]);
