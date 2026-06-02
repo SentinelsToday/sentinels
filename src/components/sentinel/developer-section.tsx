@@ -29,11 +29,11 @@ const apiFeatures = [
 const cliSteps: SequenceStep[] = [
   { type: "command", text: "sentinel init --project warehouse-alpha", delay: 150 },
   { type: "output", text: "Created project config at sentinel.yaml" },
-  { type: "output", text: "Generated API keys for staging", gap: 16 },
+  { type: "output", text: "Generated API keys for staging" },
   { type: "command", text: "sentinel register --robot unit-0042 --type forklift", delay: 200 },
   { type: "output", text: "DID: did:sentinel:0x7f3a...b2c1" },
   { type: "output", text: "Keypair: Ed25519 (stored in hardware enclave)" },
-  { type: "output", text: "Trust score: 100/100", gap: 16 },
+  { type: "output", text: "Trust score: 100/100" },
   { type: "command", text: "sentinel deploy --firmware v2.4.1 --fleet warehouse", delay: 200 },
   { type: "output", text: "Hashing firmware... SHA-256:a4e8f...91cd" },
   { type: "output", text: "Signing with project key... done" },

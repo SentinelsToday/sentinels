@@ -91,7 +91,7 @@ export function TerminalSequence({ steps }: { steps: SequenceStep[] }) {
   const [completed, setCompleted] = useState<Set<number>>(new Set());
 
   const completeLine = useCallback((i: number) => {
-    const gap = steps[i]?.gap ?? 8;
+    const gap = steps[i]?.gap ?? 0;
     setTimeout(() => setCompleted((prev) => new Set(prev).add(i)), gap);
   }, [steps]);
 
