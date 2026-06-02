@@ -40,7 +40,7 @@ const stats = [
 
 const partners = ["Solana", "NATS", "ROS 2", "MQTT"];
 
-const CHAR_SPEED = 30;
+const CHAR_SPEED = 3;
 
 function TypewriterText({ text, onComplete, startDelay }: { text: string; onComplete: () => void; startDelay: number }) {
   const [displayed, setDisplayed] = useState(0);
@@ -60,7 +60,7 @@ function TypewriterText({ text, onComplete, startDelay }: { text: string; onComp
   return <span className="whitespace-pre-wrap break-all">{text.slice(0, displayed)}</span>;
 }
 
-const LINE_GAP = 200;
+const LINE_GAP = 25;
 
 function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
   const [completedLines, setCompletedLines] = useState<Set<number>>(new Set());
