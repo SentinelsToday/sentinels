@@ -12,6 +12,7 @@ import {
   Link2,
   Lock,
 } from "lucide-react";
+import { TerminalWindow } from "@/components/terminal";
 
 const pipelineSteps = [
   { step: 1, label: "FIRMWARE BUILD", sublabel: "Source compile", icon: Hammer },
@@ -105,38 +106,31 @@ function CodeBlock() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      className="rounded-md border border-border overflow-hidden shadow-sm"
     >
-      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#1A1A1D] border-b border-[#333]">
-        <div className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-          <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-          <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
+      <TerminalWindow title="verify.ts">
+        <div className="overflow-x-auto">
+          {codeLines.map((line, i) => {
+            if (line.type === "comment") return <div key={i}><span className="text-gray-500">{line.text}</span></div>;
+            if (line.type === "keyword") return (
+              <div key={i}>
+                <span className="text-[#E8553D]">{line.text}</span>
+                <span className="text-gray-200">{line.suffix}</span>
+                <span className="text-[#E8553D]">{line.eq}</span>
+                <span className="text-gray-300">{line.call}</span>
+              </div>
+            );
+            if (line.type === "indent") return (
+              <div key={i} className="pl-4">
+                <span className="text-gray-200">{line.key}</span>
+                <span className="text-gray-500">: </span>
+                <span className="text-emerald-400">{line.value}</span>
+              </div>
+            );
+            if (line.type === "plain") return <div key={i}><span className="text-gray-300">{line.text}</span></div>;
+            return null;
+          })}
         </div>
-        <span className="ml-2 font-mono text-[11px] text-gray-500 tracking-wider">verify.ts</span>
-      </div>
-      <div className="bg-[#1A1A1D] px-5 py-4 font-mono text-[13px] leading-relaxed overflow-x-auto">
-        {codeLines.map((line, i) => {
-          if (line.type === "comment") return <div key={i}><span className="text-gray-500">{line.text}</span></div>;
-          if (line.type === "keyword") return (
-            <div key={i}>
-              <span className="text-[#E8553D]">{line.text}</span>
-              <span className="text-gray-200">{line.suffix}</span>
-              <span className="text-[#E8553D]">{line.eq}</span>
-              <span className="text-gray-300">{line.call}</span>
-            </div>
-          );
-          if (line.type === "indent") return (
-            <div key={i} className="pl-4">
-              <span className="text-gray-200">{line.key}</span>
-              <span className="text-gray-500">: </span>
-              <span className="text-emerald-400">{line.value}</span>
-            </div>
-          );
-          if (line.type === "plain") return <div key={i}><span className="text-gray-300">{line.text}</span></div>;
-          return null;
-        })}
-      </div>
+      </TerminalWindow>
     </motion.div>
   );
 }

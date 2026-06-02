@@ -9,6 +9,8 @@ import {
   KeyRound,
   Boxes,
 } from "lucide-react";
+import { TerminalWindow, TerminalSequence } from "@/components/terminal";
+import type { SequenceStep } from "@/components/terminal";
 
 const sdks = [
   { name: "Rust", lang: "rust", description: "Primary SDK for robotics runtime and edge devices" },
@@ -24,20 +26,20 @@ const apiFeatures = [
   { icon: Terminal, title: "CLI Tools", desc: "Command-line interface for automation and scripting", endpoint: "$ sentinel deploy" },
 ];
 
-const codeExample = `$ sentinel init --project warehouse-alpha
-→ Created project config at sentinel.yaml
-→ Generated API keys for staging
-
-$ sentinel register --robot unit-0042 --type forklift
-→ DID: did:sentinel:0x7f3a...b2c1
-→ Keypair: Ed25519 (stored in hardware enclave)
-→ Trust score: 100/100
-
-$ sentinel deploy --firmware v2.4.1 --fleet warehouse
-→ Hashing firmware... SHA-256:a4e8f...91cd
-→ Signing with project key... done
-→ Anchoring on Solana... slot 258491032
-→ Deploying to 247 robots... ✓`;
+const cliSteps: SequenceStep[] = [
+  { type: "command", text: "sentinel init --project warehouse-alpha", delay: 400 },
+  { type: "output", text: "Created project config at sentinel.yaml" },
+  { type: "output", text: "Generated API keys for staging", gap: 40 },
+  { type: "command", text: "sentinel register --robot unit-0042 --type forklift", delay: 600 },
+  { type: "output", text: "DID: did:sentinel:0x7f3a...b2c1" },
+  { type: "output", text: "Keypair: Ed25519 (stored in hardware enclave)" },
+  { type: "output", text: "Trust score: 100/100", gap: 40 },
+  { type: "command", text: "sentinel deploy --firmware v2.4.1 --fleet warehouse", delay: 600 },
+  { type: "output", text: "Hashing firmware... SHA-256:a4e8f...91cd" },
+  { type: "output", text: "Signing with project key... done" },
+  { type: "output", text: "Anchoring on Solana... slot 258491032" },
+  { type: "success", text: "Deploying to 247 robots... ✓" },
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -106,17 +108,9 @@ export function DeveloperSection() {
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-steel">CLI</span>
               <div className="h-px flex-1 bg-border" />
             </div>
-            <div className="rounded-lg border border-border bg-[#1A1A1D] overflow-hidden shadow-sm">
-              <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#333] bg-[#111113]">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-                <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-                <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
-                <span className="ml-2 font-mono text-[11px] text-gray-500 tracking-wider">sentinel-cli</span>
-              </div>
-              <div className="px-5 py-4 font-mono text-[12px] leading-6 text-gray-300 whitespace-pre-wrap overflow-x-auto">
-                {codeExample}
-              </div>
-            </div>
+            <TerminalWindow title="sentinel-cli">
+              <TerminalSequence steps={cliSteps} />
+            </TerminalWindow>
           </motion.div>
         </div>
 

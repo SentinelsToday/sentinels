@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, BookOpen } from "lucide-react";
+import { TerminalWindow, TerminalSequence } from "@/components/terminal";
+import type { SequenceStep } from "@/components/terminal";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -23,13 +24,13 @@ const staggerContainer = {
   },
 };
 
-const terminalLines = [
-  { prefix: "$ ", text: "sentinel register --robot unit-0042", color: "text-foreground", delay: 300 },
-  { prefix: "→ ", text: "Generating Ed25519 keypair...", color: "text-steel", delay: 800 },
-  { prefix: "→ ", text: "Registering DID: did:sentinel:0x7f3a...b2c1", color: "text-steel", delay: 1200 },
-  { prefix: "→ ", text: "Firmware hash: SHA-256:a4e8f...91cd", color: "text-steel", delay: 1600 },
-  { prefix: "→ ", text: "Trust score: ████████░░ 82/100", color: "text-sentinel", delay: 2000 },
-  { prefix: "✓ ", text: "Robot unit-0042 verified and onboarded", color: "text-emerald-600", delay: 2600 },
+const terminalSteps: SequenceStep[] = [
+  { type: "command", text: "sentinel register --robot unit-0042", delay: 400 },
+  { type: "output", text: "Generating Ed25519 keypair...", gap: 30 },
+  { type: "output", text: "Registering DID: did:sentinel:0x7f3a...b2c1" },
+  { type: "output", text: "Firmware hash: SHA-256:a4e8f...91cd" },
+  { type: "output", text: "Trust score: ████████░░ 82/100", color: "text-sentinel" },
+  { type: "success", text: "Robot unit-0042 verified and onboarded", gap: 50 },
 ];
 
 const stats = [
@@ -39,86 +40,6 @@ const stats = [
 ];
 
 const partners = ["Solana", "NATS", "ROS 2", "MQTT"];
-
-const CHAR_SPEED = 3;
-
-function TypewriterText({ text, onComplete, startDelay }: { text: string; onComplete: () => void; startDelay: number }) {
-  const [displayed, setDisplayed] = useState(0);
-
-  useEffect(() => {
-    const delayTimer = setTimeout(() => {
-      if (displayed >= text.length) {
-        onComplete();
-        return;
-      }
-      const charTimer = setTimeout(() => setDisplayed((c) => c + 1), CHAR_SPEED);
-      return () => clearTimeout(charTimer);
-    }, displayed === 0 ? startDelay : 0);
-    return () => clearTimeout(delayTimer);
-  }, [displayed, text, onComplete, startDelay]);
-
-  return <span className="whitespace-pre-wrap break-all">{text.slice(0, displayed)}</span>;
-}
-
-const LINE_GAP = 25;
-
-function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
-  const [completedLines, setCompletedLines] = useState<Set<number>>(new Set());
-  const [showCursor, setShowCursor] = useState(true);
-  const allDone = completedLines.size >= lines.length;
-
-  useEffect(() => {
-    const interval = setInterval(() => setShowCursor((c) => !c), 530);
-    return () => clearInterval(interval);
-  }, []);
-
-  function completeLine(i: number) {
-    setTimeout(() => setCompletedLines((prev) => new Set(prev).add(i)), LINE_GAP);
-  }
-
-  return (
-    <div className="relative">
-      {lines.map((line, i) => {
-        const isComplete = completedLines.has(i);
-        const isActive = i === completedLines.size;
-        if (!isComplete && !isActive) return null;
-
-        return (
-          <motion.div
-            key={i}
-            className={`flex ${line.color}`}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <span className="select-none shrink-0 text-gray-500 mr-1">{line.prefix}</span>
-            {isComplete ? (
-              <span className="whitespace-pre-wrap break-all">{line.text}</span>
-            ) : (
-              <TypewriterText
-                text={line.text}
-                startDelay={line.delay}
-                onComplete={() => completeLine(i)}
-              />
-            )}
-            {isActive && (
-              <span
-                className={`inline-block w-[7px] h-[14px] bg-foreground/70 ml-0.5 align-middle ${showCursor ? "opacity-100" : "opacity-0"}`}
-                style={{ transition: "opacity 0.1s" }}
-              />
-            )}
-          </motion.div>
-        );
-      })}
-      {allDone && (
-        <span
-          className={`inline-block w-[7px] h-[14px] bg-foreground/70 ml-0.5 align-middle ${showCursor ? "opacity-100" : "opacity-0"}`}
-          style={{ transition: "opacity 0.1s" }}
-        />
-      )}
-    </div>
-  );
-}
 
 export function HeroSection() {
   return (
@@ -189,22 +110,11 @@ export function HeroSection() {
           custom={0.6}
           variants={fadeUp}
         >
-          <div className="rounded-lg border border-border bg-[#1A1A1D] overflow-hidden shadow-lg">
-            {/* Terminal title bar */}
-            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#333] bg-[#111113]">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
-              <span className="ml-3 font-mono text-[11px] text-gray-500 tracking-wide">
-                sentinel-cli — register
-              </span>
+          <TerminalWindow title="sentinel-cli — register">
+            <div className="min-h-[176px]">
+              <TerminalSequence steps={terminalSteps} />
             </div>
-
-            {/* Terminal body */}
-            <div className="px-5 py-4 font-mono text-[13px] leading-7 min-h-[176px]">
-              <AnimatedTerminalLines lines={terminalLines} />
-            </div>
-          </div>
+          </TerminalWindow>
         </motion.div>
 
         {/* Stat cards */}

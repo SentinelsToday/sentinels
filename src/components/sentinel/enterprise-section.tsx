@@ -13,6 +13,7 @@ import {
   Factory,
   Cross,
 } from "lucide-react";
+import { TerminalWindow, AuditLogStream } from "@/components/terminal";
 
 const complianceFeatures = [
   { icon: Shield, title: "End-to-End Encryption", desc: "All data encrypted in transit and at rest with hardware-backed key management" },
@@ -28,6 +29,14 @@ const industries = [
   { icon: Truck, name: "Logistics", desc: "Warehouse robotics fleet management and audit trails" },
   { icon: Plane, name: "Defense", desc: "Mission-critical robot authentication and compliance" },
   { icon: Cross, name: "Medical Robotics", desc: "Surgical and laboratory robot verification and logging" },
+];
+
+const auditEvents = [
+  { time: "2025-01-15T08:23:41Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Robot <span className="text-gray-200">unit-0042</span> firmware verified — hash <span className="text-[#E8553D]">0xa4e8f...91cd</span></> },
+  { time: "2025-01-15T08:23:42Z ", tag: "AUTH", tagColor: "text-blue-400", message: <>  DID <span className="text-gray-200">did:sentinel:0x7f3a</span> trust score updated <span className="text-emerald-400">94→98</span></> },
+  { time: "2025-01-15T08:23:43Z ", tag: "WARN", tagColor: "text-amber-400", message: <> Robot <span className="text-gray-200">unit-0307</span> battery below threshold — <span className="text-amber-400">12%</span></> },
+  { time: "2025-01-15T08:23:44Z ", tag: "SIGN", tagColor: "text-emerald-400", message: <> Telemetry batch <span className="text-gray-200">#4891</span> anchored on Solana slot <span className="text-[#E8553D]">258491032</span></> },
+  { time: "2025-01-15T08:23:45Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Mission <span className="text-gray-200">pick-warehouse-a</span> completed by <span className="text-gray-200">unit-0042</span></> },
 ];
 
 const fadeUp = {
@@ -91,21 +100,9 @@ export function EnterpriseSection() {
           variants={fadeUp}
           className="mb-16 sm:mb-20"
         >
-          <div className="rounded-lg border border-border bg-[#1A1A1D] overflow-hidden shadow-sm">
-            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#333] bg-[#111113]">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
-              <span className="ml-2 font-mono text-[11px] text-gray-500 tracking-wider">audit-log — immutable events</span>
-            </div>
-            <div className="px-5 py-4 font-mono text-[13px] leading-7">
-              <div><span className="text-gray-500">2025-01-15T08:23:41Z </span><span className="text-emerald-400">AUDIT</span><span className="text-gray-400"> Robot </span><span className="text-gray-200">unit-0042</span><span className="text-gray-400"> firmware verified — hash </span><span className="text-[#E8553D]">0xa4e8f...91cd</span></div>
-              <div><span className="text-gray-500">2025-01-15T08:23:42Z </span><span className="text-blue-400">AUTH</span><span className="text-gray-400">  DID </span><span className="text-gray-200">did:sentinel:0x7f3a</span><span className="text-gray-400"> trust score updated </span><span className="text-emerald-400">94→98</span></div>
-              <div><span className="text-gray-500">2025-01-15T08:23:43Z </span><span className="text-amber-400">WARN</span><span className="text-gray-400"> Robot </span><span className="text-gray-200">unit-0307</span><span className="text-gray-400"> battery below threshold — </span><span className="text-amber-400">12%</span></div>
-              <div><span className="text-gray-500">2025-01-15T08:23:44Z </span><span className="text-emerald-400">SIGN</span><span className="text-gray-400"> Telemetry batch </span><span className="text-gray-200">#4891</span><span className="text-gray-400"> anchored on Solana slot </span><span className="text-[#E8553D]">258491032</span></div>
-              <div><span className="text-gray-500">2025-01-15T08:23:45Z </span><span className="text-emerald-400">AUDIT</span><span className="text-gray-400"> Mission </span><span className="text-gray-200">pick-warehouse-a</span><span className="text-gray-400"> completed by </span><span className="text-gray-200">unit-0042</span></div>
-            </div>
-          </div>
+          <TerminalWindow title="audit-log — immutable events">
+            <AuditLogStream events={auditEvents} />
+          </TerminalWindow>
         </motion.div>
 
         {/* Industries */}

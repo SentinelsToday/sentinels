@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { TerminalWindow, TerminalSequence } from "@/components/terminal";
+import type { SequenceStep } from "@/components/terminal";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -72,6 +74,17 @@ const compliance = [
   { name: "ISO 27001", status: "Certified", desc: "Information security management system" },
   { name: "NIST 800-53", status: "Compliant", desc: "Federal security and privacy controls" },
   { name: "IEC 62443", status: "Compliant", desc: "Industrial automation and control systems security" },
+];
+
+const bootSteps: SequenceStep[] = [
+  { type: "output", text: "[00:00.001] BOOT  Hardware attestation initiated", color: "text-blue-400", delay: 300 },
+  { type: "output", text: "[00:00.012] PASS  TPM 2.0 identity confirmed — fingerprint:0x8a3f...c2d1", color: "text-emerald-400" },
+  { type: "output", text: "[00:00.034] HASH  Firmware hash computed — SHA-256:a4e8f...91cd", color: "text-blue-400" },
+  { type: "output", text: "[00:00.089] CHAIN Verifying on-chain proof — Solana slot 258491032", color: "text-blue-400" },
+  { type: "output", text: "[00:00.142] PASS  Firmware integrity verified ✓", color: "text-emerald-400" },
+  { type: "output", text: "[00:00.156] AUTH  DID authentication — did:sentinel:0x7f3a...b2c1", color: "text-blue-400" },
+  { type: "output", text: "[00:00.178] PASS  Trust token issued — score 98/100", color: "text-emerald-400" },
+  { type: "output", text: "[00:00.180] READY Robot unit-0042 operational", color: "text-emerald-400" },
 ];
 
 export default function SecurityPage() {
@@ -182,24 +195,9 @@ export default function SecurityPage() {
               </p>
             </motion.div>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
-              <div className="rounded-lg border border-border bg-[#1A1A1D] overflow-hidden shadow-sm">
-                <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[#333] bg-[#111113]">
-                  <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
-                  <span className="ml-2 font-mono text-[11px] text-gray-500 tracking-wider">security-pipeline — boot verification</span>
-                </div>
-                <div className="px-5 py-4 font-mono text-[13px] leading-7">
-                  <div><span className="text-gray-500">[00:00.001] </span><span className="text-blue-400">BOOT</span><span className="text-gray-400">  Hardware attestation initiated</span></div>
-                  <div><span className="text-gray-500">[00:00.012] </span><span className="text-emerald-400">PASS</span><span className="text-gray-400">  TPM 2.0 identity confirmed — </span><span className="text-gray-200">fingerprint:0x8a3f...c2d1</span></div>
-                  <div><span className="text-gray-500">[00:00.034] </span><span className="text-blue-400">HASH</span><span className="text-gray-400">  Firmware hash computed — </span><span className="text-[#E8553D]">SHA-256:a4e8f...91cd</span></div>
-                  <div><span className="text-gray-500">[00:00.089] </span><span className="text-blue-400">CHAIN</span><span className="text-gray-400"> Verifying on-chain proof — Solana slot </span><span className="text-[#E8553D]">258491032</span></div>
-                  <div><span className="text-gray-500">[00:00.142] </span><span className="text-emerald-400">PASS</span><span className="text-gray-400">  Firmware integrity verified ✓</span></div>
-                  <div><span className="text-gray-500">[00:00.156] </span><span className="text-blue-400">AUTH</span><span className="text-gray-400">  DID authentication — </span><span className="text-gray-200">did:sentinel:0x7f3a...b2c1</span></div>
-                  <div><span className="text-gray-500">[00:00.178] </span><span className="text-emerald-400">PASS</span><span className="text-gray-400">  Trust token issued — score </span><span className="text-emerald-400">98/100</span></div>
-                  <div><span className="text-gray-500">[00:00.180] </span><span className="text-emerald-400">READY</span><span className="text-gray-400"> Robot unit-0042 operational</span></div>
-                </div>
-              </div>
+              <TerminalWindow title="security-pipeline — boot verification">
+                <TerminalSequence steps={bootSteps} />
+              </TerminalWindow>
             </motion.div>
           </div>
         </section>
