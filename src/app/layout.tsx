@@ -33,7 +33,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Sentinels Robotics" }],
   icons: {
-    icon: "/logo.svg",
+    icon: "/logo.jpg",
+    shortcut: "/logo.jpg",
+    apple: "/logo.jpg",
   },
   openGraph: {
     title: "Sentinels Robotics â€” Trust Infrastructure for Autonomous Machines",

@@ -1,5 +1,5 @@
 ﻿import Link from "next/link";
-import { Shield } from "lucide-react";
+import Image from "next/image";
 
 const footerLinks = {
   Platform: [
@@ -40,7 +40,7 @@ export function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
             <div className="col-span-2 md:col-span-1">
               <Link href="/" className="flex items-center gap-2.5 mb-4">
-                <Shield className="h-5 w-5 text-sentinels" strokeWidth={2.5} />
+                <Image src="/logo.jpg" alt="Sentinels" width={24} height={24} className="h-6 w-6 object-contain" />
                 <span className="font-mono text-sm font-semibold tracking-wider text-foreground">
                   SENTINELS
                 </span>

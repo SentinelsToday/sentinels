@@ -1,9 +1,10 @@
 ﻿"use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { QueryProvider } from "@/components/providers/query-provider";
-import { Bot, LayoutDashboard, Shield, ArrowLeft } from "lucide-react";
+import { Bot, LayoutDashboard, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -24,7 +25,7 @@ export default function DashboardLayout({
         <aside className="w-56 border-r border-neutral-200 flex flex-col bg-white">
           <div className="p-4 border-b border-neutral-200">
             <Link href="/" className="flex items-center gap-2 text-[#111113]">
-              <Shield className="h-5 w-5 text-[#E8553D]" />
+              <Image src="/logo.jpg" alt="Sentinels" width={24} height={24} className="h-6 w-6 object-contain" />
               <span className="font-semibold text-sm font-mono">SENTINELS</span>
             </Link>
           </div>

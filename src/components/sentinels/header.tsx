@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
-  Shield,
   Menu,
   Terminal,
 } from "lucide-react";
@@ -27,7 +27,7 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <Shield className="h-5 w-5 text-sentinels transition-transform group-hover:scale-110" strokeWidth={2.5} />
+            <Image src="/logo.jpg" alt="Sentinels" width={24} height={24} className="h-6 w-6 object-contain" />
             <span className="font-mono text-sm font-semibold tracking-wider text-foreground">
               SENTINELS
             </span>
