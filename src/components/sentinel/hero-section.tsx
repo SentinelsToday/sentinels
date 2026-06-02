@@ -40,7 +40,7 @@ const stats = [
 
 const partners = ["Solana", "NATS", "ROS 2", "MQTT"];
 
-const CHAR_SPEED = 35;
+const CHAR_SPEED = 10;
 
 function TypewriterText({ text, onComplete, startDelay }: { text: string; onComplete: () => void; startDelay: number }) {
   const [displayed, setDisplayed] = useState(0);
