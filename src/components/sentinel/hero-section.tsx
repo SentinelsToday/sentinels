@@ -40,15 +40,30 @@ const stats = [
 
 const partners = ["Solana", "NATS", "ROS 2", "MQTT"];
 
-function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
-  const [visibleCount, setVisibleCount] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
+const CHAR_SPEED = 35;
+
+function TypewriterText({ text, onComplete, startDelay }: { text: string; onComplete: () => void; startDelay: number }) {
+  const [displayed, setDisplayed] = useState(0);
 
   useEffect(() => {
-    if (visibleCount >= lines.length) return;
-    const timer = setTimeout(() => setVisibleCount((c) => c + 1), lines[visibleCount].delay);
-    return () => clearTimeout(timer);
-  }, [visibleCount, lines]);
+    const delayTimer = setTimeout(() => {
+      if (displayed >= text.length) {
+        onComplete();
+        return;
+      }
+      const charTimer = setTimeout(() => setDisplayed((c) => c + 1), CHAR_SPEED);
+      return () => clearTimeout(charTimer);
+    }, displayed === 0 ? startDelay : 0);
+    return () => clearTimeout(delayTimer);
+  }, [displayed, text, onComplete, startDelay]);
+
+  return <span className="whitespace-pre-wrap break-all">{text.slice(0, displayed)}</span>;
+}
+
+function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
+  const [completedLines, setCompletedLines] = useState<Set<number>>(new Set());
+  const [showCursor, setShowCursor] = useState(true);
+  const allDone = completedLines.size >= lines.length;
 
   useEffect(() => {
     const interval = setInterval(() => setShowCursor((c) => !c), 530);
@@ -57,19 +72,39 @@ function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
 
   return (
     <div className="relative">
-      {lines.slice(0, visibleCount).map((line, i) => (
-        <motion.div
-          key={i}
-          className={`flex ${line.color}`}
-          initial={{ opacity: 0, x: -8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          <span className="select-none shrink-0 text-gray-500 mr-1">{line.prefix}</span>
-          <span className="whitespace-pre-wrap break-all">{line.text}</span>
-        </motion.div>
-      ))}
-      {visibleCount < lines.length && (
+      {lines.map((line, i) => {
+        const isComplete = completedLines.has(i);
+        const isActive = i === completedLines.size;
+        if (!isComplete && !isActive) return null;
+
+        return (
+          <motion.div
+            key={i}
+            className={`flex ${line.color}`}
+            initial={{ opacity: 0, x: -8 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <span className="select-none shrink-0 text-gray-500 mr-1">{line.prefix}</span>
+            {isComplete ? (
+              <span className="whitespace-pre-wrap break-all">{line.text}</span>
+            ) : (
+              <TypewriterText
+                text={line.text}
+                startDelay={line.delay}
+                onComplete={() => setCompletedLines((prev) => new Set(prev).add(i))}
+              />
+            )}
+            {isActive && (
+              <span
+                className={`inline-block w-[7px] h-[14px] bg-foreground/70 ml-0.5 align-middle ${showCursor ? "opacity-100" : "opacity-0"}`}
+                style={{ transition: "opacity 0.1s" }}
+              />
+            )}
+          </motion.div>
+        );
+      })}
+      {allDone && (
         <span
           className={`inline-block w-[7px] h-[14px] bg-foreground/70 ml-0.5 align-middle ${showCursor ? "opacity-100" : "opacity-0"}`}
           style={{ transition: "opacity 0.1s" }}
