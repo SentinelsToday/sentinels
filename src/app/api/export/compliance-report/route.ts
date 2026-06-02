@@ -23,19 +23,23 @@ export async function GET(req: NextRequest) {
   const logs = await db.auditLog.findMany({ where, orderBy: { timestamp: "asc" } });
 
   const trustScoreHistory = logs
-    .filter((l: any) => l.action === "TRUST_SCORE_UPDATE")
+    .filter((l: any) => l.action === "trust_score_updated")
     .map((l: any) => ({ timestamp: l.timestamp, details: l.details }));
 
   const countByAction = (action: string) => logs.filter((l: any) => l.action === action).length;
+
+  // Telemetry verification is tracked via the TelemetryEvent.verified boolean
+  const telemetryEvents = await db.telemetryEvent.findMany({ where: { robotId } });
+  const telemetryVerificationCount = telemetryEvents.filter((e: any) => e.verified).length;
 
   return NextResponse.json({
     report: {
       robot: { name: robot.name, did: robot.did, status: robot.status },
       trustScoreHistory,
-      firmwareVerificationCount: countByAction("FIRMWARE_VERIFIED"),
-      telemetryVerificationCount: countByAction("TELEMETRY_VERIFIED"),
-      anomalyCount: countByAction("ANOMALY_DETECTED"),
-      keyRotationCount: countByAction("KEY_ROTATION"),
+      firmwareVerificationCount: countByAction("firmware_updated"),
+      telemetryVerificationCount,
+      anomalyCount: countByAction("anomaly_detected"),
+      keyRotationCount: countByAction("key_rotated"),
       totalAuditEntries: logs.length,
     },
     generatedAt: new Date().toISOString(),

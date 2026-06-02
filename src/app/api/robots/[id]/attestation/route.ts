@@ -20,11 +20,20 @@ export async function POST(
 
   await db.robot.update({ where: { id }, data: { status } });
 
+  const action = verified ? 'hardware_attested' : 'anomaly_detected';
+  const details = JSON.stringify({ tpmHash, secureBootEnabled, firmwareVersion, hardwareSerial });
+  const previousLog = await db.auditLog.findFirst({ where: { robotId: id }, orderBy: { timestamp: 'desc' } });
+  const logHash = sha256((previousLog?.hash || '') + action + details + attestedAt);
+  const logSignature = signData(logHash, robot.privateKey);
+
   await db.auditLog.create({
     data: {
       robotId: id,
-      action: verified ? 'hardware_attested' : 'anomaly_detected',
-      metadata: { tpmHash, secureBootEnabled, firmwareVersion, hardwareSerial },
+      action,
+      details,
+      hash: logHash,
+      previousHash: previousLog?.hash || null,
+      signature: logSignature,
       timestamp: attestedAt,
     },
   });
