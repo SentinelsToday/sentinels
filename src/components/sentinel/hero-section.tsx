@@ -40,7 +40,7 @@ const stats = [
 
 const partners = ["Solana", "NATS", "ROS 2", "MQTT"];
 
-const CHAR_SPEED = 10;
+const CHAR_SPEED = 30;
 
 function TypewriterText({ text, onComplete, startDelay }: { text: string; onComplete: () => void; startDelay: number }) {
   const [displayed, setDisplayed] = useState(0);
@@ -60,6 +60,8 @@ function TypewriterText({ text, onComplete, startDelay }: { text: string; onComp
   return <span className="whitespace-pre-wrap break-all">{text.slice(0, displayed)}</span>;
 }
 
+const LINE_GAP = 200;
+
 function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
   const [completedLines, setCompletedLines] = useState<Set<number>>(new Set());
   const [showCursor, setShowCursor] = useState(true);
@@ -69,6 +71,10 @@ function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
     const interval = setInterval(() => setShowCursor((c) => !c), 530);
     return () => clearInterval(interval);
   }, []);
+
+  function completeLine(i: number) {
+    setTimeout(() => setCompletedLines((prev) => new Set(prev).add(i)), LINE_GAP);
+  }
 
   return (
     <div className="relative">
@@ -92,7 +98,7 @@ function AnimatedTerminalLines({ lines }: { lines: typeof terminalLines }) {
               <TypewriterText
                 text={line.text}
                 startDelay={line.delay}
-                onComplete={() => setCompletedLines((prev) => new Set(prev).add(i))}
+                onComplete={() => completeLine(i)}
               />
             )}
             {isActive && (
