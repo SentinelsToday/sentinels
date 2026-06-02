@@ -33,12 +33,27 @@ export default function SignInPage() {
     setLoading(true);
     setError("");
     try {
-      // In production: connect to Phantom/Backpack wallet, sign a nonce
-      const mockPublicKey = "7f3a" + Math.random().toString(36).slice(2, 10);
+      const sol = (window as any).solana;
+      if (!sol?.connect) {
+        window.open("https://phantom.app/", "_blank");
+        setError("No Solana wallet found. Install Phantom or Backpack.");
+        setLoading(false);
+        return;
+      }
+
+      const resp = await sol.connect();
+      const publicKey = resp.publicKey.toString();
+
+      const message = new TextEncoder().encode(
+        `Sign in to Sentinel Robotics\nNonce: ${crypto.randomUUID()}\nTimestamp: ${Date.now()}`
+      );
+      const signed = await sol.signMessage(message, "utf8");
+      const signature = Buffer.from(signed.signature).toString("base64");
+
       const res = await signIn("wallet", {
-        publicKey: mockPublicKey,
-        signature: "mock-signature",
-        message: "Sign in to Sentinel",
+        publicKey,
+        signature,
+        message: new TextDecoder().decode(message),
         redirect: false,
       });
       setLoading(false);
@@ -47,9 +62,13 @@ export default function SignInPage() {
       } else {
         setError("Wallet authentication failed");
       }
-    } catch {
+    } catch (e: any) {
       setLoading(false);
-      setError("Wallet connection failed");
+      if (e?.code === 4001) {
+        setError("Wallet connection rejected");
+      } else {
+        setError("Wallet connection failed");
+      }
     }
   }
 

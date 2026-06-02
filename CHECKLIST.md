@@ -41,7 +41,7 @@
 - [x] Fleet listing + stats (search, pagination, filters)
 - [x] Audit logs (search, pagination, date range)
 - [x] Solana proof anchoring
-- [x] Multi-chain support (Solana active, ETH/Polygon/Base stubs)
+- [x] Solana-native blockchain support
 - [x] IPFS storage (upload, retrieve, pin, stats)
 - [x] ClickHouse telemetry (ingest, query, aggregates)
 - [x] MQTT/NATS messaging (publish, subscribe)
@@ -128,5 +128,5 @@
 - **IPFS**: Replace mock with real IPFS node (Pinata/Infura)
 - **ClickHouse**: Replace in-memory with real ClickHouse connection
 - **MQTT/NATS**: Replace mock broker with real MQTT/NATS client
-- **Multi-chain**: Implement real Ethereum/Polygon/Base anchoring
+- **Anchor Program**: Build custom Solana program (not just Memo program)
 - **Email**: Connect real email service (SendGrid/Resend)

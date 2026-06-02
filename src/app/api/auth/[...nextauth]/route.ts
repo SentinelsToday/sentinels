@@ -1,10 +1,10 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { verify } from "crypto";
+import nacl from "tweetnacl";
+import bs58 from "bs58";
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    // API Key / JWT credentials auth for dashboard
     CredentialsProvider({
       id: "credentials",
       name: "API Key",
@@ -13,8 +13,6 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.apiKey) return null;
-        // In production: validate against fleet API keys in DB
-        // For now: accept the configured admin key
         const validKey = process.env.SENTINEL_ADMIN_KEY || "sentinel-admin-dev";
         if (credentials.apiKey === validKey) {
           return { id: "admin", name: "Fleet Admin", email: "admin@sentinel.dev" };
@@ -22,7 +20,6 @@ export const authOptions: NextAuthOptions = {
         return null;
       },
     }),
-    // Wallet-based auth (Solana signature verification)
     CredentialsProvider({
       id: "wallet",
       name: "Wallet",
@@ -34,10 +31,13 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.publicKey || !credentials?.signature || !credentials?.message) return null;
         try {
-          // Verify the signed message matches the public key
-          // In production: use @solana/web3.js to verify Ed25519 signature
-          const isValid = credentials.signature.length > 0 && credentials.publicKey.length > 0;
+          const publicKeyBytes = bs58.decode(credentials.publicKey);
+          const signatureBytes = Uint8Array.from(atob(credentials.signature), (c) => c.charCodeAt(0));
+          const messageBytes = new TextEncoder().encode(credentials.message);
+
+          const isValid = nacl.sign.detached.verify(messageBytes, signatureBytes, publicKeyBytes);
           if (!isValid) return null;
+
           return {
             id: credentials.publicKey,
             name: `Wallet ${credentials.publicKey.slice(0, 8)}...`,
