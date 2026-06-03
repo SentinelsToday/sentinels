@@ -31,23 +31,28 @@ export const metadata: Metadata = {
     "trust infrastructure",
     "compliance",
   ],
-  authors: [{ name: "Sentinels Robotics" }],
+  authors: [{ name: "Sentinels Robotics", url: "https://sentinels.today" }],
   icons: {
     icon: "/logo.jpg",
     shortcut: "/logo.jpg",
     apple: "/logo.jpg",
   },
+  metadataBase: new URL("https://sentinels.today"),
   openGraph: {
-    title: "Sentinels Robotics â€” Trust Infrastructure for Autonomous Machines",
+    title: "Sentinels Robotics — Trust Infrastructure for Autonomous Machines",
     description:
       "Cryptographic identity, secure telemetry, and verifiable fleet operations for robotics systems.",
     type: "website",
+    url: "https://sentinels.today",
+    siteName: "Sentinels Robotics",
   },
   twitter: {
     card: "summary_large_image",
     title: "Sentinels Robotics",
     description:
       "Trust Infrastructure for Autonomous Machines",
+    site: "@sentinelstoday",
+    creator: "@sentinelstoday",
   },
 };
 

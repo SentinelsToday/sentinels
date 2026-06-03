@@ -36,7 +36,7 @@ This gives us the immutability of blockchain with the performance of traditional
 
 We're starting with robotics startups who need fleet management, auth, telemetry, and compliance. Phase 2 expands into warehouses and logistics. Phase 3 targets defense and industrial sectors.
 
-Request access at sentinels.dev to get started.`,
+Request access at sentinels.today to get started.`,
   },
   {
     slug: "why-robots-need-identity",

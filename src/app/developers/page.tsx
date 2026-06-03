@@ -47,7 +47,7 @@ const rustExample = `use sentinels_sdk::{Client, Robot, Config};
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = Client::new(Config {
         api_key: std::env::var("SENTINELS_API_KEY")?,
-        endpoint: "https://api.sentinels.dev".into(),
+        endpoint: "https://api.sentinels.today".into(),
     });
 
     // Register robot with hardware attestation

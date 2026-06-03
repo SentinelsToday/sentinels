@@ -11,7 +11,7 @@ Sentinels provides cryptographic identity and trust verification for autonomous 
 
 ## Prerequisites
 
-- A Sentinels account ([request access](https://sentinels.dev))
+- A Sentinels account ([request access](https://sentinels.today))
 - Terminal access (macOS, Linux, or WSL on Windows)
 - Node.js 18+ (for SDK usage)
 
@@ -20,7 +20,7 @@ Sentinels provides cryptographic identity and trust verification for autonomous 
 ## Step 1 â€” Install the CLI
 
 \`\`\`bash
-curl -fsSL https://get.sentinels.dev | sh
+curl -fsSL https://get.sentinels.today | sh
 \`\`\`
 
 Verify the installation:
@@ -118,7 +118,7 @@ Generated when you create a project. Include it in the \`Authorization\` header:
 
 \`\`\`bash
 curl -H "Authorization: Bearer sk_live_abc123..." \\
-  https://api.sentinels.dev/v1/robots
+  https://api.sentinels.today/v1/robots
 \`\`\`
 
 **SDK usage:**
@@ -165,7 +165,7 @@ Tokens are valid for **24 hours**. Include them in subsequent requests:
 
 \`\`\`bash
 curl -H "Authorization: Bearer eyJhbGci..." \\
-  https://api.sentinels.dev/v1/fleet/stats
+  https://api.sentinels.today/v1/fleet/stats
 \`\`\`
 
 ---

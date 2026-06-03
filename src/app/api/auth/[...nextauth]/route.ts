@@ -15,7 +15,7 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.apiKey) return null;
         const validKey = process.env.SENTINELS_ADMIN_KEY || "sentinels-admin-dev";
         if (credentials.apiKey === validKey) {
-          return { id: "admin", name: "Fleet Admin", email: "admin@sentinels.dev" };
+          return { id: "admin", name: "Fleet Admin", email: "admin@sentinels.today" };
         }
         return null;
       },

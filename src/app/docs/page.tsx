@@ -203,7 +203,7 @@ export default function DocsPage() {
                 <div className="overflow-x-auto">
                   <div className="px-5 py-4 font-mono text-[13px] leading-7 whitespace-nowrap">
                     <div><span className="text-gray-500"># Install the CLI</span></div>
-                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">curl -fsSL https://get.sentinels.dev | sh</span></div>
+                    <div><span className="text-gray-300">$ </span><span className="text-gray-200">curl -fsSL https://get.sentinels.today | sh</span></div>
                     <div className="mt-2"><span className="text-gray-500"># Authenticate</span></div>
                     <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinels auth login</span></div>
                     <div className="mt-2"><span className="text-gray-500"># Initialize project</span></div>

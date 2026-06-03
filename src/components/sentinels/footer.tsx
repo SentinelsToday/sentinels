@@ -14,7 +14,8 @@ const footerLinks = {
     { label: "SDK Reference", href: "/developers" },
     { label: "API Status", href: "/docs" },
     { label: "Changelog", href: "/blog" },
-    { label: "GitHub", href: "https://github.com" },
+    { label: "GitHub", href: "https://github.com/SentinelsToday" },
+    { label: "X / Twitter", href: "https://x.com/sentinelstoday" },
   ],
   Company: [
     { label: "About", href: "/platform" },
