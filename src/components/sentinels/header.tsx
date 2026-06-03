@@ -14,6 +14,7 @@ const navLinks = [
   { label: "Platform", href: "/platform" },
   { label: "Security", href: "/security" },
   { label: "Developers", href: "/developers" },
+  { label: "Tokonomics", href: "/#tokonomics" },
   { label: "Pricing", href: "/pricing" },
   { label: "Docs", href: "/docs" },
 ];

@@ -10,6 +10,7 @@ import { FleetSection } from "@/components/sentinels/fleet-section";
 import { EnterpriseSection } from "@/components/sentinels/enterprise-section";
 import { DeveloperSection } from "@/components/sentinels/developer-section";
 import { PricingSection } from "@/components/sentinels/pricing-section";
+import { TokonomicsSection } from "@/components/sentinels/tokonomics-section";
 import { CtaSection } from "@/components/sentinels/cta-section";
 
 export default function Home() {
@@ -25,6 +26,7 @@ export default function Home() {
         <EnterpriseSection />
         <DeveloperSection />
         <PricingSection />
+        <TokonomicsSection />
         <CtaSection />
       </main>
       <Footer />
