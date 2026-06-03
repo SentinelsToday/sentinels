@@ -84,7 +84,7 @@ const sentinels = new Sentinels({
 const robot = await sentinels.robots.register({
   name: 'unit-0042',
   model: 'forklift-v2',
-  serialNumber: 'SN-2025-0042',
+  serialNumber: 'SN-2026-0042',
 });
 
 // Verify firmware integrity

@@ -85,9 +85,8 @@ export default function EnterprisePage() {
                 Dedicated infrastructure, compliance certifications, and enterprise support for organizations deploying robotics at scale in regulated industries.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-11 px-6">
-                  Contact Sales
-                  <ArrowRight className="ml-1.5 h-4 w-4" />
+                <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-11 px-6" asChild>
+                  <a href="mailto:sales@sentinels.dev">Contact Sales <ArrowRight className="ml-1.5 h-4 w-4" /></a>
                 </Button>
                 <Button variant="outline" size="lg" className="font-mono text-sm h-11 px-6" asChild>
                   <Link href="/security">Security Overview</Link>
@@ -205,9 +204,8 @@ export default function EnterprisePage() {
                 Talk to our enterprise team about your fleet size, compliance requirements, and deployment timeline.
               </p>
               <div className="mt-8">
-                <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-12 px-8">
-                  Schedule a Call
-                  <ArrowRight className="ml-1.5 h-4 w-4" />
+                <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-12 px-8" asChild>
+                  <a href="mailto:sales@sentinels.dev">Schedule a Call <ArrowRight className="ml-1.5 h-4 w-4" /></a>
                 </Button>
               </div>
             </motion.div>

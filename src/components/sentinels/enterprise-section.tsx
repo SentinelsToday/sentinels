@@ -32,11 +32,11 @@ const industries = [
 ];
 
 const auditEvents = [
-  { time: "2025-01-15T08:23:41Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Robot <span className="text-gray-200">unit-0042</span> firmware verified â€” hash <span className="text-[#E8553D]">0xa4e8f...91cd</span></> },
-  { time: "2025-01-15T08:23:42Z ", tag: "AUTH", tagColor: "text-blue-400", message: <>  DID <span className="text-gray-200">did:sentinels:0x7f3a</span> trust score updated <span className="text-emerald-400">94â†’98</span></> },
-  { time: "2025-01-15T08:23:43Z ", tag: "WARN", tagColor: "text-amber-400", message: <> Robot <span className="text-gray-200">unit-0307</span> battery below threshold â€” <span className="text-amber-400">12%</span></> },
-  { time: "2025-01-15T08:23:44Z ", tag: "SIGN", tagColor: "text-emerald-400", message: <> Telemetry batch <span className="text-gray-200">#4891</span> anchored on Solana slot <span className="text-[#E8553D]">258491032</span></> },
-  { time: "2025-01-15T08:23:45Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Mission <span className="text-gray-200">pick-warehouse-a</span> completed by <span className="text-gray-200">unit-0042</span></> },
+  { time: "2026-01-15T08:23:41Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Robot <span className="text-gray-200">unit-0042</span> firmware verified â€” hash <span className="text-[#E8553D]">0xa4e8f...91cd</span></> },
+  { time: "2026-01-15T08:23:42Z ", tag: "AUTH", tagColor: "text-blue-400", message: <>  DID <span className="text-gray-200">did:sentinels:0x7f3a</span> trust score updated <span className="text-emerald-400">94â†’98</span></> },
+  { time: "2026-01-15T08:23:43Z ", tag: "WARN", tagColor: "text-amber-400", message: <> Robot <span className="text-gray-200">unit-0307</span> battery below threshold â€” <span className="text-amber-400">12%</span></> },
+  { time: "2026-01-15T08:23:44Z ", tag: "SIGN", tagColor: "text-emerald-400", message: <> Telemetry batch <span className="text-gray-200">#4891</span> anchored on Solana slot <span className="text-[#E8553D]">258491032</span></> },
+  { time: "2026-01-15T08:23:45Z ", tag: "AUDIT", tagColor: "text-emerald-400", message: <> Mission <span className="text-gray-200">pick-warehouse-a</span> completed by <span className="text-gray-200">unit-0042</span></> },
 ];
 
 const fadeUp = {

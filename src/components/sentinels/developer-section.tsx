@@ -161,7 +161,7 @@ export function DeveloperSection() {
           variants={fadeUp}
           className="mt-12 text-center"
         >
-          <a href="#" className="inline-flex items-center gap-2 font-mono text-sm text-sentinels hover:text-sentinels-muted transition-colors group">
+          <a href="/docs" className="inline-flex items-center gap-2 font-mono text-sm text-sentinels hover:text-sentinels-muted transition-colors group">
             <BookOpen className="h-4 w-4" />
             Read the full documentation
             <span className="group-hover:translate-x-1 transition-transform">â†’</span>

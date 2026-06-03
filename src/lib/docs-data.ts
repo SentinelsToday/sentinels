@@ -59,7 +59,7 @@ This generates a \`sentinels.yaml\` configuration file containing your project I
 sentinels register \\
   --name unit-001 \\
   --model forklift-v2 \\
-  --serial SN-2025-001
+  --serial SN-2026-001
 \`\`\`
 
 **Output:**
@@ -156,7 +156,7 @@ After successful authentication, you receive a token:
 \`\`\`json
 {
   "token": "eyJhbGciOiJFZDI1NTE5...",
-  "expiresAt": "2025-01-16T10:00:00Z",
+  "expiresAt": "2026-01-16T10:00:00Z",
   "fleetId": "fleet-abc123"
 }
 \`\`\`
@@ -218,7 +218,7 @@ Registration creates a cryptographic identity for a device. Each registered devi
 const device = await sentinels.devices.register({
   name: 'unit-0042',
   model: 'forklift-v2',
-  serialNumber: 'SN-2025-0042',
+  serialNumber: 'SN-2026-0042',
 });
 \`\`\`
 

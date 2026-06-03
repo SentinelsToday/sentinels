@@ -124,6 +124,7 @@ export default function PlatformPage() {
           const isAlt = idx % 2 === 1;
           return (
             <section
+              id={mod.id}
               key={mod.id}
               className={`relative py-20 sm:py-28 border-t border-border ${isAlt ? "bg-surface grid-bg-dense" : "bg-white"}`}
             >

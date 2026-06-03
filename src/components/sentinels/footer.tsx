@@ -77,7 +77,7 @@ export function Footer() {
 
         <div className="border-t border-border py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground font-mono">
-            Â© 2025 Sentinels Robotics, Inc. All rights reserved.
+            Â© 2026 Sentinels Robotics, Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">

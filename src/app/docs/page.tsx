@@ -87,10 +87,10 @@ const sections = [
 ];
 
 const quickLinks = [
-  { icon: Terminal, title: "CLI Reference", desc: "All CLI commands and flags" },
-  { icon: Webhook, title: "Webhook Events", desc: "Event types and payloads" },
-  { icon: Cpu, title: "Edge SDK", desc: "Embedded device integration" },
-  { icon: FileText, title: "Changelog", desc: "Latest updates and releases" },
+  { icon: Terminal, title: "CLI Reference", desc: "All CLI commands and flags", href: "/docs/quick-start" },
+  { icon: Webhook, title: "Webhook Events", desc: "Event types and payloads", href: "/docs" },
+  { icon: Cpu, title: "Edge SDK", desc: "Embedded device integration", href: "/developers" },
+  { icon: FileText, title: "Changelog", desc: "Latest updates and releases", href: "/blog" },
 ];
 
 export default function DocsPage() {
@@ -131,13 +131,13 @@ export default function DocsPage() {
               {quickLinks.map((link) => {
                 const Icon = link.icon;
                 return (
-                  <div key={link.title} className="group flex items-center gap-3 rounded-md border border-border bg-white px-4 py-3 transition-colors hover:border-sentinels/40 cursor-pointer">
+                  <Link key={link.title} href={link.href} className="group flex items-center gap-3 rounded-md border border-border bg-white px-4 py-3 transition-colors hover:border-sentinels/40 cursor-pointer">
                     <Icon className="h-4 w-4 text-steel group-hover:text-sentinels transition-colors" strokeWidth={1.8} />
                     <div>
                       <p className="font-mono text-xs font-semibold text-foreground">{link.title}</p>
                       <p className="text-[11px] text-muted-foreground">{link.desc}</p>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

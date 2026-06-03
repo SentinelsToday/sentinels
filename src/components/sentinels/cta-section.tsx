@@ -43,7 +43,7 @@ export function CtaSection() {
                 className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-sentinels-foreground h-12 px-8"
                 asChild
               >
-                <a href="#">
+                <a href="/auth/signin">
                   Request Access
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>

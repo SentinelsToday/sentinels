@@ -4,7 +4,7 @@
     title: "Introducing Sentinels: Trust Infrastructure for Autonomous Machines",
     excerpt: "Today we're launching Sentinels â€” the identity, verification, and compliance layer that every robotics fleet needs. Here's why we built it and what's next.",
     author: "Sentinels Team",
-    date: "2025-01-15",
+    date: "2026-01-15",
     readTime: "5 min",
     category: "Announcement",
     content: `## The Problem
@@ -43,7 +43,7 @@ Request access at sentinels.dev to get started.`,
     title: "Why Every Robot Needs a Cryptographic Identity",
     excerpt: "Robots today operate without verifiable identity. We explain why decentralized identifiers and hardware attestation are critical for enterprise robotics.",
     author: "Sentinels Team",
-    date: "2025-01-10",
+    date: "2026-01-10",
     readTime: "8 min",
     category: "Engineering",
     content: `## The Identity Gap
@@ -92,7 +92,7 @@ This ensures that even if a key is eventually compromised, the window of vulnera
     title: "Firmware Verification with On-Chain Proofs",
     excerpt: "How we use Solana to create immutable firmware verification records that prove your robots are running untampered code.",
     author: "Sentinels Team",
-    date: "2025-01-05",
+    date: "2026-01-05",
     readTime: "6 min",
     category: "Technical",
     content: `## Why Firmware Integrity Matters
