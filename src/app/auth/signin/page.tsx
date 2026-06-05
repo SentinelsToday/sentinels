@@ -8,13 +8,21 @@ import { Footer } from "@/components/sentinels/footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Shield, KeyRound, Wallet } from "lucide-react";
+import { Shield, KeyRound, Wallet, CheckCircle2, Loader2 } from "lucide-react";
+
+type Step = "auth" | "waitlist" | "success";
 
 export default function SignInPage() {
   const router = useRouter();
   const [apiKey, setApiKey] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState<Step>("auth");
+  const [walletAddress, setWalletAddress] = useState("");
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
 
   async function handleCredentials(e: React.FormEvent) {
     e.preventDefault();
@@ -42,26 +50,10 @@ export default function SignInPage() {
       }
 
       const resp = await sol.connect();
-      const publicKey = resp.publicKey.toString();
-
-      const message = new TextEncoder().encode(
-        `Sign in to Sentinels Robotics\nNonce: ${crypto.randomUUID()}\nTimestamp: ${Date.now()}`
-      );
-      const signed = await sol.signMessage(message, "utf8");
-      const signature = Buffer.from(signed.signature).toString("base64");
-
-      const res = await signIn("wallet", {
-        publicKey,
-        signature,
-        message: new TextDecoder().decode(message),
-        redirect: false,
-      });
+      const address = resp.publicKey.toString();
+      setWalletAddress(address);
+      setStep("waitlist");
       setLoading(false);
-      if (res?.ok) {
-        router.push("/dashboard");
-      } else {
-        setError("Wallet authentication failed");
-      }
     } catch (e: any) {
       setLoading(false);
       if (e?.code === 4001) {
@@ -72,64 +64,178 @@ export default function SignInPage() {
     }
   }
 
+  async function handleWaitlistSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ walletAddress, name, email, company }),
+      });
+
+      const data = await res.json();
+      setLoading(false);
+
+      if (res.ok) {
+        setStep("success");
+      } else {
+        setError(data.error || "Something went wrong");
+      }
+    } catch {
+      setLoading(false);
+      setError("Something went wrong. Please try again.");
+    }
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
       <main className="flex-1 pt-16 flex items-center justify-center">
         <div className="w-full max-w-sm mx-auto px-4">
-          <div className="text-center mb-8">
-            <Shield className="h-8 w-8 text-sentinels mx-auto mb-3" strokeWidth={2} />
-            <h1 className="text-2xl font-bold text-foreground">Sign in to Sentinels</h1>
-            <p className="mt-2 text-sm text-muted-foreground">Access your fleet dashboard</p>
-          </div>
+          {step === "auth" && (
+            <>
+              <div className="text-center mb-8">
+                <Shield className="h-8 w-8 text-sentinels mx-auto mb-3" strokeWidth={2} />
+                <h1 className="text-2xl font-bold text-foreground">Sign in to Sentinels</h1>
+                <p className="mt-2 text-sm text-muted-foreground">Access your fleet dashboard</p>
+              </div>
 
-          {/* API Key Auth */}
-          <form onSubmit={handleCredentials} className="space-y-4 mb-6">
-            <div>
-              <Label htmlFor="apiKey" className="font-mono text-xs uppercase tracking-wider text-steel">
-                API Key
-              </Label>
-              <Input
-                id="apiKey"
-                type="password"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-                placeholder="sk_live_..."
-                className="mt-1.5 font-mono text-sm"
-              />
+              <form onSubmit={handleCredentials} className="space-y-4 mb-6">
+                <div>
+                  <Label htmlFor="apiKey" className="font-mono text-xs uppercase tracking-wider text-steel">
+                    API Key
+                  </Label>
+                  <Input
+                    id="apiKey"
+                    type="password"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="sk_live_..."
+                    className="mt-1.5 font-mono text-sm"
+                  />
+                </div>
+                {error && <p className="text-xs text-red-500 font-mono">{error}</p>}
+                <Button
+                  type="submit"
+                  disabled={loading || !apiKey}
+                  className="w-full font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-10"
+                >
+                  <KeyRound className="mr-1.5 h-4 w-4" />
+                  {loading ? "Authenticating..." : "Sign In with API Key"}
+                </Button>
+              </form>
+
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-px flex-1 bg-border" />
+                <span className="font-mono text-[10px] uppercase tracking-widest text-steel">or</span>
+                <div className="h-px flex-1 bg-border" />
+              </div>
+
+              <Button
+                variant="outline"
+                onClick={handleWalletConnect}
+                disabled={loading}
+                className="w-full font-mono text-sm h-10"
+              >
+                <Wallet className="mr-1.5 h-4 w-4" />
+                Connect Wallet
+              </Button>
+
+              <p className="mt-6 text-center text-[11px] text-muted-foreground font-mono">
+                Enterprise SSO available on Fleet and Enterprise plans.
+              </p>
+            </>
+          )}
+
+          {step === "waitlist" && (
+            <>
+              <div className="text-center mb-8">
+                <Wallet className="h-8 w-8 text-sentinels mx-auto mb-3" strokeWidth={2} />
+                <h1 className="text-2xl font-bold text-foreground">Request Early Access</h1>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Connected as{" "}
+                  <span className="font-mono text-sentinels">{walletAddress.slice(0, 4)}...{walletAddress.slice(-4)}</span>
+                </p>
+              </div>
+
+              <form onSubmit={handleWaitlistSubmit} className="space-y-4">
+                <div>
+                  <Label htmlFor="name" className="font-mono text-xs uppercase tracking-wider text-steel">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Your full name"
+                    className="mt-1.5 font-mono text-sm"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email" className="font-mono text-xs uppercase tracking-wider text-steel">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className="mt-1.5 font-mono text-sm"
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="company" className="font-mono text-xs uppercase tracking-wider text-steel">
+                    Company <span className="text-steel/50">(optional)</span>
+                  </Label>
+                  <Input
+                    id="company"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    placeholder="Your company or project"
+                    className="mt-1.5 font-mono text-sm"
+                  />
+                </div>
+                {error && <p className="text-xs text-red-500 font-mono">{error}</p>}
+                <Button
+                  type="submit"
+                  disabled={loading || !name || !email}
+                  className="w-full font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-10"
+                >
+                  {loading ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : <Wallet className="mr-1.5 h-4 w-4" />}
+                  {loading ? "Submitting..." : "Join the Waitlist"}
+                </Button>
+              </form>
+            </>
+          )}
+
+          {step === "success" && (
+            <div className="text-center py-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sentinels/10 mb-6">
+                <CheckCircle2 className="h-8 w-8 text-sentinels" strokeWidth={2} />
+              </div>
+              <h1 className="text-2xl font-bold text-foreground mb-3">You're on the list!</h1>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                We're working on granting you access as soon as possible.
+              </p>
+              <p className="text-xs text-muted-foreground mt-4 font-mono">
+                We'll reach out at{" "}
+                <span className="text-sentinels">{email}</span>
+              </p>
+              <Button
+                variant="outline"
+                onClick={() => router.push("/")}
+                className="mt-8 font-mono text-sm"
+              >
+                Back to Home
+              </Button>
             </div>
-            {error && <p className="text-xs text-red-500 font-mono">{error}</p>}
-            <Button
-              type="submit"
-              disabled={loading || !apiKey}
-              className="w-full font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-10"
-            >
-              <KeyRound className="mr-1.5 h-4 w-4" />
-              {loading ? "Authenticating..." : "Sign In with API Key"}
-            </Button>
-          </form>
-
-          {/* Divider */}
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-border" />
-            <span className="font-mono text-[10px] uppercase tracking-widest text-steel">or</span>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-
-          {/* Wallet Auth */}
-          <Button
-            variant="outline"
-            onClick={handleWalletConnect}
-            disabled={loading}
-            className="w-full font-mono text-sm h-10"
-          >
-            <Wallet className="mr-1.5 h-4 w-4" />
-            Connect Wallet
-          </Button>
-
-          <p className="mt-6 text-center text-[11px] text-muted-foreground font-mono">
-            Enterprise SSO available on Fleet and Enterprise plans.
-          </p>
+          )}
         </div>
       </main>
       <Footer />

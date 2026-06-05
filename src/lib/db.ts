@@ -183,6 +183,7 @@ export const db = {
   wallet: createModel("Wallet"),
   transaction: createModel("Transaction"),
   webhook: createModel("Webhook"),
+  waitlistEntry: createModel("WaitlistEntry"),
   user: createModel("User"),
   organization: createModel("Organization"),
   orgMember: createModel("OrgMember"),
