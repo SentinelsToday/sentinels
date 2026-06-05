@@ -1,9 +1,10 @@
 ﻿"use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/sentinels/header";
 import { Footer } from "@/components/sentinels/footer";
-import { ArrowRight, Calendar, Clock } from "lucide-react";
+import { Calendar, Clock } from "lucide-react";
 import Link from "next/link";
 import { posts } from "@/lib/blog-data";
 
@@ -15,6 +16,12 @@ const fadeUp = {
 const categories = ["All", "Announcement", "Engineering", "Technical", "Security", "Enterprise"];
 
 export default function BlogPage() {
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const filteredPosts = activeCategory === "All"
+    ? posts
+    : posts.filter((p) => p.category === activeCategory);
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
@@ -36,8 +43,9 @@ export default function BlogPage() {
               {categories.map((cat) => (
                 <button
                   key={cat}
+                  onClick={() => setActiveCategory(cat)}
                   className={`shrink-0 rounded-md px-3 py-1.5 font-mono text-xs transition-colors ${
-                    cat === "All" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    cat === activeCategory ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   }`}
                 >
                   {cat}
@@ -50,7 +58,12 @@ export default function BlogPage() {
         <section className="py-12 sm:py-16 bg-white">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {posts.map((post, i) => (
+              {filteredPosts.length === 0 && (
+                <div className="col-span-2 text-center py-12 text-muted-foreground">
+                  No posts in this category yet.
+                </div>
+              )}
+              {filteredPosts.map((post, i) => (
                 <motion.article
                   key={post.slug}
                   initial="hidden"
@@ -82,7 +95,6 @@ export default function BlogPage() {
                           {post.readTime}
                         </span>
                       </div>
-                      <ArrowRight className="h-4 w-4 text-steel opacity-0 group-hover:opacity-100 group-hover:text-sentinels transition-all" />
                     </div>
                   </Link>
                 </motion.article>

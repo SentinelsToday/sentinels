@@ -21,36 +21,30 @@ export async function calculateTrustScore(robotId: string): Promise<number> {
 
   let score = 50;
 
-  // Status compromised: -50
   if (robot.status === "compromised") score -= 50;
 
-  // Firmware verified: +10 per verified record
-  const firmwareRecords = await db.firmwareRecord.findMany({ where: { robotId } });
-  const verifiedFirmware = firmwareRecords.filter((f: any) => f.verified).length;
+  const firmwareRecords = (await db.firmwareRecord.findMany({ where: { robotId } })) as Record<string, unknown>[];
+  const verifiedFirmware = firmwareRecords.filter((f) => f.verified).length;
   score += verifiedFirmware * 10;
 
-  // Telemetry verified: +5 per verified event, max +20
-  const telemetryEvents = await db.telemetryEvent.findMany({ where: { robotId } });
-  const verifiedTelemetry = telemetryEvents.filter((e: any) => e.verified).length;
+  const telemetryEvents = (await db.telemetryEvent.findMany({ where: { robotId } })) as Record<string, unknown>[];
+  const verifiedTelemetry = telemetryEvents.filter((e) => e.verified).length;
   score += Math.min(verifiedTelemetry * 5, 20);
 
-  // Anomaly detected: -20
-  const auditLogs = await db.auditLog.findMany({ where: { robotId } });
-  const hasAnomaly = auditLogs.some((l: any) => l.action === "anomaly_detected");
+  const auditLogs = (await db.auditLog.findMany({ where: { robotId } })) as Record<string, unknown>[];
+  const hasAnomaly = auditLogs.some((l) => l.action === "anomaly_detected");
   if (hasAnomaly) score -= 20;
 
-  // Key rotated recently: +5
-  const keyRotated = auditLogs.some((l: any) => {
+  const keyRotated = auditLogs.some((l) => {
     if (l.action !== "key_rotated") return false;
-    const age = Date.now() - new Date(l.timestamp).getTime();
-    return age < 7 * 24 * 60 * 60 * 1000; // within 7 days
+    const age = Date.now() - new Date(l.timestamp as string).getTime();
+    return age < 7 * 24 * 60 * 60 * 1000;
   });
   if (keyRotated) score += 5;
 
-  // Uptime based on heartbeat count (each heartbeat ≈ 1 hour)
-  const heartbeats = telemetryEvents.filter((e: any) => e.eventType === "heartbeat").length;
-  if (heartbeats > 168) score += 10; // > 7 days
-  else if (heartbeats > 24) score += 5; // > 24 hours
+  const heartbeats = telemetryEvents.filter((e) => e.eventType === "heartbeat").length;
+  if (heartbeats > 168) score += 10;
+  else if (heartbeats > 24) score += 5;
 
   return Math.max(0, Math.min(100, score));
 }
@@ -63,24 +57,24 @@ export async function calculateTrustFactors(robotId: string): Promise<TrustFacto
 
   if (robot.status === "compromised") factors.push({ name: "status_compromised", impact: -50 });
 
-  const firmwareRecords = await db.firmwareRecord.findMany({ where: { robotId } });
-  const verifiedFirmware = firmwareRecords.filter((f: any) => f.verified).length;
+  const firmwareRecords = (await db.firmwareRecord.findMany({ where: { robotId } })) as Record<string, unknown>[];
+  const verifiedFirmware = firmwareRecords.filter((f) => f.verified).length;
   if (verifiedFirmware > 0) factors.push({ name: "firmware_verified", impact: verifiedFirmware * 10 });
 
-  const telemetryEvents = await db.telemetryEvent.findMany({ where: { robotId } });
-  const verifiedTelemetry = telemetryEvents.filter((e: any) => e.verified).length;
+  const telemetryEvents = (await db.telemetryEvent.findMany({ where: { robotId } })) as Record<string, unknown>[];
+  const verifiedTelemetry = telemetryEvents.filter((e) => e.verified).length;
   if (verifiedTelemetry > 0) factors.push({ name: "telemetry_verified", impact: Math.min(verifiedTelemetry * 5, 20) });
 
-  const auditLogs = await db.auditLog.findMany({ where: { robotId } });
-  if (auditLogs.some((l: any) => l.action === "anomaly_detected")) factors.push({ name: "anomaly_detected", impact: -20 });
+  const auditLogs = (await db.auditLog.findMany({ where: { robotId } })) as Record<string, unknown>[];
+  if (auditLogs.some((l) => l.action === "anomaly_detected")) factors.push({ name: "anomaly_detected", impact: -20 });
 
-  const keyRotated = auditLogs.some((l: any) => {
+  const keyRotated = auditLogs.some((l) => {
     if (l.action !== "key_rotated") return false;
-    return Date.now() - new Date(l.timestamp).getTime() < 7 * 24 * 60 * 60 * 1000;
+    return Date.now() - new Date(l.timestamp as string).getTime() < 7 * 24 * 60 * 60 * 1000;
   });
   if (keyRotated) factors.push({ name: "key_rotated_recently", impact: 5 });
 
-  const heartbeats = telemetryEvents.filter((e: any) => e.eventType === "heartbeat").length;
+  const heartbeats = telemetryEvents.filter((e) => e.eventType === "heartbeat").length;
   if (heartbeats > 168) factors.push({ name: "uptime_7d", impact: 10 });
   else if (heartbeats > 24) factors.push({ name: "uptime_24h", impact: 5 });
 

@@ -5,7 +5,7 @@ const VALID_PERMISSIONS = ["read", "write", "transfer", "stake", "api_access"];
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const wallet = await db.wallet.findUnique({ where: { robotId: id } });
+  const wallet = (await db.wallet.findUnique({ where: { robotId: id } })) as { permissions: string } | null;
   if (!wallet) return NextResponse.json({ error: "Wallet not found" }, { status: 404 });
   return NextResponse.json({ permissions: JSON.parse(wallet.permissions) });
 }
@@ -18,9 +18,9 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: "Invalid permissions" }, { status: 400 });
   }
 
-  const wallet = await db.wallet.update({
+  const wallet = (await db.wallet.update({
     where: { robotId: id },
     data: { permissions: JSON.stringify(permissions) },
-  });
+  })) as { permissions: string };
   return NextResponse.json({ permissions: JSON.parse(wallet.permissions) });
 }

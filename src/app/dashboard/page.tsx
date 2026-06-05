@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -13,17 +12,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { Bot, Activity, WifiOff, AlertTriangle, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+async function fetchJson(url: string) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
 
 export default function DashboardPage() {
-  const { data: stats, isLoading: statsLoading } = useQuery({
+  const { data: stats, isLoading: statsLoading, error: statsError } = useQuery({
     queryKey: ["fleet-stats"],
-    queryFn: () => fetch("/api/fleet/stats").then((r) => r.json()),
+    queryFn: () => fetchJson("/api/fleet/stats"),
   });
 
-  const { data: robotsData, isLoading: robotsLoading } = useQuery({
+  const { data: robotsData, isLoading: robotsLoading, error: robotsError } = useQuery({
     queryKey: ["robots"],
-    queryFn: () => fetch("/api/robots/register").then((r) => r.json()),
+    queryFn: () => fetchJson("/api/robots/register"),
   });
 
   const statCards = [
@@ -36,6 +43,8 @@ export default function DashboardPage() {
       icon: AlertTriangle,
     },
   ];
+
+  const robots = Array.isArray(robotsData?.robots) ? robotsData.robots : [];
 
   return (
     <div className="space-y-6">
@@ -61,7 +70,7 @@ export default function DashboardPage() {
                     {s.label}
                   </p>
                   <p className="text-2xl font-semibold text-[#111113] mt-1">
-                    {statsLoading ? "…" : s.value}
+                    {statsLoading ? "…" : statsError ? "—" : s.value}
                   </p>
                 </div>
                 <s.icon className="h-5 w-5 text-neutral-400" />
@@ -78,6 +87,8 @@ export default function DashboardPage() {
               <p className="text-2xl font-semibold text-[#111113] mt-1">
                 {statsLoading
                   ? "…"
+                  : statsError
+                  ? "—"
                   : stats?.averageTrustScore != null
                   ? `${Number(stats.averageTrustScore).toFixed(0)}%`
                   : "—"}
@@ -96,6 +107,8 @@ export default function DashboardPage() {
         <CardContent>
           {robotsLoading ? (
             <p className="text-sm text-neutral-400 py-4">Loading…</p>
+          ) : robotsError ? (
+            <p className="text-sm text-red-400 py-4">Failed to load robots</p>
           ) : (
             <Table>
               <TableHeader>
@@ -108,7 +121,7 @@ export default function DashboardPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {robotsData?.robots?.slice(0, 10).map((robot: any) => (
+                {robots.slice(0, 10).map((robot: { id: string; name: string; model?: string; status: string; trustScore?: number; serialNumber: string }) => (
                   <TableRow key={robot.id}>
                     <TableCell>
                       <Link
@@ -134,7 +147,7 @@ export default function DashboardPage() {
                     </TableCell>
                   </TableRow>
                 ))}
-                {(!robotsData?.robots || robotsData.robots.length === 0) && (
+                {robots.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={5} className="text-center text-neutral-400 py-8">
                       No robots registered yet.
@@ -148,25 +161,4 @@ export default function DashboardPage() {
       </Card>
     </div>
   );
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const variants: Record<string, string> = {
-    ACTIVE: "bg-emerald-100 text-emerald-700 border-emerald-200",
-    OFFLINE: "bg-neutral-100 text-neutral-500 border-neutral-200",
-    COMPROMISED: "bg-red-100 text-red-700 border-red-200",
-    MAINTENANCE: "bg-amber-100 text-amber-700 border-amber-200",
-  };
-  return (
-    <Badge
-      variant="outline"
-      className={cn("text-[10px] font-mono", variants[status] || "")}
-    >
-      {status}
-    </Badge>
-  );
-}
-
-function cn(...classes: (string | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
 }

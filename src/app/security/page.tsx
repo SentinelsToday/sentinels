@@ -12,9 +12,6 @@ import {
   FileSignature,
   ShieldCheck,
   AlertTriangle,
-  Server,
-  Cpu,
-  Link2,
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";

@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/sentinels/header";
 import { Footer } from "@/components/sentinels/footer";
@@ -94,11 +95,27 @@ const quickLinks = [
 ];
 
 export default function DocsPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredSections = useMemo(() => {
+    if (!searchQuery.trim()) return sections;
+    const q = searchQuery.toLowerCase();
+    return sections
+      .map((s) => ({
+        ...s,
+        links: s.links.filter(
+          (l) =>
+            l.title.toLowerCase().includes(q) ||
+            l.desc.toLowerCase().includes(q)
+        ),
+      }))
+      .filter((s) => s.links.length > 0);
+  }, [searchQuery]);
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
       <main className="flex-1 pt-16">
-        {/* Hero */}
         <section className="relative grid-bg py-16 sm:py-20 bg-white border-b border-border">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <motion.div initial="hidden" animate="visible" variants={fadeUp} className="text-center">
@@ -108,23 +125,23 @@ export default function DocsPage() {
               <p className="mt-4 max-w-xl mx-auto text-base text-muted-foreground leading-relaxed">
                 Everything you need to integrate Sentinels into your robotics infrastructure.
               </p>
-              {/* Search */}
               <div className="mt-8 max-w-md mx-auto">
                 <div className="flex items-center gap-2 rounded-md border border-border bg-surface px-4 py-3 focus-within:border-sentinels/40 transition-colors">
                   <Search className="h-4 w-4 text-steel shrink-0" />
                   <input
                     type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search documentation..."
                     className="flex-1 bg-transparent font-mono text-sm text-foreground placeholder:text-muted-foreground outline-none"
                   />
-                  <kbd className="hidden sm:inline-flex font-mono text-[10px] text-steel border border-border rounded px-1.5 py-0.5">âŒ˜K</kbd>
+                  <kbd className="hidden sm:inline-flex font-mono text-[10px] text-steel border border-border rounded px-1.5 py-0.5">⌘K</kbd>
                 </div>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* Quick Links */}
         <section className="py-8 bg-surface border-b border-border">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -144,48 +161,52 @@ export default function DocsPage() {
           </div>
         </section>
 
-        {/* Documentation Sections */}
         <section className="py-16 sm:py-20 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {sections.map((section, i) => {
-                const Icon = section.icon;
-                return (
-                  <motion.div
-                    key={section.title}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    custom={i}
-                    variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.06, duration: 0.5 } } }}
-                  >
-                    <div className="flex items-center gap-2 mb-4">
-                      <Icon className="h-4 w-4 text-sentinels" strokeWidth={1.8} />
-                      <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground">{section.title}</h3>
-                    </div>
-                    <div className="space-y-1">
-                      {section.links.map((link) => (
-                        <Link
-                          key={link.title}
-                          href={link.href}
-                          className="group flex items-center justify-between rounded-md px-3 py-2.5 transition-colors hover:bg-surface"
-                        >
-                          <div>
-                            <p className="text-sm font-medium text-foreground group-hover:text-sentinels transition-colors">{link.title}</p>
-                            <p className="text-[12px] text-muted-foreground">{link.desc}</p>
-                          </div>
-                          <ArrowRight className="h-3.5 w-3.5 text-steel opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </Link>
-                      ))}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
+            {filteredSections.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                No results found for &ldquo;{searchQuery}&rdquo;
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredSections.map((section, i) => {
+                  const Icon = section.icon;
+                  return (
+                    <motion.div
+                      key={section.title}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      custom={i}
+                      variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: i * 0.06, duration: 0.5 } } }}
+                    >
+                      <div className="flex items-center gap-2 mb-4">
+                        <Icon className="h-4 w-4 text-sentinels" strokeWidth={1.8} />
+                        <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground">{section.title}</h3>
+                      </div>
+                      <div className="space-y-1">
+                        {section.links.map((link) => (
+                          <Link
+                            key={link.title}
+                            href={link.href}
+                            className="group flex items-center justify-between rounded-md px-3 py-2.5 transition-colors hover:bg-surface"
+                          >
+                            <div>
+                              <p className="text-sm font-medium text-foreground group-hover:text-sentinels transition-colors">{link.title}</p>
+                              <p className="text-[12px] text-muted-foreground">{link.desc}</p>
+                            </div>
+                            <ArrowRight className="h-3.5 w-3.5 text-steel opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </section>
 
-        {/* Quick Start Terminal */}
         <section className="py-16 sm:py-20 bg-surface border-t border-border">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}>
@@ -208,11 +229,11 @@ export default function DocsPage() {
                     <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinels auth login</span></div>
                     <div className="mt-2"><span className="text-gray-500"># Initialize project</span></div>
                     <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinels init --project my-fleet</span></div>
-                    <div><span className="text-[#E8553D]">â†’ </span><span className="text-gray-400">Created sentinels.yaml</span></div>
+                    <div><span className="text-[#E8553D]">→ </span><span className="text-gray-400">Created sentinels.yaml</span></div>
                     <div className="mt-2"><span className="text-gray-500"># Register your first robot</span></div>
                     <div><span className="text-gray-300">$ </span><span className="text-gray-200">sentinels register --name unit-001 --model forklift</span></div>
-                    <div><span className="text-emerald-400">âœ“ </span><span className="text-gray-400">Robot registered â€” DID: did:sentinels:0x...</span></div>
-                    <div><span className="text-emerald-400">âœ“ </span><span className="text-gray-400">Trust score: 100/100</span></div>
+                    <div><span className="text-emerald-400">✓ </span><span className="text-gray-400">Robot registered — DID: did:sentinels:0x...</span></div>
+                    <div><span className="text-emerald-400">✓ </span><span className="text-gray-400">Trust score: 100/100</span></div>
                   </div>
                 </div>
               </div>

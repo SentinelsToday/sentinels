@@ -27,17 +27,15 @@ function zScore(value: number, avg: number, sd: number): number {
 export async function analyzePattern(robotId: string): Promise<AIAnalysis> {
   const patterns: Pattern[] = [];
 
-  // Fetch recent telemetry
   const events = await db.telemetryEvent.findMany({
     where: { robotId },
     orderBy: { timestamp: "desc" },
     take: 50,
   });
 
-  // 1. Z-score on telemetry frequency
   if (events.length >= 5) {
-    const timestamps = events.map((e: any) => new Date(e.timestamp).getTime());
-    const intervals = timestamps.slice(0, -1).map((t: number, i: number) => t - timestamps[i + 1]);
+    const timestamps = (events as Record<string, unknown>[]).map((e) => new Date(e.timestamp as string).getTime());
+    const intervals = timestamps.slice(0, -1).map((t, i) => t - timestamps[i + 1]);
     const avg = mean(intervals);
     const sd = stddev(intervals, avg);
     const latestInterval = intervals[0] || avg;
@@ -52,22 +50,21 @@ export async function analyzePattern(robotId: string): Promise<AIAnalysis> {
     }
   }
 
-  // 2. Moving average on trust score
-  const robot = await db.robot.findUnique({ where: { id: robotId } });
+  const robot = (await db.robot.findUnique({ where: { id: robotId } })) as Record<string, unknown> | null;
   if (robot) {
     const logs = await db.auditLog.findMany({
       where: { robotId },
       orderBy: { timestamp: "desc" },
       take: 10,
     });
-    const trustLogs = logs.filter((l: any) => l.action === "trust_score_updated");
+    const trustLogs = (logs as Record<string, unknown>[]).filter((l) => l.action === "trust_score_updated");
+    const trustScore = robot.trustScore as number;
     if (trustLogs.length >= 3) {
-      const scores = trustLogs.map((l: any) => {
-        try { return JSON.parse(l.details)?.score ?? robot.trustScore; } catch { return robot.trustScore; }
+      const scores = trustLogs.map((l) => {
+        try { return JSON.parse(l.details as string)?.score ?? trustScore; } catch { return trustScore; }
       });
       const movingAvg = mean(scores);
-      const currentScore = robot.trustScore ?? 100;
-      const deviation = Math.abs(currentScore - movingAvg);
+      const deviation = Math.abs(trustScore - movingAvg);
 
       if (deviation > 15) {
         patterns.push({
@@ -79,14 +76,13 @@ export async function analyzePattern(robotId: string): Promise<AIAnalysis> {
     }
   }
 
-  // 3. Pattern matching on command sequences
   const commands = await db.command.findMany({
     where: { robotId },
     orderBy: { timestamp: "desc" },
     take: 20,
   });
   if (commands.length >= 5) {
-    const types = commands.map((c: any) => c.type || c.action);
+    const types = (commands as Record<string, unknown>[]).map((c) => c.type || c.action);
     const unique = new Set(types);
     const repetitionRatio = 1 - unique.size / types.length;
 
@@ -99,7 +95,6 @@ export async function analyzePattern(robotId: string): Promise<AIAnalysis> {
     }
   }
 
-  // Compute risk score (0-100)
   const riskScore = patterns.length === 0
     ? 0
     : Math.min(100, Math.round(patterns.reduce((sum, p) => sum + p.confidence * 40, 0)));

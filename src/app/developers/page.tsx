@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/sentinels/header";
 import { Footer } from "@/components/sentinels/footer";
@@ -10,10 +11,9 @@ import {
   Webhook,
   KeyRound,
   Boxes,
-  ArrowRight,
-  Copy,
   Cpu,
   Activity,
+  Copy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -106,6 +106,18 @@ const features = [
 ];
 
 export default function DevelopersPage() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText("npm install @sentinels/sdk");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard not available
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
@@ -133,7 +145,9 @@ export default function DevelopersPage() {
                 </Button>
                 <div className="flex items-center gap-2 rounded-md border border-border bg-surface px-4 py-2.5">
                   <code className="font-mono text-sm text-foreground">npm install @sentinels/sdk</code>
-                  <Copy className="h-4 w-4 text-steel cursor-pointer hover:text-foreground transition-colors" />
+                  <button type="button" onClick={handleCopy} className="p-0 bg-transparent border-none cursor-pointer">
+                    <Copy className={`h-4 w-4 ${copied ? "text-emerald-500" : "text-steel"} hover:text-foreground transition-colors`} />
+                  </button>
                 </div>
               </div>
             </motion.div>

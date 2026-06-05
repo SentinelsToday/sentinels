@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, startTransition } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -13,41 +13,68 @@ interface ApiKey {
   createdAt: string;
 }
 
+async function fetchJson(url: string, options?: RequestInit) {
+  const res = await fetch(url, options);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
 export default function SettingsPage() {
   const [keys, setKeys] = useState<ApiKey[]>([]);
   const [newKey, setNewKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchKeys = useCallback(async () => {
-    const res = await fetch("/api/keys");
-    setKeys(await res.json());
-    setLoading(false);
+    try {
+      setError(null);
+      const data = await fetchJson("/api/keys");
+      setKeys(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load keys");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  useEffect(() => { startTransition(() => fetchKeys()); }, [fetchKeys]);
+  useEffect(() => { fetchKeys(); }, [fetchKeys]);
 
   const generateKey = async () => {
     if (!keys.length) return;
-    const fleetId = keys[0]?.id;
-    const res = await fetch("/api/keys", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fleetId }),
-    });
-    const data = await res.json();
-    setNewKey(data.apiKey);
-    fetchKeys();
+    try {
+      const data = await fetchJson("/api/keys", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fleetId: keys[0].id }),
+      });
+      setNewKey(data.apiKey);
+      fetchKeys();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to generate key");
+    }
   };
 
   const revokeKey = async (id: string) => {
-    await fetch(`/api/keys/${id}`, { method: "DELETE" });
-    setNewKey(null);
-    fetchKeys();
+    try {
+      await fetchJson(`/api/keys/${id}`, { method: "DELETE" });
+      setNewKey(null);
+      fetchKeys();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to revoke key");
+    }
   };
 
   return (
     <div className="p-6 space-y-6 max-w-4xl">
       <h1 className="text-2xl font-bold tracking-tight">API Key Management</h1>
+
+      {error && (
+        <Card className="border-red-500/50 bg-red-500/5">
+          <CardContent className="pt-4">
+            <p className="text-sm text-red-600">{error}</p>
+          </CardContent>
+        </Card>
+      )}
 
       {newKey && (
         <Card className="border-green-500/50 bg-green-500/5">

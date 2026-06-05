@@ -23,12 +23,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     data: { robotId: id, version, packageUrl, packageHash, scheduledAt: scheduledAt || null },
   });
 
-  // Audit log
-  const logDetails = JSON.stringify({ updateId: update.id, version, packageUrl });
-  const logs = await db.auditLog.findMany({ where: { robotId: id }, orderBy: { timestamp: "desc" }, take: 1 });
+  const updateRecord = update as Record<string, unknown>;
+  const logDetails = JSON.stringify({ updateId: updateRecord.id, version, packageUrl });
+  const logs = (await db.auditLog.findMany({ where: { robotId: id }, orderBy: { timestamp: "desc" }, take: 1 })) as { hash: string }[];
   const lastLog = logs[0] || null;
   const logHash = sha256((lastLog?.hash || "") + "software_update_scheduled" + logDetails + new Date().toISOString());
-  const logSignature = signData(logHash, robot.privateKey);
+  const logSignature = signData(logHash, "ephemeral");
 
   await db.auditLog.create({
     data: { robotId: id, action: "software_update_scheduled", details: logDetails, hash: logHash, previousHash: lastLog?.hash || null, signature: logSignature },

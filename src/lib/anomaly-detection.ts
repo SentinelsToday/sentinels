@@ -12,7 +12,7 @@ export async function detectAnomalies(robotId: string): Promise<{ anomalies: Ano
   const now = new Date();
   const anomalies: Anomaly[] = [];
 
-  const robot = await db.robot.findUnique({ where: { id: robotId } });
+  const robot = (await db.robot.findUnique({ where: { id: robotId } })) as Record<string, unknown> | null;
   if (!robot) return { anomalies: [], hasAnomaly: false };
 
   // Rule 1: Rapid telemetry (>100 events in 1 minute)
@@ -28,8 +28,9 @@ export async function detectAnomalies(robotId: string): Promise<{ anomalies: Ano
   }
 
   // Rule 2: Trust score below 30
-  if (robot.trustScore < 30) {
-    anomalies.push({ type: "low_trust_score", severity: "critical", message: `Trust score critically low: ${robot.trustScore}`, detectedAt: now.toISOString() });
+  const trustScore = robot.trustScore as number;
+  if (trustScore < 30) {
+    anomalies.push({ type: "low_trust_score", severity: "critical", message: `Trust score critically low: ${trustScore}`, detectedAt: now.toISOString() });
   }
 
   // Rule 3: Multiple failed commands (>3 in 10 min)
@@ -54,7 +55,9 @@ export async function detectAnomalies(robotId: string): Promise<{ anomalies: Ano
     .limit(2);
 
   if (latestFirmware && latestFirmware.length === 2) {
-    if (latestFirmware[0].previousHash && latestFirmware[0].previousHash !== latestFirmware[1].hash) {
+    const fw0 = latestFirmware[0] as Record<string, unknown>;
+    const fw1 = latestFirmware[1] as Record<string, unknown>;
+    if (fw0.previousHash && fw0.previousHash !== fw1.hash) {
       anomalies.push({ type: "firmware_hash_mismatch", severity: "critical", message: "Firmware chain integrity broken: hash mismatch detected", detectedAt: now.toISOString() });
     }
   }
@@ -69,7 +72,7 @@ export async function detectAnomalies(robotId: string): Promise<{ anomalies: Ano
       .limit(1);
 
     if (lastActivity && lastActivity.length > 0) {
-      const lastSeen = new Date(lastActivity[0].timestamp).getTime();
+      const lastSeen = new Date((lastActivity[0] as Record<string, unknown>).timestamp as string).getTime();
       if (now.getTime() - lastSeen > 3_600_000) {
         anomalies.push({ type: "prolonged_offline", severity: "medium", message: "Robot offline for over 1 hour after being active", detectedAt: now.toISOString() });
       }

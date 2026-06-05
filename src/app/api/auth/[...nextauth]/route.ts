@@ -2,6 +2,8 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import nacl from "tweetnacl";
 import bs58 from "bs58";
+import type { User } from "next-auth";
+import type { JWT } from "next-auth/jwt";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -13,7 +15,8 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.apiKey) return null;
-        const validKey = process.env.SENTINELS_ADMIN_KEY || "sentinels-admin-dev";
+        const validKey = process.env.SENTINELS_ADMIN_KEY;
+        if (!validKey) throw new Error("SENTINELS_ADMIN_KEY not configured");
         if (credentials.apiKey === validKey) {
           return { id: "admin", name: "Fleet Admin", email: "admin@sentinels.today" };
         }
@@ -55,17 +58,17 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/signin",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT; user?: User }) {
       if (user) {
         token.id = user.id;
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: { user?: Record<string, unknown>; expires: string }; token: JWT }) {
       if (session.user) {
-        (session.user as any).id = token.id;
+        session.user.id = token.id as string;
       }
-      return session;
+      return session as { user?: Record<string, unknown>; expires: string };
     },
   },
 };

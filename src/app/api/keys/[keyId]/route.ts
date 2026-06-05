@@ -4,13 +4,13 @@ import crypto from "crypto";
 
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ keyId: string }> }) {
   const { keyId } = await params;
-  const fleet = await db.fleet.findUnique({ where: { id: keyId } });
+  const fleet = (await db.fleet.findUnique({ where: { id: keyId } })) as Record<string, unknown> | null;
   if (!fleet || !fleet.apiKey) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   return NextResponse.json({
     id: fleet.id,
     name: fleet.name,
-    maskedKey: "•".repeat(24) + fleet.apiKey.slice(-8),
+    maskedKey: "•".repeat(24) + (fleet.apiKey as string).slice(-8),
     createdAt: fleet.createdAt,
   });
 }

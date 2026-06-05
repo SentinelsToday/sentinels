@@ -76,7 +76,7 @@ export function TokonomicsSection() {
           <div className="inline-flex items-center gap-2 rounded-full border border-sentinels/20 bg-white px-4 py-2 shadow-sm">
             <Coins className="h-4 w-4 text-sentinels" />
             <span className="font-mono text-xs text-muted-foreground">
-              CA: <span className="text-foreground font-semibold">.......pump</span>
+              Token contract TBA upon launch
             </span>
           </div>
         </motion.div>

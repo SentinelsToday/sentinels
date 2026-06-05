@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { generateEd25519Keypair, generateDID, generateHardwareFingerprint, sha256, signData } from "@/lib/crypto";
+import { generateEd25519Keypair, generateDID, generateHardwareFingerprint, sha256 } from "@/lib/crypto";
 import { rateLimit, getClientIP } from "@/lib/rate-limit";
 
-// POST /api/robots/register - Register a new robot
+const VALID_NAME = /^[a-zA-Z0-9 _-]{1,100}$/;
+const VALID_SERIAL = /^[a-zA-Z0-9_-]{1,50}$/;
+const VALID_MODEL = /^[a-zA-Z0-9 _.-]{0,100}$/;
+
 export async function POST(req: NextRequest) {
   const limited = rateLimit(getClientIP(req), "register");
   if (limited) return limited;
@@ -14,14 +17,21 @@ export async function POST(req: NextRequest) {
     if (!name || !serialNumber) {
       return NextResponse.json({ error: "name and serialNumber required" }, { status: 400 });
     }
+    if (typeof name !== "string" || !VALID_NAME.test(name)) {
+      return NextResponse.json({ error: "name must be 1-100 chars: letters, numbers, spaces, hyphens, underscores" }, { status: 400 });
+    }
+    if (typeof serialNumber !== "string" || !VALID_SERIAL.test(serialNumber)) {
+      return NextResponse.json({ error: "serialNumber must be 1-50 alphanumeric chars" }, { status: 400 });
+    }
+    if (model !== undefined && (typeof model !== "string" || !VALID_MODEL.test(model))) {
+      return NextResponse.json({ error: "model contains invalid characters" }, { status: 400 });
+    }
 
-    // Check duplicate
     const existing = await db.robot.findUnique({ where: { serialNumber } });
     if (existing) {
       return NextResponse.json({ error: "Robot with this serialNumber already exists" }, { status: 409 });
     }
 
-    // Generate cryptographic identity
     const keypair = generateEd25519Keypair();
     const did = generateDID(keypair.publicKeyHex);
     const hardwareFingerprint = generateHardwareFingerprint();
@@ -33,7 +43,6 @@ export async function POST(req: NextRequest) {
         serialNumber,
         did,
         publicKey: keypair.publicKey,
-        privateKey: keypair.privateKey,
         publicKeyHex: keypair.publicKeyHex,
         hardwareFingerprint,
         status: "registered",
@@ -42,10 +51,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Create audit log entry
     const logDetails = JSON.stringify({ action: "robot_registered", serialNumber, did });
     const logHash = sha256(logDetails + new Date().toISOString());
-    const logSignature = signData(logHash, keypair.privateKey);
 
     await db.auditLog.create({
       data: {
@@ -53,7 +60,7 @@ export async function POST(req: NextRequest) {
         action: "registered",
         details: logDetails,
         hash: logHash,
-        signature: logSignature,
+        signature: "",
       },
     });
 
@@ -75,7 +82,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// GET /api/robots/register - List all robots
 export async function GET() {
   const robots = await db.robot.findMany({
     select: {

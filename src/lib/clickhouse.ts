@@ -1,13 +1,21 @@
-export type TelemetryRow = { robotId: string; eventType: string; payload: any; timestamp: string };
+export type TelemetryRow = { robotId: string; eventType: string; payload: string; timestamp: string };
 export type Aggregate = { bucket: string; count: number; avgValue?: number };
+
+const CLICKHOUSE_ENABLED = !!process.env.CLICKHOUSE_HOST;
 
 const store: TelemetryRow[] = [];
 
 export async function insertTelemetry(event: TelemetryRow): Promise<void> {
+  if (CLICKHOUSE_ENABLED) {
+    throw new Error("Real ClickHouse not yet implemented - set CLICKHOUSE_HOST");
+  }
   store.push(event);
 }
 
 export async function queryTelemetry(params: { robotId?: string; eventType?: string; from?: string; to?: string; limit?: number }): Promise<TelemetryRow[]> {
+  if (CLICKHOUSE_ENABLED) {
+    throw new Error("Real ClickHouse not yet implemented - set CLICKHOUSE_HOST");
+  }
   let results = store.filter((e) => {
     if (params.robotId && e.robotId !== params.robotId) return false;
     if (params.eventType && e.eventType !== params.eventType) return false;
@@ -19,6 +27,9 @@ export async function queryTelemetry(params: { robotId?: string; eventType?: str
 }
 
 export async function getAggregates(robotId: string, interval: '1m' | '5m' | '1h' | '1d'): Promise<Aggregate[]> {
+  if (CLICKHOUSE_ENABLED) {
+    throw new Error("Real ClickHouse not yet implemented - set CLICKHOUSE_HOST");
+  }
   const ms = { '1m': 60000, '5m': 300000, '1h': 3600000, '1d': 86400000 }[interval];
   const buckets = new Map<string, number>();
   for (const e of store) {

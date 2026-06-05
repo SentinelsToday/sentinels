@@ -1,9 +1,14 @@
 import { createHash } from "crypto";
 
+const IPFS_ENABLED = !!process.env.IPFS_GATEWAY_URL;
+
 const store = new Map<string, string>();
 const pinned = new Set<string>();
 
 export async function uploadToIPFS(data: string | Buffer): Promise<{ cid: string; size: number }> {
+  if (IPFS_ENABLED) {
+    throw new Error("Real IPFS not yet implemented - set IPFS_GATEWAY_URL");
+  }
   const raw = typeof data === "string" ? data : data.toString("base64");
   const hash = createHash("sha256").update(raw).digest("hex").slice(0, 44);
   const cid = `Qm${hash}`;

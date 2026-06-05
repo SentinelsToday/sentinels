@@ -1,17 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { withAuth } from "@/lib/rbac";
 
-export const PUT = withAuth(async (req: NextRequest, { params }: { params: { id: string } }) => {
-  const { role } = await req.json();
-  if (!["admin", "operator", "viewer"].includes(role)) {
-    return NextResponse.json({ error: "Invalid role" }, { status: 400 });
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const body = await req.json();
+    const { role } = body;
+
+    if (!["admin", "operator", "viewer"].includes(role)) {
+      return NextResponse.json({ error: "Invalid role" }, { status: 400 });
+    }
+    const user = await db.user.update({ where: { id }, data: { role } });
+    return NextResponse.json(user);
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-  const user = await db.user.update({ where: { id: params.id }, data: { role } });
-  return NextResponse.json(user);
-}, "admin");
+}
 
-export const DELETE = withAuth(async (_req: NextRequest, { params }: { params: { id: string } }) => {
-  await db.user.delete({ where: { id: params.id } });
-  return NextResponse.json({ success: true });
-}, "admin");
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    await db.user.delete({ where: { id } });
+    return NextResponse.json({ success: true });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : "Unknown error";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}

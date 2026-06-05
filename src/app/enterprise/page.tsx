@@ -86,7 +86,7 @@ export default function EnterprisePage() {
               </p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Button size="lg" className="font-mono text-sm bg-sentinels hover:bg-sentinels-muted text-white h-11 px-6" asChild>
-                  <a href="mailto:admin@sentinels.today">Contact Sales <ArrowRight className="ml-1.5 h-4 w-4" /></a>
+                  <a href="/contact">Contact Sales <ArrowRight className="ml-1.5 h-4 w-4" /></a>
                 </Button>
                 <Button variant="outline" size="lg" className="font-mono text-sm h-11 px-6" asChild>
                   <Link href="/security">Security Overview</Link>

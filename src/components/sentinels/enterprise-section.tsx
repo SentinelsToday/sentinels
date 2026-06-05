@@ -11,7 +11,6 @@ import {
   Truck,
   Plane,
   Factory,
-  Cross,
 } from "lucide-react";
 import { TerminalWindow, AuditLogStream } from "@/components/terminal";
 
@@ -28,7 +27,6 @@ const industries = [
   { icon: Factory, name: "Smart Factories", desc: "Industrial automation compliance and robot verification" },
   { icon: Truck, name: "Logistics", desc: "Warehouse robotics fleet management and audit trails" },
   { icon: Plane, name: "Defense", desc: "Mission-critical robot authentication and compliance" },
-  { icon: Cross, name: "Medical Robotics", desc: "Surgical and laboratory robot verification and logging" },
 ];
 
 const auditEvents = [

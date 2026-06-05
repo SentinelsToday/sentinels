@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
 
-// In-memory rate limiter (per-instance, resets on cold start)
-// For production at scale, use Redis or Upstash
 const store = new Map<string, { count: number; resetAt: number }>();
 
-const WINDOW_MS = 60 * 1000; // 1 minute
+const WINDOW_MS = 60 * 1000;
 const LIMITS: Record<string, number> = {
   default: 60,
   telemetry: 120,
@@ -12,7 +10,9 @@ const LIMITS: Record<string, number> = {
   command: 30,
 };
 
-export function rateLimit(key: string, type: string = "default") {
+const warned = new Set<string>();
+
+export function rateLimit(key: string, type: string = "default"): NextResponse | null {
   const limit = LIMITS[type] || LIMITS.default;
   const now = Date.now();
   const entry = store.get(key);
@@ -24,6 +24,10 @@ export function rateLimit(key: string, type: string = "default") {
 
   if (entry.count >= limit) {
     const retryAfter = Math.ceil((entry.resetAt - now) / 1000);
+    if (!warned.has(key)) {
+      warned.add(key);
+      console.warn(`[warn] Rate limit hit for ${key} (${type}): ${entry.count}/${limit}`);
+    }
     return NextResponse.json(
       { error: "Rate limit exceeded", retryAfter },
       { status: 429, headers: { "Retry-After": String(retryAfter) } }

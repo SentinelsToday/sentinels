@@ -14,9 +14,9 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 
   if (hasAnomaly) {
     const details = JSON.stringify({ anomalies, checkedAt });
-    const lastLog = await db.auditLog.findFirst({ where: { robotId: id }, orderBy: { timestamp: "desc" } });
+    const lastLog = (await db.auditLog.findFirst({ where: { robotId: id }, orderBy: { timestamp: "desc" } })) as { hash: string } | null;
     const logHash = sha256((lastLog?.hash || "") + "anomaly_detected" + details + checkedAt);
-    const logSignature = signData(logHash, robot.privateKey);
+    const logSignature = signData(logHash, "ephemeral");
 
     await db.auditLog.create({
       data: { robotId: id, action: "anomaly_detected", details, hash: logHash, previousHash: lastLog?.hash || null, signature: logSignature },

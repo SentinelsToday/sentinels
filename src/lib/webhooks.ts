@@ -10,12 +10,12 @@ export const WEBHOOK_EVENTS = [
   "command.executed",
 ] as const;
 
-export async function dispatchWebhook(event: string, payload: any, fleetId: string): Promise<void> {
-  const webhooks = await db.webhook.findMany({
+export async function dispatchWebhook(event: string, payload: unknown, fleetId: string): Promise<void> {
+  const webhooks = (await db.webhook.findMany({
     where: { fleetId, active: true },
-  });
+  })) as { events: string; secret: string; url: string }[];
 
-  const matched = webhooks.filter((w: { events: string }) => {
+  const matched = webhooks.filter((w) => {
     const events: string[] = JSON.parse(w.events);
     return events.includes(event);
   });
@@ -29,7 +29,7 @@ export async function dispatchWebhook(event: string, payload: any, fleetId: stri
       .digest("hex");
 
     try {
-      const res = await fetch(webhook.url, {
+      await fetch(webhook.url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,9 +39,8 @@ export async function dispatchWebhook(event: string, payload: any, fleetId: stri
         },
         body,
       });
-      console.log(`[webhook] ${event} -> ${webhook.url} : ${res.status}`);
-    } catch (err) {
-      console.error(`[webhook] ${event} -> ${webhook.url} failed:`, err);
+    } catch {
+      console.warn(`[warn] Webhook dispatch failed: ${event} -> ${webhook.url}`);
     }
   }
 }

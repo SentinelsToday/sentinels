@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,24 +22,31 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { Plus } from "lucide-react";
+
+async function fetchJson(url: string, options?: RequestInit) {
+  const res = await fetch(url, options);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
 
 export default function RobotsPage() {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["robots"],
-    queryFn: () => fetch("/api/robots/register").then((r) => r.json()),
+    queryFn: () => fetchJson("/api/robots/register"),
   });
 
   const registerMutation = useMutation({
     mutationFn: (body: { name: string; serialNumber: string; model?: string }) =>
-      fetch("/api/robots/register", {
+      fetchJson("/api/robots/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      }).then((r) => r.json()),
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["robots"] });
       queryClient.invalidateQueries({ queryKey: ["fleet-stats"] });
@@ -57,6 +63,8 @@ export default function RobotsPage() {
       model: (fd.get("model") as string) || undefined,
     });
   };
+
+  const robots = Array.isArray(data?.robots) ? data.robots : [];
 
   return (
     <div className="space-y-6">
@@ -107,6 +115,8 @@ export default function RobotsPage() {
         <CardContent>
           {isLoading ? (
             <p className="text-sm text-neutral-400 py-4">Loading…</p>
+          ) : error ? (
+            <p className="text-sm text-red-400 py-4">Failed to load robots</p>
           ) : (
             <Table>
               <TableHeader>
@@ -120,7 +130,7 @@ export default function RobotsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data?.robots?.map((robot: any) => (
+                {robots.map((robot: { id: string; name: string; model?: string; serialNumber: string; status: string; trustScore?: number; createdAt: string }) => (
                   <TableRow key={robot.id}>
                     <TableCell>
                       <Link
@@ -149,7 +159,7 @@ export default function RobotsPage() {
                     </TableCell>
                   </TableRow>
                 ))}
-                {(!data?.robots || data.robots.length === 0) && (
+                {robots.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center text-neutral-400 py-8">
                       No robots registered yet.
@@ -162,22 +172,5 @@ export default function RobotsPage() {
         </CardContent>
       </Card>
     </div>
-  );
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const variants: Record<string, string> = {
-    ACTIVE: "bg-emerald-100 text-emerald-700 border-emerald-200",
-    OFFLINE: "bg-neutral-100 text-neutral-500 border-neutral-200",
-    COMPROMISED: "bg-red-100 text-red-700 border-red-200",
-    MAINTENANCE: "bg-amber-100 text-amber-700 border-amber-200",
-  };
-  return (
-    <Badge
-      variant="outline"
-      className={`text-[10px] font-mono ${variants[status] || ""}`}
-    >
-      {status}
-    </Badge>
   );
 }

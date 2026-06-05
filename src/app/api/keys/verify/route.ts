@@ -8,5 +8,5 @@ export async function POST(req: Request) {
   const fleet = await db.fleet.findFirst({ where: { apiKey } });
   if (!fleet) return NextResponse.json({ valid: false }, { status: 401 });
 
-  return NextResponse.json({ valid: true, fleet: { id: fleet.id, name: fleet.name } });
+  return NextResponse.json({ valid: true, fleet: { id: (fleet as Record<string, unknown>).id, name: (fleet as Record<string, unknown>).name } });
 }

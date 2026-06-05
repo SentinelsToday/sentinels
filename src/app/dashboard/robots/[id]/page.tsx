@@ -25,6 +25,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { ArrowLeft, Send } from "lucide-react";
 import {
   RadialBarChart,
@@ -32,37 +33,43 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+async function fetchJson(url: string, options?: RequestInit) {
+  const res = await fetch(url, options);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
 export default function RobotDetailPage() {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
 
-  const { data: robot, isLoading } = useQuery({
+  const { data: robot, isLoading, error: robotError } = useQuery({
     queryKey: ["robot", id],
-    queryFn: () => fetch(`/api/robots/${id}`).then((r) => r.json()),
+    queryFn: () => fetchJson(`/api/robots/${id}`),
   });
 
   const { data: trustData } = useQuery({
     queryKey: ["trust", id],
-    queryFn: () => fetch(`/api/verify/trust/${id}`).then((r) => r.json()),
+    queryFn: () => fetchJson(`/api/verify/trust/${id}`),
   });
 
   const { data: commands } = useQuery({
     queryKey: ["commands", id],
-    queryFn: () => fetch(`/api/robots/${id}/command`).then((r) => r.json()),
+    queryFn: () => fetchJson(`/api/robots/${id}/command`),
   });
 
   const { data: auditData } = useQuery({
     queryKey: ["audit", id],
-    queryFn: () => fetch(`/api/audit?robotId=${id}&limit=20`).then((r) => r.json()),
+    queryFn: () => fetchJson(`/api/audit?robotId=${id}&limit=20`),
   });
 
   const commandMutation = useMutation({
     mutationFn: (body: { type: string; payload?: string }) =>
-      fetch(`/api/robots/${id}/command`, {
+      fetchJson(`/api/robots/${id}/command`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      }).then((r) => r.json()),
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["commands", id] });
       queryClient.invalidateQueries({ queryKey: ["audit", id] });
@@ -76,12 +83,14 @@ export default function RobotDetailPage() {
     return <p className="text-neutral-400">Loading…</p>;
   }
 
-  if (!robot || robot.error) {
+  if (!robot || robotError) {
     return <p className="text-red-500">Robot not found.</p>;
   }
 
   const trustScore = trustData?.trustScore ?? robot.trustScore ?? 0;
   const chartData = [{ value: Number(trustScore), fill: trustScore >= 70 ? "#10b981" : trustScore >= 40 ? "#f59e0b" : "#ef4444" }];
+  const commandList = Array.isArray(commands?.commands) ? commands.commands : [];
+  const auditLogs = Array.isArray(auditData?.logs) ? auditData.logs : [];
 
   return (
     <div className="space-y-6">
@@ -96,7 +105,6 @@ export default function RobotDetailPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Identity Card */}
         <Card className="lg:col-span-2">
           <CardHeader className="pb-0">
             <CardTitle className="text-sm font-mono uppercase text-neutral-500">
@@ -111,13 +119,9 @@ export default function RobotDetailPage() {
             {robot.publicKey && (
               <InfoRow label="Public Key" value={robot.publicKey} mono truncate />
             )}
-            {robot.fingerprint && (
-              <InfoRow label="Fingerprint" value={robot.fingerprint} mono />
-            )}
           </CardContent>
         </Card>
 
-        {/* Trust Score */}
         <Card>
           <CardHeader className="pb-0">
             <CardTitle className="text-sm font-mono uppercase text-neutral-500">
@@ -145,16 +149,6 @@ export default function RobotDetailPage() {
             <p className="text-3xl font-bold text-[#111113] -mt-4">
               {Number(trustScore).toFixed(0)}%
             </p>
-            {trustData?.factors && (
-              <div className="mt-3 w-full space-y-1">
-                {Object.entries(trustData.factors).map(([key, val]) => (
-                  <div key={key} className="flex justify-between text-xs">
-                    <span className="text-neutral-500 font-mono">{key}</span>
-                    <span className="text-[#111113]">{String(val)}</span>
-                  </div>
-                ))}
-              </div>
-            )}
           </CardContent>
         </Card>
       </div>
@@ -179,7 +173,7 @@ export default function RobotDetailPage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {robot.firmwareRecords.map((fw: any) => (
+                    {robot.firmwareRecords.map((fw: { id: string; version: string; status: string; verifiedAt?: string; createdAt: string }) => (
                       <TableRow key={fw.id}>
                         <TableCell className="font-mono text-xs">
                           {fw.version}
@@ -252,7 +246,7 @@ export default function RobotDetailPage() {
                 </Button>
               </form>
 
-              {commands?.commands?.length > 0 ? (
+              {commandList.length > 0 ? (
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -262,7 +256,7 @@ export default function RobotDetailPage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {commands.commands.map((cmd: any) => (
+                    {commandList.map((cmd: { id: string; type: string; status: string; createdAt: string }) => (
                       <TableRow key={cmd.id}>
                         <TableCell className="font-mono text-xs">{cmd.type}</TableCell>
                         <TableCell>
@@ -287,7 +281,7 @@ export default function RobotDetailPage() {
         <TabsContent value="audit">
           <Card>
             <CardContent className="pt-6">
-              {auditData?.logs?.length > 0 ? (
+              {auditLogs.length > 0 ? (
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -297,7 +291,7 @@ export default function RobotDetailPage() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {auditData.logs.map((log: any) => (
+                    {auditLogs.map((log: { id: string; action: string; details?: string; createdAt: string }) => (
                       <TableRow key={log.id}>
                         <TableCell className="font-mono text-xs">{log.action}</TableCell>
                         <TableCell className="text-neutral-500 text-xs max-w-xs truncate">
@@ -345,22 +339,5 @@ function InfoRow({
         {value}
       </span>
     </div>
-  );
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const variants: Record<string, string> = {
-    ACTIVE: "bg-emerald-100 text-emerald-700 border-emerald-200",
-    OFFLINE: "bg-neutral-100 text-neutral-500 border-neutral-200",
-    COMPROMISED: "bg-red-100 text-red-700 border-red-200",
-    MAINTENANCE: "bg-amber-100 text-amber-700 border-amber-200",
-  };
-  return (
-    <Badge
-      variant="outline"
-      className={`text-[10px] font-mono ${variants[status] || ""}`}
-    >
-      {status}
-    </Badge>
   );
 }

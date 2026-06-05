@@ -18,6 +18,9 @@ export interface MessageBroker {
   disconnect(): void;
 }
 
+const MQTT_ENABLED = !!process.env.MQTT_BROKER_URL;
+const NATS_ENABLED = !!process.env.NATS_SERVER_URL;
+
 const messageStore: Message[] = [];
 const subscribers = new Map<string, ((msg: Message) => void)[]>();
 
@@ -40,12 +43,16 @@ function mockBroker(): MessageBroker {
 }
 
 export function createMQTTBroker(url: string): MessageBroker {
-  console.log(`[MQTT stub] Would connect to ${url}`);
+  if (!MQTT_ENABLED) {
+    console.warn(`[warn] MQTT not configured - set MQTT_BROKER_URL. Using in-memory fallback.`);
+  }
   return mockBroker();
 }
 
 export function createNATSBroker(url: string): MessageBroker {
-  console.log(`[NATS stub] Would connect to ${url}`);
+  if (!NATS_ENABLED) {
+    console.warn(`[warn] NATS not configured - set NATS_SERVER_URL. Using in-memory fallback.`);
+  }
   return mockBroker();
 }
 

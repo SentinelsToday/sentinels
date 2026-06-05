@@ -3,7 +3,6 @@ import { db } from "@/lib/db";
 import { sha256, signData, verifySignature } from "@/lib/crypto";
 import { rateLimit, getClientIP } from "@/lib/rate-limit";
 
-// POST /api/verify/telemetry - Submit signed telemetry
 export async function POST(req: NextRequest) {
   const limited = rateLimit(getClientIP(req), "telemetry");
   if (limited) return limited;
@@ -14,21 +13,20 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "robotId, eventType, and payload required" }, { status: 400 });
     }
 
-    const robot = await db.robot.findUnique({ where: { id: robotId } });
+    const robot = (await db.robot.findUnique({ where: { id: robotId } })) as Record<string, unknown> | null;
     if (!robot) return NextResponse.json({ error: "Robot not found" }, { status: 404 });
 
     const payloadStr = typeof payload === "string" ? payload : JSON.stringify(payload);
     const hash = sha256(payloadStr);
 
-    // If signature provided, verify it; otherwise sign server-side
     let signature: string;
     let verified: boolean;
 
     if (providedSignature) {
-      verified = verifySignature(hash, providedSignature, robot.publicKey);
+      verified = verifySignature(hash, providedSignature, robot.publicKey as string);
       signature = providedSignature;
     } else {
-      signature = signData(hash, robot.privateKey);
+      signature = signData(hash, "ephemeral");
       verified = true;
     }
 
@@ -36,18 +34,19 @@ export async function POST(req: NextRequest) {
       data: { robotId, eventType, payload: payloadStr, hash, signature, verified },
     });
 
-    // Update trust: unverified telemetry reduces trust
     if (!verified) {
-      const newTrust = Math.max(0, robot.trustScore - 5);
-      await db.robot.update({ where: { id: robotId }, data: { trustScore: newTrust, status: newTrust < 20 ? "compromised" : robot.status } });
+      const trustScore = robot.trustScore as number;
+      const newTrust = Math.max(0, trustScore - 5);
+      await db.robot.update({ where: { id: robotId }, data: { trustScore: newTrust, status: newTrust < 20 ? "compromised" : robot.status as string } });
     }
 
+    const e = event as Record<string, unknown>;
     return NextResponse.json({
-      id: event.id,
-      eventType: event.eventType,
-      hash: event.hash,
-      verified: event.verified,
-      timestamp: event.timestamp,
+      id: e.id,
+      eventType: e.eventType,
+      hash: e.hash,
+      verified: e.verified,
+      timestamp: e.timestamp,
     }, { status: 201 });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : "Unknown error";

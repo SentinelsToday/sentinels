@@ -9,14 +9,19 @@ import {
 } from "@solana/web3.js";
 
 const MEMO_PROGRAM_ID = new PublicKey("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr");
-const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+const NETWORK = (process.env.SOLANA_NETWORK || "devnet") as "devnet" | "mainnet-beta" | "testnet";
+const connection = new Connection(clusterApiUrl(NETWORK), "confirmed");
 
 function getKeypair(): Keypair {
-  if (process.env.SOLANA_PRIVATE_KEY) {
-    const secret = JSON.parse(process.env.SOLANA_PRIVATE_KEY) as number[];
-    return Keypair.fromSecretKey(Uint8Array.from(secret));
+  const pk = process.env.SOLANA_PRIVATE_KEY;
+  if (!pk) throw new Error("SOLANA_PRIVATE_KEY environment variable not set");
+  let secret: number[];
+  try {
+    secret = JSON.parse(pk) as number[];
+  } catch {
+    throw new Error("SOLANA_PRIVATE_KEY must be a valid JSON array of numbers");
   }
-  return Keypair.generate();
+  return Keypair.fromSecretKey(Uint8Array.from(secret));
 }
 
 export async function anchorProof(
@@ -39,10 +44,10 @@ export async function anchorProof(
     const txSignature = await sendAndConfirmTransaction(connection, tx, [keypair]);
     return {
       txSignature,
-      explorerUrl: `https://explorer.solana.com/tx/${txSignature}?cluster=devnet`,
+      explorerUrl: `https://explorer.solana.com/tx/${txSignature}?cluster=${NETWORK}`,
     };
   } catch (err) {
-    console.error("[solana] anchorProof failed:", err);
+    console.warn("[warn] Solana anchorProof failed:", err instanceof Error ? err.message : err);
     return null;
   }
 }
@@ -65,8 +70,7 @@ export async function verifyOnChainProof(txSignature: string) {
       slot: tx.slot,
       blockTime: tx.blockTime,
     };
-  } catch (err) {
-    console.error("[solana] verifyOnChainProof failed:", err);
+  } catch {
     return null;
   }
 }
@@ -77,12 +81,11 @@ export async function getStatus() {
     const balance = await connection.getBalance(keypair.publicKey);
     return {
       connected: true,
-      network: "devnet",
+      network: NETWORK,
       walletAddress: keypair.publicKey.toBase58(),
       balanceSol: balance / 1e9,
     };
-  } catch (err) {
-    console.error("[solana] getStatus failed:", err);
-    return { connected: false, network: "devnet", walletAddress: null, balanceSol: 0 };
+  } catch {
+    return { connected: false, network: NETWORK, walletAddress: null, balanceSol: 0 };
   }
 }
