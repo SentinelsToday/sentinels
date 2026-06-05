@@ -51,14 +51,14 @@ const sectionVariants = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const } },
 };
 
 const stepVariants = {
   hidden: { opacity: 0, x: -16 },
   visible: (i: number) => ({
     opacity: 1, x: 0,
-    transition: { delay: i * 0.12, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { delay: i * 0.12, duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] as const },
   }),
 };
 
@@ -66,7 +66,7 @@ const connectorVariants = {
   hidden: { scaleY: 0 },
   visible: (i: number) => ({
     scaleY: 1,
-    transition: { delay: i * 0.12 + 0.08, duration: 0.35, ease: "easeOut" },
+    transition: { delay: i * 0.12 + 0.08, duration: 0.35, ease: "easeOut" as const },
   }),
 };
 
@@ -74,7 +74,7 @@ const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1, y: 0,
-    transition: { delay: 0.2 + i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { delay: 0.2 + i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
   }),
 };
 

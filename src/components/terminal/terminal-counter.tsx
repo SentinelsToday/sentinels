@@ -14,7 +14,7 @@ export function TerminalCounter({
   className?: string;
 }) {
   const [displayed, setDisplayed] = useState(0);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     if (displayed >= target) return;

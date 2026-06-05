@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
@@ -36,15 +36,13 @@ const statusColor = (s: string) =>
 
 export default function RealtimeDashboard() {
   const [events, setEvents] = useState<TelemetryEvent[]>([])
-  const [connected, setConnected] = useState(false)
   const [filter, setFilter] = useState<string>('all')
 
   useEffect(() => {
-    setConnected(true)
     const interval = setInterval(() => {
       setEvents(prev => [generateEvent(), ...prev].slice(0, 50))
     }, 2000 + Math.random() * 1000)
-    return () => { clearInterval(interval); setConnected(false) }
+    return () => clearInterval(interval)
   }, [])
 
   const filtered = filter === 'all' ? events : events.filter(e => e.eventType === filter)
@@ -55,8 +53,8 @@ export default function RealtimeDashboard() {
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-lg font-mono">Live Telemetry Feed</CardTitle>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span className={`h-2.5 w-2.5 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`} />
-            {connected ? 'Connected' : 'Disconnected'}
+            <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+            Connected
           </div>
         </CardHeader>
         <CardContent className="space-y-4">

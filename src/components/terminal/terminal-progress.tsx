@@ -16,7 +16,7 @@ export function TerminalProgress({
   className?: string;
 }) {
   const [displayed, setDisplayed] = useState(0);
-  const rafRef = useRef<number>();
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     const target = Math.min(value, max);

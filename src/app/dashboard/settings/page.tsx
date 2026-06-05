@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, startTransition } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -18,13 +18,13 @@ export default function SettingsPage() {
   const [newKey, setNewKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchKeys = async () => {
+  const fetchKeys = useCallback(async () => {
     const res = await fetch("/api/keys");
     setKeys(await res.json());
     setLoading(false);
-  };
+  }, []);
 
-  useEffect(() => { fetchKeys(); }, []);
+  useEffect(() => { startTransition(() => fetchKeys()); }, [fetchKeys]);
 
   const generateKey = async () => {
     if (!keys.length) return;

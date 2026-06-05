@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, startTransition } from "react";
 
 export function useViewportOnce(margin = "-80px") {
   const ref = useRef<HTMLDivElement>(null);
@@ -10,7 +10,7 @@ export function useViewportOnce(margin = "-80px") {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
+      startTransition(() => setVisible(true));
       return;
     }
     const observer = new IntersectionObserver(
