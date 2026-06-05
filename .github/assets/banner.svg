@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" fill="none">
+  <rect width="1200" height="400" fill="#0a0a0b"/>
+
+  <!-- Subtle grid pattern -->
+  <g stroke="#18181b" stroke-width="1" opacity="0.5">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="300" y1="0" x2="300" y2="400"/>
+    <line x1="600" y1="0" x2="600" y2="400"/>
+    <line x1="900" y1="0" x2="900" y2="400"/>
+  </g>
+
+  <!-- Accent line at top -->
+  <rect x="0" y="0" width="1200" height="3" fill="#22c55e"/>
+
+  <!-- Shield logo -->
+  <g transform="translate(140, 144)">
+    <path d="M48 4L6 22v34c0 30.4 17.4 58.8 42 68 24.6-9.2 42-37.6 42-68V22L48 4z" fill="#18181b" stroke="#22c55e" stroke-width="3"/>
+    <path d="M38 42h22l-16 28h16" stroke="#22c55e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M30 36h36l-24 40h24" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.3"/>
+  </g>
+
+  <!-- Text lockup -->
+  <g transform="translate(220, 140)">
+    <text x="0" y="50" fill="#fafafa" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="42" font-weight="700" letter-spacing="2">Sentinel Labs</text>
+    <text x="0" y="85" fill="#a1a1aa" font-family="'Inter', system-ui, sans-serif" font-size="20" font-weight="400" letter-spacing="0.5">Trust infrastructure for autonomous systems.</text>
+  </g>
+
+  <!-- Decorative corner elements -->
+  <rect x="0" y="0" width="16" height="16" stroke="#22c55e" stroke-width="2" fill="none" opacity="0.3"/>
+  <rect x="1184" y="0" width="16" height="16" stroke="#22c55e" stroke-width="2" fill="none" opacity="0.3"/>
+  <rect x="0" y="384" width="16" height="16" stroke="#22c55e" stroke-width="2" fill="none" opacity="0.3"/>
+  <rect x="1184" y="384" width="16" height="16" stroke="#22c55e" stroke-width="2" fill="none" opacity="0.3"/>
+</svg>

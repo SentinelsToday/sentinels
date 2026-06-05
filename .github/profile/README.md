@@ -1,25 +1,24 @@
-# Sentinel Labs
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/SentinelsToday/.github/main/assets/banner.svg">
+  <img alt="Sentinel Labs — Trust infrastructure for autonomous systems." src="https://raw.githubusercontent.com/SentinelsToday/.github/main/assets/banner.svg" width="100%">
+</picture>
 
-**Trust infrastructure for autonomous systems.**
+<br>
 
-- Website: https://sentinellabs.io
-- Docs: https://docs.sentinellabs.io
-- X: @sentinellabs
-- Email: hello@sentinellabs.io
+<p align="center">
+  <a href="https://sentinellabs.io">Website</a> •
+  <a href="https://docs.sentinellabs.io">Docs</a> •
+  <a href="https://x.com/sentinellabs">X</a> •
+  <a href="mailto:hello@sentinellabs.io">Email</a>
+</p>
 
 ---
-
-# Sentinel Labs
 
 > Trust is a design decision.
 
-## About Us
+## About
 
-Our mission is to support the entire autonomous systems ecosystem.
-
-Identity, attestation, telemetry, and audit are our focus points. Cryptography and openness are baked into the core of everything we do.
-
----
+Our mission is to support the entire autonomous systems ecosystem with identity, attestation, telemetry, and audit. Cryptography and openness are baked into the core of everything we do.
 
 ## Flagship
 
@@ -27,27 +26,23 @@ Identity, attestation, telemetry, and audit are our focus points. Cryptography a
 
 A unified platform for robot identity, trust scoring, and audit.
 
-**Platforms**
-- Linux (amd64, arm64)
-- macOS
-- Windows
-- Docker
-- Kubernetes
+**Platforms** — Linux (amd64, arm64) · macOS · Windows · Docker · Kubernetes
 
 ### Built On
 
 | Project | Description | Language |
-|----------|-------------|----------|
+|---|---|---|
 | sentinel-core | Trust engine, attestation, identity registry | Rust |
 | sentinel-agent | On-device daemon for identity management | Rust |
 | sentinel-cloud | Fleet management API and backend | TypeScript |
 
----
-
 ## Ecosystem
 
 | Repository | Description |
-|------------|-------------|
+|---|---|
+| sentinel-core | Trust engine, attestation, identity registry |
+| sentinel-agent | On-device daemon for identity management |
+| sentinel-cloud | Fleet management API and backend |
 | sentinel-sdk | Multi-language SDK (TypeScript, Rust, Python) |
 | sentinel-cli | Command-line fleet management tool |
 | sentinel-dashboard | Web UI for fleet operations |
@@ -60,31 +55,4 @@ A unified platform for robot identity, trust scoring, and audit.
 
 ---
 
-## Popular Repositories
-
-- sentinel-core
-- sentinel-agent
-- sentinel-cloud
-- sentinel-sdk
-- sentinel-chain
-- sentinel-dashboard
-
----
-
-## Repositories
-
-- sentinel-website
-- sentinel-docs
-- sentinel-core
-- sentinel-agent
-- sentinel-cloud
-- sentinel-chain
-- sentinel-sdk
-- sentinel-cli
-- sentinel-dashboard
-- sentinel-firmware
-- .github
-
----
-
-Built with care and intent.
+<p align="center">Built with care and intent.</p>
