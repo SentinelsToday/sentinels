@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Coins, Zap, Lock, Users, Cpu, Globe, ArrowRight, Wallet } from "lucide-react";
+import { Coins, Zap, Lock, Users, Cpu, Globe, ArrowRight, Wallet, ExternalLink } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -41,6 +41,8 @@ const useCases = [
   },
 ];
 
+const SENT_ADDRESS = "DYrWewaqjmiMpnTh8SGzfo9NkiTzFckTTmnRMDQypump";
+
 export function TokonomicsSection() {
   return (
     <section id="tokonomics" className="relative py-20 sm:py-28 lg:py-32 bg-surface border-t border-border">
@@ -73,12 +75,18 @@ export function TokonomicsSection() {
           variants={fadeUp}
           className="flex justify-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-sentinels/20 bg-white px-4 py-2 shadow-sm">
+          <a
+            href={`https://solscan.io/token/${SENT_ADDRESS}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full border border-sentinels/20 bg-white px-4 py-2 shadow-sm hover:border-sentinels/40 hover:shadow-md transition-all"
+          >
             <Coins className="h-4 w-4 text-sentinels" />
             <span className="font-mono text-xs text-muted-foreground">
-              Token contract TBA upon launch
+              CA: {SENT_ADDRESS.slice(0, 4)}...{SENT_ADDRESS.slice(-4)}
             </span>
-          </div>
+            <ExternalLink className="h-3 w-3 text-muted-foreground" />
+          </a>
         </motion.div>
 
         {/* Use Cases Grid */}
@@ -118,7 +126,7 @@ export function TokonomicsSection() {
           className="mt-12 text-center"
         >
           <p className="font-mono text-xs text-muted-foreground">
-            $SENT is not yet live. Token contract will be announced upon launch.
+            $SENT is live on Solana. View the contract on Solscan.
           </p>
         </motion.div>
       </div>
