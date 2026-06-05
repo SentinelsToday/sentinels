@@ -1,7 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Coins, Zap, Lock, Users, Cpu, Globe, ArrowRight, Wallet, ExternalLink } from "lucide-react";
+import {
+  Coins, Zap, Lock, Users, Cpu, Globe, ArrowRight, Wallet,
+  ExternalLink, Copy, Check,
+} from "lucide-react";
+import {
+  Dialog, DialogContent, DialogTitle, DialogDescription,
+} from "@/components/ui/dialog";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -44,6 +51,26 @@ const useCases = [
 const SENT_ADDRESS = "DYrWewaqjmiMpnTh8SGzfo9NkiTzFckTTmnRMDQypump";
 
 export function TokonomicsSection() {
+  const [copied, setCopied] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(SENT_ADDRESS);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = SENT_ADDRESS;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
+
   return (
     <section id="tokonomics" className="relative py-20 sm:py-28 lg:py-32 bg-surface border-t border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -67,7 +94,7 @@ export function TokonomicsSection() {
           </p>
         </motion.div>
 
-        {/* CA Badge */}
+        {/* CA Badge — opens popup */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -75,18 +102,56 @@ export function TokonomicsSection() {
           variants={fadeUp}
           className="flex justify-center mb-12"
         >
-          <a
-            href={`https://solscan.io/token/${SENT_ADDRESS}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-sentinels/20 bg-white px-4 py-2 shadow-sm hover:border-sentinels/40 hover:shadow-md transition-all"
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="inline-flex items-center gap-2 rounded-full border border-sentinels/20 bg-white px-4 py-2 shadow-sm hover:border-sentinels/40 hover:shadow-md transition-all cursor-pointer"
           >
             <Coins className="h-4 w-4 text-sentinels" />
             <span className="font-mono text-xs text-muted-foreground">
               CA: {SENT_ADDRESS.slice(0, 4)}...{SENT_ADDRESS.slice(-4)}
             </span>
             <ExternalLink className="h-3 w-3 text-muted-foreground" />
-          </a>
+          </button>
+
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogContent className="sm:max-w-md">
+              <DialogTitle className="font-mono text-sm tracking-wide">
+                $SENT Token Address
+              </DialogTitle>
+              <DialogDescription className="sr-only">
+                Contract address for the $SENT token on Solana
+              </DialogDescription>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={handleCopy}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleCopy(); }}
+                className="mt-2 w-full rounded-lg border border-border bg-surface p-4 font-mono text-xs break-all text-foreground cursor-pointer hover:border-sentinels/40 hover:bg-sentinels/5 transition-colors select-all"
+              >
+                {SENT_ADDRESS}
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 font-mono text-xs text-foreground hover:bg-secondary transition-colors cursor-pointer"
+                >
+                  {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
+                  {copied ? "Copied!" : "Copy Address"}
+                </button>
+                <a
+                  href={`https://solscan.io/token/${SENT_ADDRESS}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-2 font-mono text-xs text-foreground hover:bg-secondary transition-colors"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  View on Solscan
+                </a>
+              </div>
+            </DialogContent>
+          </Dialog>
         </motion.div>
 
         {/* Use Cases Grid */}
