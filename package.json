@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000 2>&1 | tee dev.log",
-    "build": "next build && xcopy /E /I /Y .next\\static .next\\standalone\\.next\\static >nul && xcopy /E /I /Y public .next\\standalone\\public >nul",
+    "build": "next build && node -e \"require('fs').cpSync('.next/static','.next/standalone/.next/static',{recursive:true,force:true});require('fs').cpSync('public','.next/standalone/public',{recursive:true,force:true})\"",
     "start": "NODE_ENV=production bun .next/standalone/server.js 2>&1 | tee server.log",
     "lint": "eslint ."
   },
