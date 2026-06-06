@@ -135,6 +135,25 @@ export function PricingSection() {
             </motion.div>
           ))}
         </div>
+
+        {/* SENT Discount Banner */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="max-w-2xl mx-auto mt-10 text-center bg-gradient-to-r from-sentinels/5 via-white to-sentinels/5 border border-sentinels/20 rounded-lg p-6"
+        >
+          <span className="inline-block font-mono text-[10px] font-semibold uppercase tracking-widest text-sentinels bg-sentinels/10 px-3 py-1 rounded-full mb-3">
+            Save with $SENT
+          </span>
+          <h3 className="text-lg font-bold text-foreground">
+            Pay with $SENT — Get 20% Off
+          </h3>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Use the $SENT token at checkout to receive a 20% discount on any plan.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

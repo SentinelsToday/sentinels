@@ -171,6 +171,24 @@ export default function PricingPage() {
           </div>
         </section>
 
+        {/* SENT Discount Banner */}
+        <section className="py-12 bg-gradient-to-r from-sentinels/5 via-white to-sentinels/5 border-t border-border">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              <span className="inline-block font-mono text-[10px] font-semibold uppercase tracking-widest text-sentinels bg-sentinels/10 px-3 py-1 rounded-full mb-4">
+                Save with $SENT
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold text-foreground">
+                Pay with $SENT — Get 20% Off
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground max-w-xl mx-auto">
+                Use the $SENT token at checkout to receive a 20% discount on any plan.
+                Autonomously powered, cryptographically verified.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
         {/* Feature Comparison */}
         <section className="py-16 sm:py-20 bg-white border-t border-border">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
