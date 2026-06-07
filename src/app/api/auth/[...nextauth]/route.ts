@@ -4,6 +4,7 @@ import nacl from "tweetnacl";
 import bs58 from "bs58";
 import type { User } from "next-auth";
 import type { JWT } from "next-auth/jwt";
+import { consumeChallenge } from "@/lib/auth-challenge";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -33,6 +34,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.publicKey || !credentials?.signature || !credentials?.message) return null;
+        if (!consumeChallenge(credentials.publicKey, credentials.message)) return null;
         try {
           const publicKeyBytes = bs58.decode(credentials.publicKey);
           const signatureBytes = Uint8Array.from(atob(credentials.signature), (c) => c.charCodeAt(0));

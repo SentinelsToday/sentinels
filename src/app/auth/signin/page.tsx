@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
@@ -11,6 +11,21 @@ import { Label } from "@/components/ui/label";
 import { Shield, KeyRound, Wallet, CheckCircle2, Loader2 } from "lucide-react";
 
 type Step = "auth" | "waitlist" | "success";
+
+interface SolanaProvider {
+  connect: () => Promise<{ publicKey: { toString: () => string } }>;
+  signMessage?: (message: Uint8Array, display?: "utf8" | "hex") => Promise<{ signature: Uint8Array }>;
+}
+
+function getSolanaProvider(): SolanaProvider | undefined {
+  return (window as unknown as { solana?: SolanaProvider }).solana;
+}
+
+function toBase64(bytes: Uint8Array): string {
+  let s = "";
+  for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+  return btoa(s);
+}
 
 export default function SignInPage() {
   const router = useRouter();
@@ -37,12 +52,12 @@ export default function SignInPage() {
     }
   }
 
-  async function handleWalletConnect() {
+  async function handleWalletSignIn() {
     setLoading(true);
     setError("");
     try {
-      const sol = (window as any).solana;
-      if (!sol?.connect) {
+      const sol = getSolanaProvider();
+      if (!sol?.connect || !sol.signMessage) {
         window.open("https://phantom.app/", "_blank");
         setError("No Solana wallet found. Install Phantom or Backpack.");
         setLoading(false);
@@ -51,16 +66,61 @@ export default function SignInPage() {
 
       const resp = await sol.connect();
       const address = resp.publicKey.toString();
-      setWalletAddress(address);
-      setStep("waitlist");
-      setLoading(false);
-    } catch (e: any) {
-      setLoading(false);
-      if (e?.code === 4001) {
-        setError("Wallet connection rejected");
-      } else {
-        setError("Wallet connection failed");
+
+      const challengeRes = await fetch(`/api/auth/challenge?publicKey=${encodeURIComponent(address)}`);
+      if (!challengeRes.ok) {
+        setError("Could not request sign-in challenge.");
+        setLoading(false);
+        return;
       }
+      const { message } = await challengeRes.json();
+
+      const messageBytes = new TextEncoder().encode(message);
+      const { signature } = await sol.signMessage(messageBytes, "utf8");
+
+      const signInRes = await signIn("wallet", {
+        publicKey: address,
+        signature: toBase64(signature),
+        message,
+        redirect: false,
+      });
+
+      setLoading(false);
+      if (signInRes?.ok) {
+        router.push("/dashboard");
+      } else {
+        setError("Signature did not verify. Try again.");
+      }
+    } catch (e: unknown) {
+      setLoading(false);
+      const err = e as { code?: number; message?: string };
+      if (err?.code === 4001) {
+        setError("Wallet signature rejected.");
+      } else {
+        setError(err?.message || "Wallet sign-in failed.");
+      }
+    }
+  }
+
+  async function handleWaitlistConnect() {
+    setLoading(true);
+    setError("");
+    try {
+      const sol = getSolanaProvider();
+      if (!sol?.connect) {
+        window.open("https://phantom.app/", "_blank");
+        setError("No Solana wallet found. Install Phantom or Backpack.");
+        setLoading(false);
+        return;
+      }
+      const resp = await sol.connect();
+      setWalletAddress(resp.publicKey.toString());
+      setStep("waitlist");
+    } catch (e: unknown) {
+      const err = e as { code?: number };
+      setError(err?.code === 4001 ? "Wallet connection rejected" : "Wallet connection failed");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -135,13 +195,21 @@ export default function SignInPage() {
               </div>
 
               <Button
-                variant="outline"
-                onClick={handleWalletConnect}
+                onClick={handleWalletSignIn}
                 disabled={loading}
-                className="w-full font-mono text-sm h-10"
+                className="w-full font-mono text-sm bg-foreground hover:bg-foreground/90 text-background h-10"
               >
                 <Wallet className="mr-1.5 h-4 w-4" />
-                Connect Wallet
+                {loading ? "Signing in..." : "Sign In with Wallet"}
+              </Button>
+
+              <Button
+                variant="outline"
+                onClick={handleWaitlistConnect}
+                disabled={loading}
+                className="w-full font-mono text-sm h-10 mt-3"
+              >
+                Request Early Access
               </Button>
 
               <p className="mt-6 text-center text-[11px] text-muted-foreground font-mono">
@@ -210,6 +278,14 @@ export default function SignInPage() {
                   {loading ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : <Wallet className="mr-1.5 h-4 w-4" />}
                   {loading ? "Submitting..." : "Join the Waitlist"}
                 </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setStep("auth")}
+                  className="w-full font-mono text-xs text-muted-foreground"
+                >
+                  Back
+                </Button>
               </form>
             </>
           )}
@@ -219,12 +295,12 @@ export default function SignInPage() {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-sentinels/10 mb-6">
                 <CheckCircle2 className="h-8 w-8 text-sentinels" strokeWidth={2} />
               </div>
-              <h1 className="text-2xl font-bold text-foreground mb-3">You're on the list!</h1>
+              <h1 className="text-2xl font-bold text-foreground mb-3">You&apos;re on the list!</h1>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
-                We're working on granting you access as soon as possible.
+                We&apos;re working on granting you access as soon as possible.
               </p>
               <p className="text-xs text-muted-foreground mt-4 font-mono">
-                We'll reach out at{" "}
+                We&apos;ll reach out at{" "}
                 <span className="text-sentinels">{email}</span>
               </p>
               <Button

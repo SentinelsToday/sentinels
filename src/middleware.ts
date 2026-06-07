@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
 const PUBLIC_PATHS = [
   "/api/auth",
   "/api/robots/register",
   "/api/waitlist",
+  "/api/subscriptions/plans",
   "/_next/static",
   "/favicon.ico",
   "/logo.jpg",
@@ -12,7 +14,7 @@ const PUBLIC_PATHS = [
 
 const STATIC_EXTENSIONS = /\.(jpg|jpeg|png|gif|svg|ico|css|js|woff2?)$/;
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   if (PUBLIC_PATHS.some((p) => pathname.startsWith(p))) return NextResponse.next();
@@ -28,6 +30,9 @@ export function middleware(req: NextRequest) {
       const token = authHeader.slice(7);
       if (token === process.env.SENTINELS_ADMIN_KEY) return NextResponse.next();
     }
+
+    const session = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+    if (session) return NextResponse.next();
 
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
