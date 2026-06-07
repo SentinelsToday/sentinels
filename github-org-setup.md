@@ -1,6 +1,6 @@
 # GitHub Organization Setup Checklist
 
-This document lists everything that has been done in this repository, and the manual steps required on GitHub.com to complete the Sentinel Labs organization.
+This document lists everything that has been done in this repository, and the manual steps required on GitHub.com to complete the Sentinels organization.
 
 ## Done in this repo
 
@@ -38,7 +38,7 @@ The organization profile README is shown only when a special `.github` repositor
 
 1. Go to https://github.com/organizations/Sentinels-Today/repositories/new
 2. Repository name: `.github`
-3. Description: `Sentinel Labs org profile`
+3. Description: `Sentinels org profile`
 4. Visibility: Public
 5. Initialize with README: no
 6. Add the contents of this repository's `.github/` folder to it
@@ -80,7 +80,7 @@ For each:
 
 Go to https://github.com/organizations/Sentinels-Today/settings:
 
-- **Display name**: Sentinel Labs
+- **Display name**: Sentinels
 - **Description**: Trust infrastructure for autonomous systems
 - **URL**: https://sentinels.today
 - **Location**: (your location)

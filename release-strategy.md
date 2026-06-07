@@ -2,7 +2,7 @@
 
 ## Versioning
 
-All Sentinel Labs projects follow [Semantic Versioning 2.0](https://semver.org/):
+All Sentinels projects follow [Semantic Versioning 2.0](https://semver.org/):
 
 ```
 MAJOR.MINOR.PATCH

@@ -1,6 +1,6 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Sentinels-Today/.github/main/assets/banner.svg">
-  <img alt="Sentinel Labs — Trust infrastructure for autonomous systems." src="https://raw.githubusercontent.com/Sentinels-Today/.github/main/assets/banner.svg" width="100%">
+  <img alt="Sentinels — Trust infrastructure for autonomous systems." src="https://raw.githubusercontent.com/Sentinels-Today/.github/main/assets/banner.svg" width="100%">
 </picture>
 
 <br>

@@ -1,6 +1,6 @@
 # Repository Hierarchy
 
-## Organization: Sentinel Labs
+## Organization: Sentinels
 
 ### Core Infrastructure
 

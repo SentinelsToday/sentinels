@@ -42,7 +42,7 @@ This document describes how to set up the Fumadocs-based documentation portal in
 import { defineConfig } from "fumadocs/config";
 
 export default defineConfig({
-  name: "Sentinel Labs",
+  name: "Sentinels",
   description: "Trust infrastructure for autonomous systems",
   logo: {
     light: "/logo-light.svg",
@@ -58,7 +58,7 @@ export default defineConfig({
     type: "local",
   },
   banner: {
-    text: "Sentinel Labs is in public alpha. APIs may change.",
+    text: "Sentinels is in public alpha. APIs may change.",
     bg: "#27272a",
     textColor: "#fafafa",
   },
@@ -137,7 +137,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <DocsLayout
       tree={pageTree}
       nav={{
-        title: "Sentinel Labs",
+        title: "Sentinels",
         transparentMode: "top",
         githubUrl: "https://github.com/Sentinels-Today",
       }}

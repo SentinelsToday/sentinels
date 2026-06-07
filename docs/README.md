@@ -1,6 +1,6 @@
-# Sentinel Labs Documentation
+# Sentinels Documentation
 
-This directory contains the source for the Sentinel Labs documentation portal, built with [Fumadocs](https://fumadocs.vercel.app).
+This directory contains the source for the Sentinels documentation portal, built with [Fumadocs](https://fumadocs.vercel.app).
 
 ## Structure
 

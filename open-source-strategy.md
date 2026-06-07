@@ -2,7 +2,7 @@
 
 ## Philosophy
 
-Sentinel Labs follows an **open-core** model. The core trust infrastructure is fully open source. Enterprise features are source-available under a delayed-license conversion (BSL to Apache 2.0 after 3 years).
+Sentinels follows an **open-core** model. The core trust infrastructure is fully open source. Enterprise features are source-available under a delayed-license conversion (BSL to Apache 2.0 after 3 years).
 
 We believe:
 
@@ -116,7 +116,7 @@ Priority integrations for Year 1:
 
 ### Positioning Statement
 
-> Sentinel Labs is the trust infrastructure for autonomous systems. We provide the identity, attestation, and audit layer that makes machine-to-machine communication verifiable, tamper-evident, and auditable.
+> Sentinels is the trust infrastructure for autonomous systems. We provide the identity, attestation, and audit layer that makes machine-to-machine communication verifiable, tamper-evident, and auditable.
 
 ## Marketing Channels
 

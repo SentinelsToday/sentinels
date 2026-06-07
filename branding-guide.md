@@ -1,8 +1,8 @@
-# Sentinel Labs Branding Guide
+# Sentinels Branding Guide
 
 ## Design Philosophy
 
-Sentinel Labs follows a dark engineering aesthetic inspired by the Rust Foundation, Solana Labs, Cloudflare, and Tailscale. The design language prioritizes clarity, professionalism, and technical credibility over hype or trend-driven styling.
+Sentinels follows a dark engineering aesthetic inspired by the Rust Foundation, Solana Labs, Cloudflare, and Tailscale. The design language prioritizes clarity, professionalism, and technical credibility over hype or trend-driven styling.
 
 - No gradients (except subtle dark-on-dark)
 - No emojis in official communications
@@ -14,14 +14,14 @@ Sentinel Labs follows a dark engineering aesthetic inspired by the Rust Foundati
 
 ### Primary Logo
 
-The Sentinel Labs logo is a geometric shield containing a stylized "S" mark. The shield represents security and trust. The "S" is angular and precise, suggesting engineering rigor.
+The Sentinels logo is a geometric shield containing a stylized "S" mark. The shield represents security and trust. The "S" is angular and precise, suggesting engineering rigor.
 
 - Minimum clear space: 1x logo height on all sides
 - Minimum size: 24px (digital), 0.5in (print)
 
 ### Lockup
 
-The primary lockup places the shield mark to the left of the wordmark "Sentinel Labs" in a monospace or geometric sans-serif typeface.
+The primary lockup places the shield mark to the left of the wordmark "Sentinels" in a monospace or geometric sans-serif typeface.
 
 - Horizontal lockup (preferred)
 - Vertical lockup (for square formats)
@@ -130,4 +130,4 @@ Use descriptive link text. Do not use "click here" or "read more."
 
 ---
 
-These guidelines apply to all Sentinel Labs repositories, documentation, websites, and communications.
+These guidelines apply to all Sentinels repositories, documentation, websites, and communications.

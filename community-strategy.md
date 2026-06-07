@@ -2,8 +2,8 @@
 
 ## Goals
 
-1. Build a community of developers who build on and contribute to Sentinel Labs.
-2. Establish Sentinel Labs as the standard for machine trust infrastructure.
+1. Build a community of developers who build on and contribute to Sentinels.
+2. Establish Sentinels as the standard for machine trust infrastructure.
 3. Create a sustainable contributor ecosystem that reduces maintainer burden.
 
 ## Platforms
