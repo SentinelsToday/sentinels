@@ -12,7 +12,7 @@
 
 ```
 1. Install CLI
-   curl -fsSL https://get.sentinellabs.io | sh
+   curl -fsSL https://get.sentinels.today | sh
 
 2. Create API key
    sentinel auth login
@@ -34,7 +34,7 @@ This flow should work in under 5 minutes with no configuration files.
 ### TypeScript
 
 ```typescript
-import { SentinelClient } from "@sentinellabs/sdk";
+import { SentinelClient } from "@sentinels-today/sdk";
 
 const client = new SentinelClient({
   apiKey: process.env.SENTINEL_API_KEY,
@@ -120,19 +120,19 @@ Error: <what went wrong>
        <how to fix it>
 
   Code: E123
-  Docs: https://docs.sentinellabs.io/errors/E123
+  Docs: https://sentinels.today/docs/errors/E123
 ```
 
 Example:
 
 ```
 Error: Failed to connect to sentinel-cloud
-       The API endpoint "https://api.sentinellabs.io/v2" is unreachable.
+       The API endpoint "https://api.sentinels.today/v2" is unreachable.
        Check that the endpoint is correct and your network allows outbound
        connections on port 443.
 
   Code: E1001
-  Docs: https://docs.sentinellabs.io/errors/E1001
+  Docs: https://sentinels.today/docs/errors/E1001
 ```
 
 ## Documentation Experience
@@ -165,7 +165,7 @@ Every repository README follows this structure:
 5. **Contributing** -- Link to CONTRIBUTING.md
 6. **License** -- License information
 
-### docs.sentinellabs.io
+### sentinels.today/docs
 
 1. **Home** -- Hero with value prop, quick start CTA, ecosystem overview
 2. **Quick Start** -- Interactive CLI commands

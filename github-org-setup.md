@@ -36,7 +36,7 @@ This document lists everything that has been done in this repository, and the ma
 
 The organization profile README is shown only when a special `.github` repository exists.
 
-1. Go to https://github.com/organizations/SentinelLabs/repositories/new
+1. Go to https://github.com/organizations/Sentinels-Today/repositories/new
 2. Repository name: `.github`
 3. Description: `Sentinel Labs org profile`
 4. Visibility: Public
@@ -44,12 +44,12 @@ The organization profile README is shown only when a special `.github` repositor
 6. Add the contents of this repository's `.github/` folder to it
 7. Push using:
    ```bash
-   git remote add github-org https://github.com/SentinelLabs/.github.git
+   git remote add github-org https://github.com/Sentinels-Today/.github.git
    git checkout -b main
    git push github-org main
    ```
 
-The org profile README will appear at https://github.com/SentinelLabs within a few minutes.
+The org profile README will appear at https://github.com/Sentinels-Today within a few minutes.
 
 ### 2. Create the remaining repos
 
@@ -78,15 +78,15 @@ For each:
 
 ### 3. Configure organization settings
 
-Go to https://github.com/organizations/SentinelLabs/settings:
+Go to https://github.com/organizations/Sentinels-Today/settings:
 
 - **Display name**: Sentinel Labs
 - **Description**: Trust infrastructure for autonomous systems
-- **URL**: https://sentinellabs.io
+- **URL**: https://sentinels.today
 - **Location**: (your location)
-- **Email**: hello@sentinellabs.io
+- **Email**: admin@sentinels.today
 - **Profile picture**: logo (shield + "S" mark)
-- **Twitter/X**: @sentinellabs
+- **Twitter/X**: @sentinelstoday
 
 ### 4. Apply organization-wide labels
 
@@ -98,7 +98,7 @@ Run the workflow in `.github/workflows/labels.yml` from each repo, or apply manu
 
 ### 5. Create project boards
 
-Go to https://github.com/orgs/SentinelLabs/projects:
+Go to https://github.com/orgs/Sentinels-Today/projects:
 
 Create the 5 boards listed in `project-boards.md`:
 
@@ -125,7 +125,7 @@ For each public repo:
 
 ### 8. Set up Sponsors (optional)
 
-Go to https://github.com/sponsors/SentinelLabs (requires GitHub sponsorship program enrollment).
+Go to https://github.com/sponsors/Sentinels-Today (requires GitHub sponsorship program enrollment).
 
 ### 9. Set up security policy
 
@@ -135,9 +135,9 @@ For each repo, ensure `SECURITY.md` is in place. The org-wide version is in this
 
 In each repo, create a `.github/CODEOWNERS` file:
 ```
-* @SentinelLabs/maintainers
-/docs/ @SentinelLabs/docs-team
-/security/ @SentinelLabs/security-team
+* @Sentinels-Today/maintainers
+/docs/ @Sentinels-Today/docs-team
+/security/ @Sentinels-Today/security-team
 ```
 
 ### 11. Organization teams
@@ -156,8 +156,8 @@ Create the following teams:
 ## Verification
 
 After all steps, verify:
-- [ ] Org profile README is visible at https://github.com/SentinelLabs
-- [ ] All repos are visible at https://github.com/orgs/SentinelLabs/repositories
+- [ ] Org profile README is visible at https://github.com/Sentinels-Today
+- [ ] All repos are visible at https://github.com/orgs/Sentinels-Today/repositories
 - [ ] Topics are searchable
 - [ ] Discussions are enabled
 - [ ] Branch protection is enforced

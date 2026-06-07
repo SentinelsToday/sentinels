@@ -139,7 +139,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       nav={{
         title: "Sentinel Labs",
         transparentMode: "top",
-        githubUrl: "https://github.com/SentinelLabs",
+        githubUrl: "https://github.com/Sentinels-Today",
       }}
       sidebar={{
         defaultOpen: true,

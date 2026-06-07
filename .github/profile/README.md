@@ -1,15 +1,15 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/SentinelsToday/.github/main/assets/banner.svg">
-  <img alt="Sentinel Labs — Trust infrastructure for autonomous systems." src="https://raw.githubusercontent.com/SentinelsToday/.github/main/assets/banner.svg" width="100%">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Sentinels-Today/.github/main/assets/banner.svg">
+  <img alt="Sentinel Labs — Trust infrastructure for autonomous systems." src="https://raw.githubusercontent.com/Sentinels-Today/.github/main/assets/banner.svg" width="100%">
 </picture>
 
 <br>
 
 <p align="center">
-  <a href="https://sentinellabs.io">Website</a> •
-  <a href="https://docs.sentinellabs.io">Docs</a> •
-  <a href="https://x.com/sentinellabs">X</a> •
-  <a href="mailto:hello@sentinellabs.io">Email</a>
+  <a href="https://sentinels.today">Website</a> •
+  <a href="https://sentinels.today/docs">Docs</a> •
+  <a href="https://x.com/sentinelstoday">X</a> •
+  <a href="mailto:admin@sentinels.today">Email</a>
 </p>
 
 ---
