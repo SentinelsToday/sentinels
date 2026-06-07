@@ -1,31 +1,51 @@
-# sentinel-core
+# Sentinels
 
-Trust engine: attestation, identity registry, audit.
+Trust infrastructure for autonomous machines.
 
-- Language: Rust
-- License: Apache 2.0
+- Website: <https://sentinels.today>
+- Org: <https://github.com/Sentinels-Today>
 - Status: Pre-alpha
 
-## Overview
+## What lives here
 
-The core trust engine handles device identity, attestation verification, trust score computation, and audit trail generation.
+This repo is the **`sentinels` monorepo** — it bundles the marketing website, the cloud API, and the operator dashboard into one Next.js 16 app. As individual modules harden, they will split out into the standalone `sentinel-*` sibling repos under the org.
 
-## About Sentinel Labs
+```
+src/app                  Next.js 16 app router
+  /                      Marketing site (16 pages, light theme)
+  /dashboard             Operator fleet UI
+  /api/...               57 route files (REST surface)
+src/lib                  Trust engine, crypto, integrations (18 modules)
+src/components/sentinels Landing page sections
+db/                      Local SQLite (dev) — InsForge Postgres in prod
+```
 
-Sentinel Labs builds trust infrastructure for autonomous systems. The team's focus is on identity, attestation, telemetry, and audit. Cryptography and openness are core principles, not afterthoughts.
+## Read these first
 
-## Ecosystem
+| File | Purpose |
+|---|---|
+| [`STATUS.md`](./STATUS.md) | **Verified** state — what's built, what's mocked, what's missing. Single source of truth. |
+| [`PRD.md`](./PRD.md) | Product vision and MVP scope. |
+| [`ARCHITECTURE.md`](./ARCHITECTURE.md) | Layered system design and target stack. |
+| [`ROADMAP.md`](./ROADMAP.md) | Quarterly milestones. |
+| [`GAP-ANALYSIS.md`](./GAP-ANALYSIS.md) | ⚠️ Historical — superseded by `STATUS.md`. |
+| [`CHECKLIST.md`](./CHECKLIST.md) | ⚠️ Historical — superseded by `STATUS.md`. |
 
-- [sentinel-agent](https://github.com/SentinelsToday/sentinel-agent): on-device daemon.
-- [sentinel-cloud](https://github.com/SentinelsToday/sentinel-cloud): fleet management API.
-- [sentinel-chain](https://github.com/SentinelsToday/sentinel-chain): Solana attestation.
-- [sentinel-sdk](https://github.com/SentinelsToday/sentinel-sdk): multi-language SDK.
-- [sentinel-cli](https://github.com/SentinelsToday/sentinel-cli): command-line tool.
-- [sentinel-dashboard](https://github.com/SentinelsToday/sentinel-dashboard): web UI.
-- [sentinel-firmware](https://github.com/SentinelsToday/sentinel-firmware): TPM firmware.
+## Quick start
 
-## Resources
+```bash
+bun install
+bun dev          # next dev on :3000
+bun run lint
+bun run build    # produces .next/standalone
+```
 
-- Website: https://sentinels.today
-- Docs: https://sentinels.today/docs
-- X: @sentinelstoday
+Environment template in [`.env.example`](./.env.example). Local secrets go in `.env.local` (gitignored).
+
+## Ecosystem repos
+
+The standalone `sentinel-*` repos at <https://github.com/Sentinels-Today> are currently scaffolded with docs only; their source will land as each module is extracted from this monorepo. Track per-milestone status in `ROADMAP.md`.
+
+## License
+
+Apache 2.0 — see [`LICENSE`](./LICENSE).

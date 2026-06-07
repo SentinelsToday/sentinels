@@ -1,5 +1,8 @@
 ﻿# Sentinels Robotics: PRD vs Codebase Gap Analysis
 
+> ⚠️ **Superseded by [`STATUS.md`](./STATUS.md) on 2026-06-07.**
+> This file is kept for history. The verified counts (57 routes, 16 pages, 18 lib modules) and the empty-repo discovery live in `STATUS.md`. Don't trust "Done" claims here without cross-referencing.
+>
 > Generated: 2026-06-02
 
 ## Total scope (per PRD)

@@ -1,5 +1,8 @@
 ﻿# Sentinels Robotics: Development Checklist
 
+> ⚠️ **Superseded by [`STATUS.md`](./STATUS.md) on 2026-06-07.**
+> Numbers in this file are stale (claims 51 routes / 15 pages / 16 lib modules; reality is 57 / 16 / 18). The "Final stats" table is wrong. The "To activate when ready" list is correct — those are still TODO.
+
 ## All features completed
 
 ### Website pages (15)

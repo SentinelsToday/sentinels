@@ -10,16 +10,18 @@ This document outlines the high-level development roadmap for Sentinel Labs. Tim
 
 | Milestone | Repositories | Status |
 |---|---|---|
-| sentinel-core v1.0 | sentinel-core | Released |
-| sentinel-agent v1.0 | sentinel-agent | Released |
-| Identity registry API | sentinel-cloud | Released |
-| Attestation verification | sentinel-core | Released |
-| Trust score engine | sentinel-core | Released |
-| Hash-chain audit trail | sentinel-core | Released |
-| Dashboard fleet overview | sentinel-dashboard | Released |
-| TypeScript SDK | sentinel-sdk | Released |
-| Solana attestation program | sentinel-chain | Released |
-| CLI tool (basic ops) | sentinel-cli | Released |
+| sentinel-core v1.0 | sentinel-core | Planned |
+| sentinel-agent v1.0 | sentinel-agent | Planned |
+| Identity registry API | sentinel-cloud | In progress |
+| Attestation verification | sentinel-core | In progress |
+| Trust score engine | sentinel-core | In progress |
+| Hash-chain audit trail | sentinel-core | In progress |
+| Dashboard fleet overview | sentinel-dashboard | In progress |
+| TypeScript SDK | sentinel-sdk | Planned |
+| Solana attestation program | sentinel-chain | In progress |
+| CLI tool (basic ops) | sentinel-cli | Planned |
+
+> Reference implementations of the cloud, dashboard, identity registry, attestation, trust engine, audit trail, and Solana anchoring run today inside the `sentinels` monorepo. The standalone `sentinel-*` repositories are scaffolded and will receive their split-out source as each module hardens. See `STATUS.md` for the verified state.
 
 ## Q3 2025 -- Scale
 
