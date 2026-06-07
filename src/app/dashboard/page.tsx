@@ -15,6 +15,7 @@ import {
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Bot, Activity, WifiOff, AlertTriangle, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { SubscriptionCard } from "@/components/dashboard/subscription-card";
 
 async function fetchJson(url: string) {
   const res = await fetch(url);
@@ -97,6 +98,8 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      <SubscriptionCard />
 
       <Card>
         <CardHeader className="pb-0">

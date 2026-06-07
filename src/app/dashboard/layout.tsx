@@ -4,12 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { QueryProvider } from "@/components/providers/query-provider";
-import { Bot, LayoutDashboard, ArrowLeft } from "lucide-react";
+import { Bot, LayoutDashboard, ArrowLeft, CreditCard } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/robots", label: "Robots", icon: Bot },
+  { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
 ];
 
 export default function DashboardLayout({
