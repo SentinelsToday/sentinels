@@ -50,7 +50,7 @@ export function Footer() {
                 Trust infrastructure for autonomous machines.
               </p>
               <div className="mt-4 font-mono text-xs text-steel">
-                v0.1.0-alpha
+                v0.2.0-alpha
               </div>
             </div>
 
@@ -82,8 +82,8 @@ export function Footer() {
           </p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              All systems operational
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+              Pre-alpha — not production ready
             </span>
           </div>
         </div>

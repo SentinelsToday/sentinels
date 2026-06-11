@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { generateEd25519Keypair, generateDID, generateHardwareFingerprint, sha256 } from "@/lib/crypto";
 import { rateLimit, getClientIP } from "@/lib/rate-limit";
+import { apiError } from "@/lib/utils";
 
 const VALID_NAME = /^[a-zA-Z0-9 _-]{1,100}$/;
 const VALID_SERIAL = /^[a-zA-Z0-9_-]{1,50}$/;
@@ -77,8 +78,7 @@ export async function POST(req: NextRequest) {
       createdAt: robot.createdAt,
     }, { status: 201 });
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "Unknown error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return apiError(e);
   }
 }
 

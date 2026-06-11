@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { generateEd25519Keypair, generateDID, sha256 } from "@/lib/crypto";
+import { apiError } from "@/lib/utils";
 
 const VALID_STATUSES = ["active", "offline", "maintenance", "compromised", "registered"] as const;
 const VALID_NAME = /^[a-zA-Z0-9 _-]{1,100}$/;
@@ -38,8 +39,7 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       counts: (r._count as Record<string, unknown>),
     });
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "Unknown error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return apiError(e);
   }
 }
 
@@ -85,8 +85,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const u = updated as Record<string, unknown>;
     return NextResponse.json({ id: u.id, status: u.status, name: u.name });
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "Unknown error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return apiError(e);
   }
 }
 
@@ -119,7 +118,6 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
     return NextResponse.json({ id, did: newDid, publicKey: newKeypair.publicKey, publicKeyHex: newKeypair.publicKeyHex });
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "Unknown error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return apiError(e);
   }
 }

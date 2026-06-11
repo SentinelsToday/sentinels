@@ -97,6 +97,9 @@ export function PricingSection() {
           <p className="mt-3 font-mono text-[11px] uppercase tracking-widest text-steel">
             Powered by Solana Subscriptions & Allowances · {data?.network ?? "devnet"}
           </p>
+          <p className="mt-2 font-mono text-[10px] text-amber-600">
+            Pre-alpha — plans not yet provisioned on mainnet. Devnet demo only.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">

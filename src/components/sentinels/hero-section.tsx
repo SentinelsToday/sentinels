@@ -34,9 +34,9 @@ const terminalSteps: SequenceStep[] = [
 ];
 
 const stats = [
-  { value: "1.2M+", label: "Robots Verified" },
-  { value: "99.97%", label: "Uptime SLA" },
-  { value: "<50ms", label: "Auth Latency" },
+  { value: "Pre-alpha", label: "Development Stage" },
+  { value: "Coming Soon", label: "Early Access" },
+  { value: "0.2.0", label: "Current Build" },
 ];
 
 const partners = ["Solana", "NATS", "ROS 2", "MQTT"];
@@ -150,7 +150,7 @@ export function HeroSection() {
       >
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <span className="font-mono text-[11px] tracking-widest text-muted-foreground uppercase shrink-0">
-            Built on
+            Planned Integrations
           </span>
           <div className="flex items-center gap-2">
             {partners.map((name) => (

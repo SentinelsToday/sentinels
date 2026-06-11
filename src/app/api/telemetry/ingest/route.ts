@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { insertTelemetry } from '@/lib/clickhouse';
 import { db } from '@/lib/db';
 import { sha256 } from '@/lib/crypto';
+import { apiError } from '@/lib/utils';
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,7 +31,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ingested: true, timestamp });
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : "Unknown error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return apiError(e);
   }
 }
